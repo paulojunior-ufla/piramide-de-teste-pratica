@@ -14,6 +14,8 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 [A Pirâmide de Teste](#sec-test-pyramid)
 
+[Ferramentas e Bibliotecas que veremos](#sec-tools-and-libs)
+
 Um software pronto para produção requer testes antes de definitivamente entrar em produção. À medida que a área de desenvolvimento de software amadureceu, as abordagens para teste de software também amadureceram. Ao invés de se ter uma miríade de testadores manuais de software, as equipes de desenvolvimento passaram a automatizar a maior parte de seus esforços com teste de software. Automatizar os testes permite que as equipes saibam se seu software está "quebrado" em questão de segundos e minutos, em vez de dias e semanas. 
 
 O ciclo de *feedback* drascitamente curto, alimentado por testes automatizados, anda de mãos dadas com práticas de desenvolvimento ágil, entrega contínua e cultura DevOps. Ter uma abordagem efetiva para teste de software permite que as equipes se movam rapidamente e com confiança.
@@ -66,3 +68,13 @@ Atenha-se ao formato da pirâmide para criar uma suíte de teste saudável, ráp
 Não se apegue tanto aos nomes das camadas individuais da pirâmide de teste de Cohn. De fato, eles podem ser um pouco enganosos: por exemplo, "Testes de serviço" é uma expressão difícil de definir (o próprio Mike Cohn [fez uma declaração](https://www.mountaingoatsoftware.com/blog/the-forgotten-layer-of-the-test-automation-pyramid) de que muitos desenvolvedores ignoram completamente esta camada). Além disso, vivemos em dias em que  *frameworks* para SPA (*Single Page Applications*), tais como React, Angular, Ember.js, entre outros, demonstram que "Testes de interface do usuário" não precisam estar no nível mais alto de sua pirâmide - você pode perfeitamente realizar "Testes de unidade" em todos esses *frameworks*.
 
 Dadas essas limitações dos nomes originais, é totalmente aceitável criar outros nomes para suas camadas de teste, desde que você o  s mantenha consistentes em sua base de código e nas discussões com sua equipe.
+
+### <a id="sec-tools-and-libs"></a>Ferramentas e Bibliotecas que veremos
+
+* [JUnit](http://junit.org/):  nosso executor de testes (*test runner*)
+* [Mockito](http://site.mockito.org/): para "mockar" dependências
+* [Wiremock](http://wiremock.org/): para criar *stubs* de serviços externos
+* [Pact](https://docs.pact.io/): para escrever testes CDC
+* [Selenium](http://docs.seleniumhq.org/): para escrever testes *end-to-end* executados a partir da interface de usuário
+* [REST-assured](https://github.com/rest-assured/rest-assured): para escrever testes *end-to-end* executados a partir dos *endpoints* de uma API REST
+
