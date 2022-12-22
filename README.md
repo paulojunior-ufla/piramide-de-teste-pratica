@@ -8,7 +8,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 ![A Pirâmide de Teste Prática](/assets/teaser.png "A Pirâmide de Teste Prática")
 
-### Conteúdo
+## Conteúdo
 
 [A Importância da Automação (de Testes)](#sec-test-automation)
 
@@ -25,7 +25,7 @@ O ciclo de *feedback* drascitamente curto, alimentado por testes automatizados, 
 
 Este artigo explora o que um portfólio de teste deve ter para ser considerado responsivo, confiável e manutenível - independentemente se você está construindo uma arquitetura de microsserviços, aplicativos móveis ou ecossistemas de IoT (*Internet of Things*). Também entraremos em detalhes sobre a criação de testes automatizados efetivos e legíveis. 
 
-### <a id="sec-test-automation"></a>A Importância da Automação (de Testes)
+## <a id="sec-test-automation"></a>A Importância da Automação (de Testes)
 
 O software tem se tornado parte essencial do mundo em que vivemos. Ele superou seu único propósito inicial de tornar negócios mais eficientes. Hoje, as empresas tentam encontrar maneiras de se tornarem empresas digitais de primeira classe. Como usuários, todos nós interagimos com uma quantidade cada vez maior de software diariamente. As rodas da inovação estão girando rapidamente.
 
@@ -45,7 +45,7 @@ Felizmente, existe um remédio para tarefas repetitivas: **automação**.
 
 Automatizar seus testes repetitivos pode ser uma grande virada de jogo em sua vida como desenvolvedor de software. Automatize esses testes e você não terá mais que seguir protocolos de cliques, sem pensar, a fim de verificar se seu software ainda funciona corretamente. Automatize seus testes e você poderá alterar sua base de código sem titubear. Se você já tentou fazer uma refatoração em larga escala, sem uma suíte de teste adequada, aposto que você sabe o quão terrível esta experiência pode ser. Como você saberia se acidentalmente quebrasse alguma coisa ao longo do caminho? Bem, você "clica", de acordo com todos os seus *roteiros de teste* manuais; é assim. Mas, sejamos honestos: você realmente gosta disso? Que tal realizar alterações em larga escala e saber se você quebrou alguma coisa em segundos, enquanto toma um bom gole de café? Parece mais agradável, não é mesmo?
 
-### <a id="sec-test-pyramid"></a>A Pirâmide de Teste
+## <a id="sec-test-pyramid"></a>A Pirâmide de Teste
 
 Se você quiser levar a sério os testes automatizados para o seu software, há um conceito-chave que você deve conhecer: a **Pirâmide de Teste**. Mike Cohn propôs esse conceito em seu livro *Succeeding with Agile: Software Development Using Scrum* (traduzido para o português com o título "Desenvolvimento de Software com Scrum: Aplicando Métodos Ágeis com Sucesso"). A pirâmide de teste é uma ótima metáfora visual, pois te faz pensar sobre as diferentes camadas de teste. Ela também informa a você quanto de teste realizar em cada camada. 
 
@@ -72,7 +72,7 @@ Não se apegue tanto aos nomes das camadas individuais da pirâmide de teste de 
 
 Dadas essas limitações dos nomes originais, é totalmente aceitável criar outros nomes para suas camadas de teste, desde que você o  s mantenha consistentes em sua base de código e nas discussões com sua equipe.
 
-### <a id="sec-tools-and-libs"></a>Ferramentas e Bibliotecas que veremos
+## <a id="sec-tools-and-libs"></a>Ferramentas e Bibliotecas que veremos
 
 * [JUnit](http://junit.org/):  nosso executor de testes (*test runner*)
 * [Mockito](http://site.mockito.org/): para "mockar" dependências
@@ -81,10 +81,11 @@ Dadas essas limitações dos nomes originais, é totalmente aceitável criar out
 * [Selenium](http://docs.seleniumhq.org/): para escrever testes *end-to-end* executados a partir da interface de usuário
 * [REST-assured](https://github.com/rest-assured/rest-assured): para escrever testes *end-to-end* executados a partir dos *endpoints* de uma API REST
 
-### <a id="sec-sample-app"></a>Aplicação de Exemplo
+## <a id="sec-sample-app"></a>Aplicação de Exemplo
 
 Eu escrevi um [microsserviço simples](https://github.com/hamvocke/spring-testing), incluindo uma suíte de teste com testes para as diferentes camadas da pirâmide de teste.
 
 A aplicação de exemplo apresenta as características de um típico microsserviço. Ela expõe uma interface REST, "conversa" com uma base de dados e busca informações de um serviço REST de terceiros. Ela foi implementada usando [Spring Boot](https://projects.spring.io/spring-boot/) e deve ser compreensível mesmo que você nunca tenha trabalho com Sring Boot antes.
 
 Certifique-se de verificar o [código no Github](https://github.com/hamvocke/spring-testing). O *README* do projeto contém as instruções necessárias para você executar a aplicação, bem como seus testes automatizados, em sua máquina.
+
