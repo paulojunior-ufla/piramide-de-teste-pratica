@@ -20,6 +20,8 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [Funcionalidade](#sec-app-functionality)
 
+    - [Estrutura em alto-nível](#sec-app-high-level-structure)
+
 Um software pronto para produção requer testes antes de definitivamente entrar em produção. À medida que a área de desenvolvimento de software amadureceu, as abordagens para teste de software também amadureceram. Ao invés de se ter uma miríade de testadores manuais de software, as equipes de desenvolvimento passaram a automatizar a maior parte de seus esforços com teste de software. Automatizar os testes permite que as equipes saibam se seu software está "quebrado" em questão de segundos e minutos, em vez de dias e semanas. 
 
 O ciclo de *feedback* drascitamente curto, alimentado por testes automatizados, anda de mãos dadas com práticas de desenvolvimento ágil, entrega contínua e cultura DevOps. Ter uma abordagem efetiva para teste de software permite que as equipes se movam rapidamente e com confiança.
@@ -98,4 +100,14 @@ A funcionalidade da aplicação é simples. Ela disponibiliza uma interface REST
 | --- | --- |
 | `GET /hello`  | Retorna "*Hello World*". Sempre.  |
 | `GET /hello/{lastname}`  | Busca a pessoa com o sobrenome informado. Se existir, retorna "*Hello, {Firstname} {Lastname}*".  |
-| `GET /weather`  | Retorna as condições do tempo atuais para *Hamburg*, *Alemanha*.
+| `GET /weather`  | Retorna as condições meteorológicas atuais para *Hamburg*, *Alemanha*.
+
+### <a id="sec-app-high-level-structure"></a>Estrutura de alto-nível
+
+Em alto-nível, o sistema possui a seguinte estrutura 
+
+![Estrutura do sistema em alto-nível](/assets/testService.png "Estrutura do sistema em alto-nível")
+
+**Figura 3**. Estrutura em alto-nível do nosso microsserviço.
+
+Nosso microsserviço oferece uma interface REST que pode ser invocada via HTTP. Para alguns *endpoints*, o serviço irá buscar informações de uma base de dados. Em outros casos, o serviço irá invocar uma API externa de previsão do tempo, a fim de recuperar e exibir as condições meteorológicas atuais.
