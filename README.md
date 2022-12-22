@@ -10,14 +10,15 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 ## Conteúdo
 
-[A Importância da Automação (de Testes)](#sec-test-automation)
+- [A Importância da Automação (de Testes)](#sec-test-automation)
 
-[A Pirâmide de Teste](#sec-test-pyramid)
+- [A Pirâmide de Teste](#sec-test-pyramid)
 
-[Ferramentas e Bibliotecas que veremos](#sec-tools-and-libs)
+- [Ferramentas e Bibliotecas que veremos](#sec-tools-and-libs)
 
-[Aplicação de Exemplo](#sec-sample-app)
+- [Aplicação de Exemplo](#sec-sample-app)
 
+    - [Funcionalidade](#sec-app-functionality)
 
 Um software pronto para produção requer testes antes de definitivamente entrar em produção. À medida que a área de desenvolvimento de software amadureceu, as abordagens para teste de software também amadureceram. Ao invés de se ter uma miríade de testadores manuais de software, as equipes de desenvolvimento passaram a automatizar a maior parte de seus esforços com teste de software. Automatizar os testes permite que as equipes saibam se seu software está "quebrado" em questão de segundos e minutos, em vez de dias e semanas. 
 
@@ -89,3 +90,12 @@ A aplicação de exemplo apresenta as características de um típico microsservi
 
 Certifique-se de verificar o [código no Github](https://github.com/hamvocke/spring-testing). O *README* do projeto contém as instruções necessárias para você executar a aplicação, bem como seus testes automatizados, em sua máquina.
 
+### <a id="sec-app-functionality"></a>Funcionalidade
+
+A funcionalidade da aplicação é simples. Ela disponibiliza uma interface REST com três *endpoints*:
+
+| *Endpoint*  | Funcionalidade |
+| --- | --- |
+| `GET /hello`  | Retorna "*Hello World*". Sempre.  |
+| `GET /hello/{lastname}`  | Busca a pessoa com o sobrenome informado. Se existir, retorna "*Hello, {Firstname} {Lastname}*".  |
+| `GET /weather`  | Retorna as condições do tempo atuais para *Hamburg*, *Alemanha*.
