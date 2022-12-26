@@ -22,6 +22,8 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [Estrutura em alto-nível](#sec-app-high-level-structure)
 
+    - [Arquitetura interna](#sec-app-internal-structure)
+
 Um software pronto para produção requer testes antes de definitivamente entrar em produção. À medida que a área de desenvolvimento de software amadureceu, as abordagens para teste de software também amadureceram. Ao invés de se ter uma miríade de testadores manuais de software, as equipes de desenvolvimento passaram a automatizar a maior parte de seus esforços com teste de software. Automatizar os testes permite que as equipes saibam se seu software está "quebrado" em questão de segundos e minutos, em vez de dias e semanas. 
 
 O ciclo de *feedback* drascitamente curto, alimentado por testes automatizados, anda de mãos dadas com práticas de desenvolvimento ágil, entrega contínua e cultura DevOps. Ter uma abordagem efetiva para teste de software permite que as equipes se movam rapidamente e com confiança.
@@ -104,10 +106,33 @@ A funcionalidade da aplicação é simples. Ela disponibiliza uma interface REST
 
 ### <a id="sec-app-high-level-structure"></a>Estrutura de alto-nível
 
-Em alto-nível, o sistema possui a seguinte estrutura 
+Em alto-nível, o sistema possui a seguinte estrutura:
 
 ![Estrutura do sistema em alto-nível](/assets/testService.png "Estrutura do sistema em alto-nível")
 
 **Figura 3**. Estrutura em alto-nível do nosso microsserviço.
 
 Nosso microsserviço oferece uma interface REST que pode ser invocada via HTTP. Para alguns *endpoints*, o serviço irá buscar informações de uma base de dados. Em outros casos, o serviço irá invocar uma API externa de previsão do tempo, a fim de recuperar e exibir as condições meteorológicas atuais.
+
+### <a id="sec-app-internal-structure"></a>Arquitetura interna
+
+Internamente, nosso microsserviço tem uma arquitetura típica de aplicações Spring:
+
+![Arquitetura interna da aplicação](/assets/testArchitecture.png "Arquitetura interna da aplicação")
+
+**Figura 4**. Estrutura interna do nosso microsserviço.
+
+* As classes do tipo `Controller` provêm *endpoints* REST e lidam com requisições e respostas HTTP.
+* As classes do tipo `Repository` interagem com o banco de dados e cuidam da escrita e leitura de dados no/do armazenamento persistente.
+* As classes do tipo `Client` "conversam" com outras APIs, em nosso caso, elas buscam dados no formato JSON a partir de uma API de previsão do tempo, denominada *darksky.net* [^1].
+* As classes do tipo `Domain` representam nosso modelo de domínio, incluindo a lógica de negócio (que, para ser justo, é bem trivial em nosso caso).
+
+Os desenvolvedores Spring experientes devem notar que uma camada frequentemente utilizada está faltando aqui: inspirados pelo [*Domain-Drive Design*](https://en.wikipedia.org/wiki/Domain-driven_design) (DDD), muitos desenvolvedores constrõem uma camada para classes de serviço. Eu decidi não incluir uma camada de serviço nesta aplicação. Uma razão é que nossa aplicação é bastante simples, por isso, uma camada de serviço seria um nível de abstração desnecessário. Outro motivo é que eu acho que muitas pessoas exageram em suas camadas de serviço. Geralmente, eu encontro bases de código nas quais toda a regra de negócio está encapsulada em classes de serviço. O modelo de domínio torna-se apenas uma camada de dados, não de comportamentos (isto é, um [Modelo de Domínio Anêmico](https://en.wikipedia.org/wiki/Anemic_domain_model)). Para toda aplicação não-trivial, isso desperdiça muito potencial para manter seu código bem estruturado e testável e não utiliza totalmente o poder da orientação a objetos. 
+
+Nossos repositórios são simples e diretos, oferecendo a funcionalidade de CRUD. Para manter o código simples, eu usei o [Spring Data](http://projects.spring.io/spring-data/). Spring Data nos fornece uma implementação de repositório CRUD simples e genérica, a qual podemos usar em vez de desenvolvê-la por nós mesmos. Ele também cuida da criação de um banco de dados em memória para nossos testes, em vez de usar um banco de dados PostgresSQL real, como seria em produção.
+
+Dê uma olhada na base de código para se familiarizar com a estrutura interna. Isso será útil para nossa próxima etapa: Testar a aplicação!  
+
+[^1] **Nota do tradutor**: no README do [repositório](https://github.com/hamvocke/spring-testing) da aplicação de exemplo, o autor menciona ter trocado a API do *darksky.net* pela do *openweathermap.org*, depois que a primeira foi desativada para consulta pública à previsão do tempo.
+
+
