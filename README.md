@@ -52,7 +52,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [Provider Test (the other team)](#sec-provider-test-other-team)
 
-    - [Provider Test (our team)](#sec-provider-test-out-team)
+    - [Provider Test (our team)](#sec-provider-test-our-team)
 
 - [UI Tests](#sec-ui-tests)
 
@@ -189,6 +189,58 @@ Os desenvolvedores Spring experientes devem notar que uma camada frequentemente 
 Nossos repositórios são simples e diretos, oferecendo a funcionalidade de CRUD. Para manter o código simples, eu usei o [Spring Data](http://projects.spring.io/spring-data/). Spring Data nos fornece uma implementação de repositório CRUD simples e genérica, a qual podemos usar em vez de desenvolvê-la por nós mesmos. Ele também cuida da criação de um banco de dados em memória para nossos testes, em vez de usar um banco de dados PostgresSQL real, como seria em produção.
 
 Dê uma olhada na base de código para se familiarizar com a estrutura interna. Isso será útil para nossa próxima etapa: Testar a aplicação!  
+
+## <a id="sec-unit-tests"></a>Unit tests
+
+### <a id="sec-what-is-a-unit"></a>What's a Unit?
+
+### <a id="sec-sociable-and-solitary"></a>Sociable and Solitary
+
+### <a id="sec-what-to-test"></a>What to Test?
+
+### <a id="sec-test-structure"></a>Test Structure
+
+### <a id="sec-implementing-unit-test"></a>Implementing a Unit Test
+
+## <a id="sec-integration-tests"></a>Integration Tests
+
+### <a id="sec-database-integration"></a>Database Integration
+
+### <a id="sec-integration-separated-services"></a>Integration With Separate Services
+
+## <a id="sec-contract-tests"></a>Contract Tests
+
+### <a id="sec-consumer-test"></a>Consumer Test (our team)
+
+### <a id="sec-provider-test-other-team"></a>Provider Test (the other team)
+
+### <a id="sec-provider-test-our-team"></a>Provider Test (our team)
+
+## <a id="sec-ui-tests"></a>UI Tests
+
+## <a id="sec-end-to-end-tests"></a>End-to-End Tests
+
+### <a id="sec-ui-end-to-end-tests"></a>User Interface End-to-End Test
+
+### <a id="sec-api-end-to-end-tests"></a>REST API End-to-End Test
+
+## <a id="sec-exploratory-tests"></a>Exploratory Testing
+
+## <a id="sec-terminology-confusion"></a>The Confusion About Testing Terminology
+
+## <a id="sec-deployment-pipeline"></a>Putting Tests Into Your Deployment Pipeline
+
+## <a id="sec-test-duplication"></a>Avoid Test Duplication
+
+## <a id="sec-clean-test-code"></a>Writing Clean Test Code
+
+## <a id="sec-conclusion"></a>Conclusion
+
+## <a id="sec-appendix"></a>Appendix
+
+### <a id="sec-private-method-tests"></a>But I Really Need to Test This Private Method
+
+### <a id="sec-test-helpers"></a>Specialised Test Helpers
 
 [^1]: **Nota do tradutor**: no README do [repositório](https://github.com/hamvocke/spring-testing) da aplicação de exemplo, o autor menciona ter trocado a API do *darksky.net* pela do *openweathermap.org*, depois que a primeira foi desativada para consulta pública à previsão do tempo.
 
