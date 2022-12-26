@@ -28,6 +28,59 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [Arquitetura interna](#sec-app-internal-structure)
 
+- [Unit tests](#sec-unit-tests)
+
+    - [What's a Unit?](#sec-what-is-a-unit)
+
+    - [Sociable and Solitary](#sec-sociable-and-solitary)
+    
+    - [What to Test?](#sec-what-to-test)
+    
+    - [Test Structure](#sec-test-structure)
+    
+    - [Implementing a Unit Test](#sec-implementing-unit-test)
+
+- [Integration Tests](#sec-integration-tests)
+
+    - [Database Integration](#sec-database-integration)
+
+    - [Integration With Separate Services](#sec-integration-separated-services)
+
+- [Contract Tests](#sec-contract-tests)
+
+    - [Consumer Test (our team)](#sec-consumer-test)
+
+    - [Provider Test (the other team)](#sec-provider-test-other-team)
+
+    - [Provider Test (our team)](#sec-provider-test-out-team)
+
+- [UI Tests](#sec-ui-tests)
+
+- [End-to-End Tests](#sec-end-to-end-tests)
+
+    - [User Interface End-to-End Test](#sec-ui-end-to-end-tests)
+
+    - [REST API End-to-End Test](#sec-api-end-to-end-tests)
+
+- [Exploratory Testing](#sec-exploratory-tests)
+
+- [The Confusion About Testing Terminology](#sec-terminology-confusion)
+
+- [Putting Tests Into Your Deployment Pipeline](#sec-deployment-pipeline)
+
+- [Avoid Test Duplication](#sec-test-duplication)
+
+- [Writing Clean Test Code](#sec-clean-test-code)
+
+- [Conclusion](#sec-conclusion)
+
+- [Appendix](#sec-appendix)
+
+    - [But I Really Need to Test This Private Method](#sec-private-method-tests)
+
+    - [Specialised Test Helpers](#sec-test-helpers)
+
+
 Um software pronto para produção requer testes antes de definitivamente entrar em produção. À medida que a área de desenvolvimento de software amadureceu, as abordagens para teste de software também amadureceram. Ao invés de se ter uma miríade de testadores manuais de software, as equipes de desenvolvimento passaram a automatizar a maior parte de seus esforços com teste de software. Automatizar os testes permite que as equipes saibam se seu software está "quebrado" em questão de segundos e minutos, em vez de dias e semanas. 
 
 O ciclo de *feedback* drascitamente curto, alimentado por testes automatizados, anda de mãos dadas com práticas de desenvolvimento ágil, entrega contínua e cultura DevOps. Ter uma abordagem efetiva para teste de software permite que as equipes se movam rapidamente e com confiança.
