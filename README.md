@@ -137,6 +137,6 @@ Nossos repositórios são simples e diretos, oferecendo a funcionalidade de CRUD
 
 Dê uma olhada na base de código para se familiarizar com a estrutura interna. Isso será útil para nossa próxima etapa: Testar a aplicação!  
 
-[^1] **Nota do tradutor**: no README do [repositório](https://github.com/hamvocke/spring-testing) da aplicação de exemplo, o autor menciona ter trocado a API do *darksky.net* pela do *openweathermap.org*, depois que a primeira foi desativada para consulta pública à previsão do tempo.
+[^1]: **Nota do tradutor**: no README do [repositório](https://github.com/hamvocke/spring-testing) da aplicação de exemplo, o autor menciona ter trocado a API do *darksky.net* pela do *openweathermap.org*, depois que a primeira foi desativada para consulta pública à previsão do tempo.
 
 
