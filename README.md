@@ -2,10 +2,10 @@
 
 Esta é uma tradução do artigo [The Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader), originalmente escrito por Ham Vocke.
 
-[numOfTranslatedSections]: 8
+[numOfTranslatedSections]: 9
 [amountOfSections]: 34
 
-![23%](https://progress-bar.dev/23/?title=progresso)
+![26%](https://progress-bar.dev/26/?title=progresso)
 
 ---
 
@@ -31,7 +31,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 - [Testes de Unidade](#sec-unit-tests)
 
-    - [What's a Unit?](#sec-what-is-a-unit)
+    - [O que é Unidade?](#sec-what-is-a-unit)
 
     - [Sociable and Solitary](#sec-sociable-and-solitary)
     
@@ -200,7 +200,11 @@ A base de sua suíte de teste deve ser composta por testes de unidade. Seus test
 **Figura 5**. Um teste de unidade normalmente substitui seus colaboradores externos por dublês de teste (*test doubles*).
 
 
-### <a id="sec-what-is-a-unit"></a>What's a Unit?
+### <a id="sec-what-is-a-unit"></a>O que é Unidade?
+
+Se você perguntar a três pessoas diferentes o que é "unidade" no contexto de testes de unidade, provavelmente, você receberá quatro respostas ligeriramente diferentes. Até certo ponto, é uma questão de definição pessoal e não há problema em não se ter uma resposta canônica.
+
+Se você estiver trabalhando em uma linguagem funcional, uma unidade será, provavelmente, uma única função. Seus testes de unidade invocarão esta função com diferentes parâmetros e garantirão que ela retorne os valores esperados. Em uma linguagem orientada a objetos, uma unidade pode ser desde um único método até uma classe inteira.
 
 ### <a id="sec-sociable-and-solitary"></a>Sociable and Solitary
 
