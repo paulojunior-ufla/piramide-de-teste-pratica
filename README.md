@@ -28,7 +28,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [Arquitetura interna](#sec-app-internal-structure)
 
-- [Unit tests](#sec-unit-tests)
+- [Testes de Unidade](#sec-unit-tests)
 
     - [What's a Unit?](#sec-what-is-a-unit)
 
@@ -190,7 +190,14 @@ Nossos repositórios são simples e diretos, oferecendo a funcionalidade de CRUD
 
 Dê uma olhada na base de código para se familiarizar com a estrutura interna. Isso será útil para nossa próxima etapa: Testar a aplicação!  
 
-## <a id="sec-unit-tests"></a>Unit tests
+## <a id="sec-unit-tests"></a>Teste de Unidade
+
+A base de sua suíte de teste deve ser composta por testes de unidade. Seus testes de unidade garantem que uma determinada unidade (*Subject Under Test - SUT*) de sua base de código funciona conforme esperado. Testes de unidade possuem o escopo mais restrito de todos os testes em sua suíte de teste. O número de testes de unidade em sua suíte de teste superará em muito o de qualquer outro tipo de teste.
+
+![Testes de unidade](/assets/unitTest.png "Testes de unidade")
+
+**Figura 5**. Um teste de unidade normalmente substitui seus colaboradores externos por dublês de teste (*test doubles*).
+
 
 ### <a id="sec-what-is-a-unit"></a>What's a Unit?
 
