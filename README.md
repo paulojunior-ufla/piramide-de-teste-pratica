@@ -2,10 +2,10 @@
 
 Esta é uma tradução do artigo [The Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader), originalmente escrito por Ham Vocke.
 
-[numOfTranslatedSections]: 9
+[numOfTranslatedSections]: 10
 [amountOfSections]: 34
 
-![26%](https://progress-bar.dev/26/?title=progresso)
+![29%](https://progress-bar.dev/29/?title=progresso)
 
 ---
 
@@ -33,7 +33,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [O que é Unidade?](#sec-what-is-a-unit)
 
-    - [Sociable and Solitary](#sec-sociable-and-solitary)
+    - [Sociável e Solitário](#sec-sociable-and-solitary)
     
     - [What to Test?](#sec-what-to-test)
     
@@ -206,7 +206,13 @@ Se você perguntar a três pessoas diferentes o que é "unidade" no contexto de 
 
 Se você estiver trabalhando em uma linguagem funcional, uma unidade será, provavelmente, uma única função. Seus testes de unidade invocarão esta função com diferentes parâmetros e garantirão que ela retorne os valores esperados. Em uma linguagem orientada a objetos, uma unidade pode ser desde um único método até uma classe inteira.
 
-### <a id="sec-sociable-and-solitary"></a>Sociable and Solitary
+### <a id="sec-sociable-and-solitary"></a>Sociável e Solitário
+
+Algumas pessoas defendem que todos os colaboradores (por exemplo, outras classes que são chamadas pela classe sob teste) do seu *SUT* devem ser substituídas por *mocks* ou *stubs* a fim de se obter isolamento perfeito e evitar efeitos colaterais e uma configuração de teste complicada. Outros argumentam que apenas colaboradores que são "lentos" ou com efeitos colaterais maiores (por exemplo, classes que acessam o banco de dados ou fazem chamadas via rede) devem ser substituídas. 
+
+[Geralmente](https://martinfowler.com/bliki/UnitTest.html), as pessoas nomeiam esses dois tipos de testes como **testes de unidade solitários**, para os testes que substituem todos os seus colaboradores, e **testes de unidade sociáveis**, para os testes que permitem "conversar" com colaboradores reais (Jay Fields cunhou esses termos em seu livro [*Working Effectively with Unit Tests*](https://leanpub.com/wewut)). Se você tiver algum tempo livre, [leia mais sobre](https://martinfowler.com/articles/mocksArentStubs.html) os prós e contras dessas diferentes escolas de pensamento.
+
+No final das contas, não importa se você vai de testes de unidade solitários ou sociáveis. Escrever testes automatizados é o que importa. Pessoalmente, eu procuro usar ambas as abordagens o tempo todo. Se ficar estranho usar colaboradores reais, então eu os substituirei, sem cerimônia. Se eu sentir que envolver o colaborador real me dá mais confiança em um teste, então eu vou substituir apenas as partes mais externas do meu serviço.
 
 ### <a id="sec-what-to-test"></a>What to Test?
 
