@@ -2,10 +2,10 @@
 
 Esta é uma tradução do artigo [The Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader), originalmente escrito por Ham Vocke.
 
-[numOfTranslatedSections]: 10
+[numOfTranslatedSections]: 11
 [amountOfSections]: 34
 
-![29%](https://progress-bar.dev/29/?title=progresso)
+![32%](https://progress-bar.dev/32/?title=progresso)
 
 ---
 
@@ -35,7 +35,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [Sociável e Solitário](#sec-sociable-and-solitary)
     
-    - [What to Test?](#sec-what-to-test)
+    - [O que testar?](#sec-what-to-test)
     
     - [Test Structure](#sec-test-structure)
     
@@ -214,7 +214,37 @@ Algumas pessoas defendem que todos os colaboradores (por exemplo, outras classes
 
 No final das contas, não importa se você vai de testes de unidade solitários ou sociáveis. Escrever testes automatizados é o que importa. Pessoalmente, eu procuro usar ambas as abordagens o tempo todo. Se ficar estranho usar colaboradores reais, então eu os substituirei, sem cerimônia. Se eu sentir que envolver o colaborador real me dá mais confiança em um teste, então eu vou substituir apenas as partes mais externas do meu serviço.
 
-### <a id="sec-what-to-test"></a>What to Test?
+### <a id="sec-what-to-test"></a>O que testar?
+
+Uma coisa boa sobre testes de unidade é que você pode escrevê-los para todas as suas classes de código de produção, independentemente de sua funcionalidade ou qual de camada em sua estrutura interna elas pertencem. Você pode criar testes de unidade para controladores (*controllers*), da mesma forma que pode testar repositórios, classes de domínio ou leitores de arquivos. Simplesmente, siga a regra geral "**uma classe de teste por classe de produção**" e você terá um bom começo.
+
+Uma classe de teste de unidade deve, pelo menos, **testar a interface pública da classe** [de produção]. Os métodos privados não podem ser testados, uma vez que você não pode simplesmente invocá-los a partir de uma classe de teste diferente. Métodos *protected* ou *package-private* são acessíveis a partir de uma classe de teste (considerando que a estrutura de pacotes da sua classe de teste é a mesma da sua classe de produção), mas testar esses métodos já é "ir longe demais" (para mais detalhes sobre esse assunto, leia a seção "[Mas eu realmente preciso testar este método privado](#sec-contract-tests)").
+
+Há uma linha tênue quando se trata de escrever testes de unidade: eles devem garantir que todos os caminhos de código não-triviais estão testados (incluindo o caminho feliz e os casos limítrofes). Ao mesmo tempo, eles não devem estar muito próximos à sua implementação.
+
+Por que isso?
+
+Testes que estão muito próximos do código de produção se tornam rapidamente irritantes. Assim que você refatorar seu código de produção (recapitulação rápida: refatorar significa mudar a estrutura interna do seu código sem mudar seu comportamento visível externamente) seus testes de unidade "quebrarão".
+
+Dessa forma, você perde o grande benefício dos testes de unidade: atuar como uma rede de segurança para alterações no código. Você, então, se torna farto desses testes estúpidos falhando toda vez que você refatora, causando mais trabalho do que ajudando; e de quem foi essa ideia estúpida de testar?
+
+O que você faz então? Não reflita sua estrutura interna de código em seus testes de unidade. Em vez disso, teste o comportamento observável. Pense sobre
+
+`se eu inserir os valores X e Y, o resultado será Z?`
+
+ao invés de
+
+`se eu inserir X e Y, o método invocará a classe A primeiro, depois invocará a classe B e retornará o resultado da classe A mais o resultado da classe B`
+
+Métodos privado, em geral, devem ser considerados como um detalhe de implementação. É por isso que você nem deve ter vontade de testá-los.
+
+Muitas vezes eu ouço opositores dos testes de unidade (ou TDD) argumentando que escrever testes de unidade é um trabalho sem sentido, uma vez que você precisa testar todos os seus métodos para obter uma alta cobertura de testes. Eles, geralmente, citam cenários nos quais líderes extremamente ansiosos os forçou a escrever testes de unidade para *getters* e *setters* e todos os outros tipos de código trivial, a fim de se obter 100% de cobertura de teste. 
+
+Há tanta coisa errada nisso.
+
+*Yes, you should test the public interface. More importantly, however, you don't test trivial code. Don't worry, Kent Beck said it's ok. You won't gain anything from testing simple getters or setters or other trivial implementations (e.g. without any conditional logic). Save the time, that's one more meeting you can attend, hooray!*
+
+Sim, você deve testar a interface pública. Mais importante, no entanto, **você não testa código trivial**. Não se preocupe, [Kent Beck disse que que está tudo bem](https://stackoverflow.com/questions/153234/how-deep-are-your-unit-tests/). Você não ganhará nada ao testar simples *getters* e *setters* ou outras implementações triviais (por exemplo, sem nenhuma lógica condicional). Economize tempo, essa é mais uma reunião da qual você pode participar, viva!
 
 ### <a id="sec-test-structure"></a>Test Structure
 
