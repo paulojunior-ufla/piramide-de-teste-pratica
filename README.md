@@ -268,7 +268,7 @@ Uma boa estrutura para todos os seus testes (não limitada apenas a testes de un
 * Chame seu método sob teste
 * Assegure (*assert*) que os resultados esperados são retornados
 
-Há um mnemônico legal para lembrar essa estrutura: "*Arrange, Act, Assert*". Outro que você pode usar, inspirado no BDD (*Behavior Driven Development*), é a tríade "*given, when, then*", onde "*given*" representa a configuração dos dados de teste, "*when*" representa o método chamado e "*then*" representa a parte da asserção. 
+Há um mnemônico legal para lembrar essa estrutura: "[*Arrange, Act, Assert*](https://xp123.com/articles/3a-arrange-act-assert/)". Outro que você pode usar, inspirado no BDD (*Behavior Driven Development*), é a tríade "[*given, when, then*](https://martinfowler.com/bliki/GivenWhenThen.html)", onde "*given*" representa a configuração dos dados de teste, "*when*" representa o método chamado e "*then*" representa a parte da asserção. 
 
 This pattern can be applied to other, more high-level tests as well. In every case they ensure that your tests remain easy and consistent to read. On top of that tests written with this structure in mind tend to be shorter and more expressive.
 
