@@ -2,10 +2,10 @@
 
 Esta é uma tradução do artigo [The Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader), originalmente escrito por Ham Vocke.
 
-[numOfTranslatedSections]: 11
+[numOfTranslatedSections]: 12
 [amountOfSections]: 34
 
-![32%](https://progress-bar.dev/32/?title=progresso)
+![35%](https://progress-bar.dev/35/?title=progresso)
 
 ---
 
@@ -37,7 +37,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
     
     - [O que testar?](#sec-what-to-test)
     
-    - [Test Structure](#sec-test-structure)
+    - [A estrutura de um teste](#sec-test-structure)
     
     - [Implementing a Unit Test](#sec-implementing-unit-test)
 
@@ -246,7 +246,20 @@ Há tanta coisa errada nisso.
 
 Sim, você deve testar a interface pública. Mais importante, no entanto, **você não testa código trivial**. Não se preocupe, [Kent Beck disse que que está tudo bem](https://stackoverflow.com/questions/153234/how-deep-are-your-unit-tests/). Você não ganhará nada ao testar simples *getters* e *setters* ou outras implementações triviais (por exemplo, sem nenhuma lógica condicional). Economize tempo, essa é mais uma reunião da qual você pode participar, viva!
 
-### <a id="sec-test-structure"></a>Test Structure
+### <a id="sec-test-structure"></a>A estrutura de um teste
+
+Uma boa estrutura para todos os seus testes (não limitada apenas a testes de unidade) é esta:
+
+* Configure os dados de teste
+* Chame seu método sob teste
+* Assegure (*assert*) que os resultados esperados são retornados
+
+Há um mnemônico legal para lembrar essa estrutura: "*Arrange, Act, Assert*". Outro que você pode usar, inspirado no BDD (*Behavior Driven Development*), é a tríade "*given, when, then*", onde "*given*" representa a configuração dos dados de teste, "*when*" representa o método chamado e "*then*" representa a parte da asserção. 
+
+This pattern can be applied to other, more high-level tests as well. In every case they ensure that your tests remain easy and consistent to read. On top of that tests written with this structure in mind tend to be shorter and more expressive.
+
+Este padrão pode ser aplicado a outros testes de nível mais alto também. Em todos os casos, eles garantem que seus testes permamençam consistentes e fáceis de ler. Além disso, testes escritos com essa estrutura em mente tendem a ser mais curtos e expressivos.
+
 
 ### <a id="sec-implementing-unit-test"></a>Implementing a Unit Test
 
