@@ -7,7 +7,21 @@ Esta é uma tradução do artigo [The Practical Test Pyramid](https://martinfowl
 
 ![35%](https://progress-bar.dev/35/?title=progresso)
 
----
+## Como contribuir?
+
+Para contribuir com a tradução deste artigo, siga as recomendações abaixo:
+
+- Escolha uma seção do [artigo original](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader) que ainda não foi traduzida. Depois, informe sua intenção de traduzi-la criando uma *issue*, cujo título é o nome da própria seção.
+
+- Enquanto realiza a tradução: (i) não se esqueça de atualizar a barra de progresso acima; e (ii) não traduza elementos de código, tais como nomes de classes, métodos e atributos (traduza apenas os comentários do código, quando necessário).
+
+- Após concluir a traduação, faça um *commit*, cuja mensagem deve ser `trad: [NOME_DA_SECAO]`, onde `NOME_DA_SECAO` representa o nome da seção que foi traduzida. 
+
+- Abra o *Pull Request* e aguarde o contato do mantenedor do projeto. 
+
+*Obrigado por sua contribuição!*
+
+# Início do artigo
 
 A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software em compartimentos (*buckets*) de diferentes granularidades. Ela também oferece uma ideia de quantos testes devemos ter em cada um desses compartimentos. Embora o conceito da pirâmide de teste exista há algum tempo, as equipes de desenvolvimento ainda lutam para colocá-la em prática de forma adequada. Este artigo revisita o conceito original da pirâmide de teste e apresenta como você pode colocá-la em prática. O artigo também mostra os tipos de teste que você deve procurar em diferentes níveis da pirâmide e oferece exemplos práticos sobre como eles podem ser implementados.
 
