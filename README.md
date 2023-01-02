@@ -2,10 +2,10 @@
 
 Esta é uma tradução do artigo [The Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader), originalmente escrito por Ham Vocke.
 
-[numOfTranslatedSections]: 12
+[numOfTranslatedSections]: 13
 [amountOfSections]: 34
 
-![35%](https://progress-bar.dev/35/?title=progresso)
+![38%](https://progress-bar.dev/38/?title=progresso)
 
 ## Como contribuir?
 
@@ -53,7 +53,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
     
     - [A estrutura de um teste](#sec-test-structure)
     
-    - [Implementing a Unit Test](#sec-implementing-unit-test)
+    - [Implementando um Teste de Unidade](#sec-implementing-unit-test)
 
 - [Integration Tests](#sec-integration-tests)
 
@@ -275,7 +275,81 @@ This pattern can be applied to other, more high-level tests as well. In every ca
 Este padrão pode ser aplicado a outros testes de nível mais alto também. Em todos os casos, eles garantem que seus testes permamençam consistentes e fáceis de ler. Além disso, testes escritos com essa estrutura em mente tendem a ser mais curtos e expressivos.
 
 
-### <a id="sec-implementing-unit-test"></a>Implementing a Unit Test
+### <a id="sec-implementing-unit-test"></a>Implementando um Teste de Unidade
+
+Agora que nós sabemos o que testar e como estruturar nossos testes de unidade, nós podemos, finalmente, ver um exemplo real.
+
+Vamos pegar uma versão simplificada da classe `ExempleController`:
+
+```Java
+@RestController
+public class ExampleController {
+
+    private final PersonRepository personRepo;
+
+    @Autowired
+    public ExampleController(final PersonRepository personRepo) {
+        this.personRepo = personRepo;
+    }
+
+    @GetMapping("/hello/{lastName}")
+    public String hello(@PathVariable final String lastName) {
+        Optional<Person> foundPerson = personRepo.findByLastName(lastName);
+
+        return foundPerson
+                .map(person -> String.format("Hello %s %s!",
+                        person.getFirstName(),
+                        person.getLastName()))
+                .orElse(String.format("Who is this '%s' you're talking about?",
+                        lastName));
+    }
+}
+```
+
+Um teste de unidade para o método `hello(lastname)` pode ser assim:
+
+```Java
+public class ExampleControllerTest {
+
+    private ExampleController subject;
+
+    @Mock
+    private PersonRepository personRepo;
+
+    @Before
+    public void setUp() throws Exception {
+        initMocks(this);
+        subject = new ExampleController(personRepo);
+    }
+
+    @Test
+    public void shouldReturnFullNameOfAPerson() throws Exception {
+        Person peter = new Person("Peter", "Pan");
+        given(personRepo.findByLastName("Pan"))
+            .willReturn(Optional.of(peter));
+
+        String greeting = subject.hello("Pan");
+
+        assertThat(greeting, is("Hello Peter Pan!"));
+    }
+
+    @Test
+    public void shouldTellIfPersonIsUnknown() throws Exception {
+        given(personRepo.findByLastName(anyString()))
+            .willReturn(Optional.empty());
+
+        String greeting = subject.hello("Pan");
+
+        assertThat(greeting, is("Who is this 'Pan' you're talking about?"));
+    }
+}
+```
+
+Estamos escrevemos os testes de unidade usando [JUnit](http://junit.org/), o *framework* de testes "padrão" para Java. Nós usamos [Mockito](http://site.mockito.org/) para substituir a classe `PersonRepository` real por um *stub* em nosso teste. Este *stub* nos permite criar repostas pré-definidas a serem retornadas pelo método substituído neste teste. Utilizar *stubs* torna o teste mais simples, previsível e nos permite configurar facilmente os dados de teste.   
+
+Seguindo a estrutura "*arrange, act, assert*", nós escrevemos dois testes - um caso positivo e um caso em que a pessoa procurada não foi encontrada. O primeiro caso de teste cria um novo objeto pessoa e diz ao repositório fictício (*mocked*) para retornar esse objeto quando for invocado com "Pan" como o valor para o parâmetro `lastName`. O teste então chama o método que deve ser testado. Finalmente, ele assegura (*asserts*) que a resposta seja igual à resposta esperada.
+
+O segundo caso de teste trabalha de forma similar, mas testa o cenário em que o método testado não encontra uma pessoa para o parâmetro informado.
 
 ## <a id="sec-integration-tests"></a>Integration Tests
 
