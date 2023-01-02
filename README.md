@@ -13,7 +13,7 @@ Para contribuir com a tradução deste artigo, siga as recomendações abaixo:
 
 - Escolha uma seção do [artigo original](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader) que ainda não foi traduzida. Depois, informe sua intenção de traduzi-la criando uma *issue*, cujo título é o nome da própria seção.
 
-- Enquanto realiza a tradução: (i) não se esqueça de atualizar a barra de progresso acima; e (ii) não traduza elementos de código, tais como nomes de classes, métodos e atributos (traduza apenas os comentários do código, quando necessário).
+- Enquanto realiza a tradução: (i) não se esqueça de atualizar a barra de progresso acima; e (ii) não traduza elementos de código, tais como *strings* literais, nomes de classes, métodos e atributos, entre outros (traduza apenas comentários de código, quando necessário).
 
 - Após concluir a traduação, faça um *commit*, cuja mensagem deve ser `trad: [NOME_DA_SECAO]`, onde `NOME_DA_SECAO` representa o nome da seção que foi traduzida. 
 
