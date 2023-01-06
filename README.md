@@ -2,10 +2,10 @@
 
 Esta é uma tradução do artigo [The Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader), originalmente escrito por Ham Vocke.
 
-[numOfTranslatedSections]: 13
+[numOfTranslatedSections]: 14
 [amountOfSections]: 34
 
-![38%](https://progress-bar.dev/38/?title=progresso)
+![41%](https://progress-bar.dev/41/?title=progresso)
 
 ## Como contribuir?
 
@@ -15,7 +15,7 @@ Para contribuir com a tradução deste artigo, siga as recomendações abaixo:
 
 - Enquanto realiza a tradução: (i) não se esqueça de atualizar a barra de progresso acima; e (ii) não traduza elementos de código, tais como *strings* literais, nomes de classes, métodos e atributos, entre outros (traduza apenas comentários de código, quando necessário).
 
-- Após concluir a traduação, faça um *commit*, cuja mensagem deve ser `trad: [NOME_DA_SECAO]`, onde `NOME_DA_SECAO` representa o nome da seção que foi traduzida. 
+- Após concluir a tradução, faça um *commit*, cuja mensagem deve ser `trad: [NOME_DA_SECAO]`, onde `NOME_DA_SECAO` representa o nome da seção que foi traduzida. 
 
 - Abra o *Pull Request* e aguarde o contato do mantenedor do projeto. 
 
@@ -55,7 +55,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
     
     - [Implementando um Teste de Unidade](#sec-implementing-unit-test)
 
-- [Integration Tests](#sec-integration-tests)
+- [Testes de Integração](#sec-integration-tests)
 
     - [Database Integration](#sec-database-integration)
 
@@ -98,7 +98,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 Um software pronto para produção requer testes antes de definitivamente entrar em produção. À medida que a área de desenvolvimento de software amadureceu, as abordagens para teste de software também amadureceram. Ao invés de se ter uma miríade de testadores manuais de software, as equipes de desenvolvimento passaram a automatizar a maior parte de seus esforços com teste de software. Automatizar os testes permite que as equipes saibam se seu software está "quebrado" em questão de segundos e minutos, em vez de dias e semanas. 
 
-O ciclo de *feedback* drascitamente curto, alimentado por testes automatizados, anda de mãos dadas com práticas de desenvolvimento ágil, entrega contínua e cultura DevOps. Ter uma abordagem efetiva para teste de software permite que as equipes se movam rapidamente e com confiança.
+O ciclo de *feedback* drasticamente curto, alimentado por testes automatizados, anda de mãos dadas com práticas de desenvolvimento ágil, entrega contínua e cultura DevOps. Ter uma abordagem efetiva para teste de software permite que as equipes se movam rapidamente e com confiança.
 
 Este artigo explora o que um portfólio de teste deve ter para ser considerado responsivo, confiável e manutenível - independentemente se você está construindo uma arquitetura de microsserviços, aplicativos móveis ou ecossistemas de IoT (*Internet of Things*). Também entraremos em detalhes sobre a criação de testes automatizados efetivos e legíveis. 
 
@@ -106,11 +106,11 @@ Este artigo explora o que um portfólio de teste deve ter para ser considerado r
 
 O software tem se tornado parte essencial do mundo em que vivemos. Ele superou seu único propósito inicial de tornar negócios mais eficientes. Hoje, as empresas tentam encontrar maneiras de se tornarem empresas digitais de primeira classe. Como usuários, todos nós interagimos com uma quantidade cada vez maior de software diariamente. As rodas da inovação estão girando rapidamente.
 
-Se você quiser manter o ritmo, terá que procurar maneiras de entregar software mais rapidamente, sem sacrificar sua qualidade. Entrega contínua, prática na qual você garante automaticamente que seu software pode ser colocado em produção (*released*) a qualquer momento, pode ajudá-lo com isso. Com a entrega contínua, você usa um *pipeline* de contrução para testar automaticamente seu software e implantá-lo em seus ambientes de teste e produção.
+Se você quiser manter o ritmo, terá que procurar maneiras de entregar software mais rapidamente, sem sacrificar sua qualidade. Entrega contínua, prática na qual você garante automaticamente que seu software pode ser colocado em produção (*released*) a qualquer momento, pode ajudá-lo com isso. Com a entrega contínua, você usa um *pipeline* de construção para testar automaticamente seu software e implantá-lo em seus ambientes de teste e produção.
 
-Contruir, testar e implantar manualmente uma quantidade cada vez maior de software logo se torna algo impossível - a menos que você queira gastar todo o seu tempo com trabalho manual e repetitivo, ao invés de entregar software funcionando. Automatizar tudo - da construção aos testes, implantação e infraestrutura - é o único caminho a seguir.
+Construir, testar e implantar manualmente uma quantidade cada vez maior de software logo se torna algo impossível - a menos que você queira gastar todo o seu tempo com trabalho manual e repetitivo, ao invés de entregar software funcionando. Automatizar tudo - da construção aos testes, implantação e infraestrutura - é o único caminho a seguir.
 
-![Pipeline de contrução](/assets/buildPipeline.png "Pipeline de contrução")
+![Pipeline de construção](/assets/buildPipeline.png "Pipeline de construção")
 
 **Figura 1**. Use *pipelines* de construção para colocar seu software em produção de forma automática e confiável.
 
@@ -136,7 +136,7 @@ A pirâmide de teste original de Mike Cohn consiste em três camadas, as quais s
 * Testes de serviço
 * Testes de interface do usuário
 
-Infelizmente, o conceito da pirâmide de teste fica um pouco aquém, se você olhar mais de perto. Algumas pessoas argumentam que a nomenclatura ou alguns aspectos conceituais da pirâmide de teste de Mike Cohn não são ideiais, e eu tenho que concordar. De um ponto de vista moderno, a pirâmide de teste parece excessivamente simplista e pode, portanto, ser enganosa.
+Infelizmente, o conceito da pirâmide de teste fica um pouco aquém, se você olhar mais de perto. Algumas pessoas argumentam que a nomenclatura ou alguns aspectos conceituais da pirâmide de teste de Mike Cohn não são ideais, e eu tenho que concordar. De um ponto de vista moderno, a pirâmide de teste parece excessivamente simplista e pode, portanto, ser enganosa.
 
 Ainda assim, devido à sua simplicidade, a essência da pirâmide de teste serve como uma boa regra geral, quando se trata de estabelecer sua própria suíte de teste. O melhor que você pode fazer é se lembrar de duas coisas a respeito da pirâmide de teste original de Cohn:
 
@@ -152,7 +152,7 @@ Dadas essas limitações dos nomes originais, é totalmente aceitável criar out
 ## <a id="sec-tools-and-libs"></a>Ferramentas e Bibliotecas que veremos
 
 * [JUnit](http://junit.org/):  nosso executor de testes (*test runner*)
-* [Mockito](http://site.mockito.org/): para "mockar" dependências
+* [Mockito](http://site.mockito.org/): para substituir (*mock*) dependências
 * [Wiremock](http://wiremock.org/): para criar *stubs* de serviços externos
 * [Pact](https://docs.pact.io/): para escrever testes CDC
 * [Selenium](http://docs.seleniumhq.org/): para escrever testes *end-to-end* executados a partir da interface de usuário
@@ -162,7 +162,7 @@ Dadas essas limitações dos nomes originais, é totalmente aceitável criar out
 
 Eu escrevi um [microsserviço simples](https://github.com/hamvocke/spring-testing), incluindo uma suíte de teste com testes para as diferentes camadas da pirâmide de teste.
 
-A aplicação de exemplo apresenta as características de um típico microsserviço. Ela expõe uma interface REST, "conversa" com uma base de dados e busca informações de um serviço REST de terceiros. Ela foi implementada usando [Spring Boot](https://projects.spring.io/spring-boot/) e deve ser compreensível mesmo que você nunca tenha trabalho com Sring Boot antes.
+A aplicação de exemplo apresenta as características de um típico microsserviço. Ela expõe uma interface REST, "conversa" com uma base de dados e busca informações de um serviço REST de terceiros. Ela foi implementada usando [Spring Boot](https://projects.spring.io/spring-boot/) e deve ser compreensível mesmo que você nunca tenha trabalho com Spring Boot antes.
 
 Certifique-se de verificar o [código no Github](https://github.com/hamvocke/spring-testing). O *README* do projeto contém as instruções necessárias para você executar a aplicação, bem como seus testes automatizados, em sua máquina.
 
@@ -199,7 +199,7 @@ Internamente, nosso microsserviço tem uma arquitetura típica de aplicações S
 * As classes do tipo `Client` "conversam" com outras APIs, em nosso caso, elas buscam dados no formato JSON a partir de uma API de previsão do tempo, denominada *darksky.net* [^1].
 * As classes do tipo `Domain` representam nosso modelo de domínio, incluindo a lógica de negócio (que, para ser justo, é bem trivial em nosso caso).
 
-Os desenvolvedores Spring experientes devem notar que uma camada frequentemente utilizada está faltando aqui: inspirados pelo [*Domain-Drive Design*](https://en.wikipedia.org/wiki/Domain-driven_design) (DDD), muitos desenvolvedores constrõem uma camada para classes de serviço. Eu decidi não incluir uma camada de serviço nesta aplicação. Uma razão é que nossa aplicação é bastante simples, por isso, uma camada de serviço seria um nível de abstração desnecessário. Outro motivo é que eu acho que muitas pessoas exageram em suas camadas de serviço. Geralmente, eu encontro bases de código nas quais toda a regra de negócio está encapsulada em classes de serviço. O modelo de domínio torna-se apenas uma camada de dados, não de comportamentos (isto é, um [Modelo de Domínio Anêmico](https://en.wikipedia.org/wiki/Anemic_domain_model)). Para toda aplicação não-trivial, isso desperdiça muito potencial para manter seu código bem estruturado e testável e não utiliza totalmente o poder da orientação a objetos. 
+Os desenvolvedores Spring experientes devem notar que uma camada frequentemente utilizada está faltando aqui: inspirados pelo [*Domain-Drive Design*](https://en.wikipedia.org/wiki/Domain-driven_design) (DDD), muitos desenvolvedores constroem uma camada para classes de serviço. Eu decidi não incluir uma camada de serviço nesta aplicação. Uma razão é que nossa aplicação é bastante simples, por isso, uma camada de serviço seria um nível de abstração desnecessário. Outro motivo é que eu acho que muitas pessoas exageram em suas camadas de serviço. Geralmente, eu encontro bases de código nas quais toda a regra de negócio está encapsulada em classes de serviço. O modelo de domínio torna-se apenas uma camada de dados, não de comportamentos (isto é, um [Modelo de Domínio Anêmico](https://en.wikipedia.org/wiki/Anemic_domain_model)). Para toda aplicação não-trivial, isso desperdiça muito potencial para manter seu código bem estruturado e testável e não utiliza totalmente o poder da orientação a objetos. 
 
 Nossos repositórios são simples e diretos, oferecendo a funcionalidade de CRUD. Para manter o código simples, eu usei o [Spring Data](http://projects.spring.io/spring-data/). Spring Data nos fornece uma implementação de repositório CRUD simples e genérica, a qual podemos usar em vez de desenvolvê-la por nós mesmos. Ele também cuida da criação de um banco de dados em memória para nossos testes, em vez de usar um banco de dados PostgresSQL real, como seria em produção.
 
@@ -216,7 +216,7 @@ A base de sua suíte de teste deve ser composta por testes de unidade. Seus test
 
 ### <a id="sec-what-is-a-unit"></a>O que é Unidade?
 
-Se você perguntar a três pessoas diferentes o que é "unidade" no contexto de testes de unidade, provavelmente, você receberá quatro respostas ligeriramente diferentes. Até certo ponto, é uma questão de definição pessoal e não há problema em não se ter uma resposta canônica.
+Se você perguntar a três pessoas diferentes o que é "unidade" no contexto de testes de unidade, provavelmente, você receberá quatro respostas ligeiramente diferentes. Até certo ponto, é uma questão de definição pessoal e não há problema em não se ter uma resposta canônica.
 
 Se você estiver trabalhando em uma linguagem funcional, uma unidade será, provavelmente, uma única função. Seus testes de unidade invocarão esta função com diferentes parâmetros e garantirão que ela retorne os valores esperados. Em uma linguagem orientada a objetos, uma unidade pode ser desde um único método até uma classe inteira.
 
@@ -272,7 +272,7 @@ Há um mnemônico legal para lembrar essa estrutura: "[*Arrange, Act, Assert*](h
 
 This pattern can be applied to other, more high-level tests as well. In every case they ensure that your tests remain easy and consistent to read. On top of that tests written with this structure in mind tend to be shorter and more expressive.
 
-Este padrão pode ser aplicado a outros testes de nível mais alto também. Em todos os casos, eles garantem que seus testes permamençam consistentes e fáceis de ler. Além disso, testes escritos com essa estrutura em mente tendem a ser mais curtos e expressivos.
+Este padrão pode ser aplicado a outros testes de nível mais alto também. Em todos os casos, eles garantem que seus testes permaneçam consistentes e fáceis de ler. Além disso, testes escritos com essa estrutura em mente tendem a ser mais curtos e expressivos.
 
 
 ### <a id="sec-implementing-unit-test"></a>Implementando um Teste de Unidade
@@ -351,7 +351,53 @@ Seguindo a estrutura "*arrange, act, assert*", nós escrevemos dois testes - um 
 
 O segundo caso de teste trabalha de forma similar, mas testa o cenário em que o método testado não encontra uma pessoa para o parâmetro informado.
 
-## <a id="sec-integration-tests"></a>Integration Tests
+## <a id="sec-integration-tests"></a>Testes de Integração
+
+Todas as aplicações não-triviais se integrarão com algumas outras partes (bancos de dados, sistemas de arquivos, chamadas de rede para outras aplicações). Ao escrever testes de unidade, estas são, geralmente, as partes que você deixa de fora para obter um melhor isolamento e testes mais rápidos. Ainda assim, sua aplicação irá interagir com outras partes e isso precisa ser testado. **[Testes de Integração](https://martinfowler.com/bliki/IntegrationTest.html)** estão aí para ajudar. Eles testam a integração da sua aplicação com todas as partes que "vivem fora" da sua aplicação.
+
+Para seus testes automatizados, isso significa que você não precisa apenas rodar sua própria aplicação, mas também o componente com o qual você está integrando. Se você estiver testando a integração com um banco de dados, você precisará "executar" um banco de dados ao executar seus testes. Para testar se você pode ler arquivos de um disco, você precisa salvar um arquivo em seu disco e carregá-lo em seu teste de integração.
+
+Eu mencionei antes que "testes de unidade" é um termo vago, isso é ainda mais verdade para "testes de integração". Para algumas pessoas, teste de integração significa testar toda a *stack* de sua aplicação conectada a outras aplicações. Eu gosto de tratar dos testes de integração de forma mais restrita e testar um ponto de integração de cada vez, substituindo serviços externos e bancos de dados separados por dublês de teste. Juntamente com os testes de contrato e a execução de testes de contrato contra esses dublês de testes, bem como as implementações reais, você pode criar testes de integração mais rápidos, mais independentes e geralmente mais fáceis de entender. 
+
+Testes de integração restritos vivem na fronteira do seu serviço. Conceitualmente, eles estão sempre desencadeando uma ação que leva à integração com a parte externa (sistemas de arquivo, banco de dados, serviços externos). Um teste de integração de banco de dados ficaria assim:
+
+* Inicie um banco de dados
+* Conecte sua aplicação ao banco de dados
+* Execute uma função em seu código que escreva dados no banco de dados
+* Verifique se os dados esperados foram escritos no banco de dados, lendo os dados do banco de dados
+
+![Teste de integração de banco de dados](/assets/dbIntegrationTest.png "Teste de integração de banco de dados")
+
+**Figura 6**. Um teste de integração de banco de dados integra seu código com um banco de dados real.
+
+Outro exemplo, testar se seu serviço se integra com um serviço externo via API REST poderia ser assim:
+
+* Inicie sua aplicação
+* Inicie uma instância do seu serviço externo (ou um dublê de teste com mesma interface)
+* Execute uma função em seu código que lê a partir da API do serviço externo
+* Verifique se sua aplicação pode tratar (*parse*) a resposta corretamente
+
+![Teste de integração de serviço externo](/assets/httpIntegrationTest.png "Teste de integração de serviço externo")
+
+**Figura 7**. Este tipo de teste de integração verifica se sua aplicação pode se comunicar corretamente com um serviço externo.
+
+Seus testes de interação - tais como testes de unidade - pode ser bastante "caixa-branca". Alguns *frameworks* permitem que você inicie sua aplicação, substituindo (*mock*) algumas partes dela, para que você possa verificar se as interações ocorreram corretamente.
+
+Escreva testes de integração para todas aspartes do código em que você serializa ou desserializa dados. Isso acontece com mais frequência do que você imagina. Pense em:
+
+* Chamadas para seus serviços via API REST
+* Ler e escrever em bancos de dados
+* Chamar APIs de outras aplicações
+* Ler e escrever em filas
+* Escrever no sistema de arquivo
+
+Escrever testes de integração em torno dessas fronteiras garante que a gravação e a leitura de dados desses colaboradores externos funcionam bem.
+
+Ao escrever *testes de integração restritos*, você deve tentar executar suas dependências externas localmente: crie um banco de dados MySQL local, teste em um sistemas de arquivos ext4 local. Se você estiver integrando com um serviço externo, execute uma instância desse serviço localmente ou crie e execute uma versão falsa (*fake*) que imita o comportamento do serviço real.
+
+Se não houver uma maneira de executar o serviço de terceiro localmente, você deve optar por executar uma instância dedicada para testes e apontar para essa instância de teste ao executar seus testes de integração. Evite integrar o sistema de produção real com seus testes automatizados. "Explodir" milhares de requisições de teste em um sistema de produção é uma maneira infalível de deixar as pessoas com raiva, pois você está sobrecarregando seus *logs* (no melhor caso) ou mesmo gerando um ataque DoS em seus serviços (no pior caso). A integração com serviços pela rede é uma característica típica de um teste de integração amplo, que torna seus testes mais lentos e geralmente mais difíceis de escrever.
+
+Com relação à pirâmide de teste, os testes de integração estão em um nível mais alto do que os testes de unidade. A integração de partes lentas, como sistemas de arquivo e bancos de dados, tende a ser muito mais lento do que executar testes de unidade com essas partes substituídas. Eles também podem ser mais difíceis de escrever do que testes de unidade pequenos e isolados, afinal você tem que se preocupar em configurar uma parte externa como uma das etapas dos seus testes. Ainda assim, eles têm a vantagem de dar a você a confiança de que sua aplicação pode funcionar corretamente com todas as partes externas com as quais ela precisam comunicar. Os testes de unidade não podem ajudá-lo com isso.   
 
 ### <a id="sec-database-integration"></a>Database Integration
 
