@@ -2,10 +2,10 @@
 
 Esta é uma tradução do artigo [The Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader), originalmente escrito por Ham Vocke.
 
-[numOfTranslatedSections]: 14
+[numOfTranslatedSections]: 15
 [amountOfSections]: 34
 
-![41%](https://progress-bar.dev/41/?title=progresso)
+![44%](https://progress-bar.dev/44/?title=progresso)
 
 ## Como contribuir?
 
@@ -57,7 +57,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 - [Testes de Integração](#sec-integration-tests)
 
-    - [Database Integration](#sec-database-integration)
+    - [Integração com o banco de dados](#sec-database-integration)
 
     - [Integration With Separate Services](#sec-integration-separated-services)
 
@@ -399,7 +399,60 @@ Se não houver uma maneira de executar o serviço de terceiro localmente, você 
 
 Com relação à pirâmide de teste, os testes de integração estão em um nível mais alto do que os testes de unidade. A integração de partes lentas, como sistemas de arquivo e bancos de dados, tende a ser muito mais lento do que executar testes de unidade com essas partes substituídas. Eles também podem ser mais difíceis de escrever do que testes de unidade pequenos e isolados, afinal você tem que se preocupar em configurar uma parte externa como uma das etapas dos seus testes. Ainda assim, eles têm a vantagem de dar a você a confiança de que sua aplicação pode funcionar corretamente com todas as partes externas com as quais ela precisam comunicar. Os testes de unidade não podem ajudá-lo com isso.   
 
-### <a id="sec-database-integration"></a>Database Integration
+### <a id="sec-database-integration"></a>Integração com o banco de dados
+
+`PersonRepository` é a única classe de repositório na base de código. Ela depende do *Spring Data* e não possui implementação real. Ela apenas herda da interface `CrudRepository` e provê um único cabeçalho de método. O resto é "mágica" do Spring.
+
+```Java
+public interface PersonRepository extends CrudRepository<Person, String> {
+    Optional<Person> findByLastName(String lastName);
+}
+```
+
+Com a interface `CrudRepository`, o Spring Boot oferece um repositório CRUD totalmente funcional com os métodos `findOne`, `findAll`, `save`, `update` e `delete`. Nossa definição de método personalizado (`findByLastName()`) estende essa funcionalidade básica e nos dá uma maneira de buscar pessoas a partir de seu sobrenome. O Spring Data analisa o tipo de retorno e o nome do método e verifica o nome do método em relação a uma convenção de nomenclatura para descobrir o que ele deve fazer. 
+
+Embora o Spring Data faça o trabalho pesado de implementar repositórios de banco de dados, eu escrevi um teste de integração de banco de dados. Você pode argumentar que isso é testar o *framework*, o que é algo que eu devo evitar, pois não é nosso código que estamos testando. Ainda assim, eu acredito que ter pelo menos um teste de integração aqui é crucial. Primeiro, porque ele testa se nosso método personalizado `findByLastName` realmente se comporta conforme o esperado. Em segundo lugar, ele prova que nosso repositório usou a configuração do Spring corretamente e pode se conectar ao banco de dados. 
+
+Para facilitar a execução dos testes em sua máquina (sem precisar instalar um banco de dados PostgreSQL), nosso teste se conecta um um banco de dados em memória, denominado H2.
+
+Eu defini o H2 como uma dependência de teste no arquivo de construção `build.grade`. O arquivo `application.properties` no diretório de teste não define qualquer propriedade `spring.datasource`. Isso diz ao Spring Data para usar um banco de dados em memória. Ao encontrar o H2 no `classpath` da aplicação, ele simplesmente o utiliza durante a execução dos nossos testes.
+
+Ao executar uma aplicação real com o perfil `int` (por exemplo, definindo `SPRING_PROFILES_ACTIVE=int` como uma variável de ambiente), ela irá se conectar ao banco de dados PostgreSQL conforme especificado no arquivo `application-int.properties`.
+
+Eu sei, há muitos detalhes específicos do *framework* Spring para conhecer e entender. Para isso, você terá que vascular muita [documentação](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html#boot-features-embedded-database-support). O código resultante é fácil de visualizar, mas difícil de entender se você não conhece os detalhes do Spring.
+
+Além disso, utilizar um banco de dados em memória é um negócio arriscado. Afinal, nossos testes de integração são executados em um tipo de banco de dados diferente daquele utilizado em produção. Vá em frente e decida por si mesmo se você prefere a "mágica" do Spring e o código simples em vez de uma implementação explícita e mais verbosa.
+
+Enough explanation already, here's a simple integration test that saves a Person to the database and finds it by its last name:
+
+Já chega de explicação, aqui está um teste de integração simples que salva uma `Person` no banco de dados e a encontra pelo sobrenome:
+
+```Java
+@RunWith(SpringRunner.class)
+@DataJpaTest
+public class PersonRepositoryIntegrationTest {
+    @Autowired
+    private PersonRepository subject;
+
+    @After
+    public void tearDown() throws Exception {
+        subject.deleteAll();
+    }
+
+    @Test
+    public void shouldSaveAndFetchPerson() throws Exception {
+        Person peter = new Person("Peter", "Pan");
+        subject.save(peter);
+
+        Optional<Person> maybePeter = subject.findByLastName("Pan");
+
+        assertThat(maybePeter, is(Optional.of(peter)));
+    }
+}
+```
+
+Você pode ver que nosso teste de integração segue a mesma estrutura *Arrange, Act, Assert* dos testes de unidade. Eu lhe disse que este era um conceito universal!
+
 
 ### <a id="sec-integration-separated-services"></a>Integration With Separate Services
 
