@@ -456,11 +456,11 @@ Você pode ver que nosso teste de integração segue a mesma estrutura *Arrange,
 
 ### <a id="sec-integration-separated-services"></a>Integração com serviços separados
 
-Nosso microsserviço se comunica com o [darksky.net](https://darksky.net/), uma API REST de meteorologia. É claro que queremos garantir que nosso serviço mande requisições e analise as respostas corretamente.
+Nosso microsserviço se comunica com o [*darksky.net*](https://darksky.net/), uma API REST de meteorologia. É claro que queremos garantir que nosso serviço mande requisições e analise as respostas corretamente.
 
-Queremos evitar acessar os servidores reais do darksky ao executar testes automatizados. Os limites de cota do nosso plano gratuito são apenas parte do motivo. A verdadeira razão é desacoplamento. Nossos testes devem ser executados independentemente do que as pessoas amáveis do [darksky.net](https://darksky.net/) estejam fazendo. Mesmo quando sua máquina não consiga acessar os servidores da darksky ou os servidores da darksky estejam fora do ar para manutenção.
+Queremos evitar acessar os servidores reais do *darksky* ao executar testes automatizados. Os limites de cota do nosso plano gratuito são apenas parte do motivo. A verdadeira razão é desacoplamento. Nossos testes devem ser executados independentemente do que as pessoas amáveis do [*darksky.net*](https://darksky.net/) estejam fazendo. Mesmo quando sua máquina não consiga acessar os servidores da *darksky* ou os servidores da *darksky* estejam fora do ar para manutenção.
 
-Podemos evitar acessar os servidores reais da darksky executando nosso próprio servidor falso enquanto executamos nossos testes de integração. Isso pode soar como uma tarefa enorme. Graças a ferramentas como o [Wiremock](http://wiremock.org/), é fácil fácil. Veja só:
+Podemos evitar acessar os servidores reais da *darksky* executando nosso próprio servidor falso enquanto executamos nossos testes de integração. Isso pode soar como uma tarefa enorme. Graças a ferramentas como o [Wiremock](http://wiremock.org/), é fácil fácil. Veja só:
 
 ```Java
 @RunWith(SpringRunner.class)
@@ -493,7 +493,7 @@ Para usar o Wiremock, instanciamos um `WireMockRule` em uma porta fixa `(8089)`.
 
 Em seguida, chamamos o método que queremos testar, aquele que chama o serviço externo e verificamos se o resultado foi analisado corretamente.
 
-É importante entender como o teste sabe que deve chamar o servidor Wiremock falso em vez da API verdadeira do darksky. O segredo está em nosso arquivo `application.properties` contido em `src/test/resources`. Este é o arquivo de propriedades que o Spring carrega ao executar testes. Neste arquivo, substituímos configurações como chaves de API e URLs por valores adequados para nossos propósitos de teste, por exemplo, chamando o servidor Wiremock falso ao invés do real:
+É importante entender como o teste sabe que deve chamar o servidor Wiremock falso em vez da API verdadeira do *darksky*. O segredo está em nosso arquivo `application.properties` contido em `src/test/resources`. Este é o arquivo de propriedades que o Spring carrega ao executar testes. Neste arquivo, substituímos configurações como chaves de API e URLs por valores adequados para nossos propósitos de teste, por exemplo, chamando o servidor Wiremock falso ao invés do real:
 
 ```java
 weather.url = http://localhost:8089
@@ -511,7 +511,7 @@ public WeatherClient(final RestTemplate restTemplate,
     this.weatherServiceApiKey = weatherServiceApiKey;
 }
 ```
-Desta forma, pedimos ao nosso `WeatherClient` ler o valor do parâmetro `weatherUrl` da propriedade `weather.url` que definimos nas propriedades de nosso aplicativo.
+Desta forma, pedimos ao nosso `WeatherClient` para ler o valor do parâmetro `weatherUrl` da propriedade `weather.url` que definimos nas propriedades de nosso aplicativo.
 
 Escrever testes de integração restritos para um serviço separado é bastante fácil com ferramentas como o Wiremock. Infelizmente, há uma desvantagem nessa abordagem: como garantimos que o servidor falso que configuramos se comporta como o servidor real? Com a implementação atual, o serviço separado poderia mudar sua API e nossos testes ainda passariam. No momento, estamos apenas testando se nosso `WeatherClient` pode analisar as respostas que o servidor falso envia. Isso é um começo, mas é muito frágil. Usar testes de ponta a ponta e executá-los em uma instância de teste do serviço real ao invés de usar um serviço falso resolveria esse problema, mas nos tornaria dependentes da disponibilidade do serviço de teste. 
 
