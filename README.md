@@ -2,10 +2,10 @@
 
 Esta é uma tradução do artigo [The Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader), originalmente escrito por Ham Vocke.
 
-[numOfTranslatedSections]: 15
+[numOfTranslatedSections]: 16
 [amountOfSections]: 34
 
-![44%](https://progress-bar.dev/44/?title=progresso)
+![47%](https://progress-bar.dev/47/?title=progresso)
 
 ## Como contribuir?
 
@@ -59,7 +59,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [Integração com o banco de dados](#sec-database-integration)
 
-    - [Integration With Separate Services](#sec-integration-separated-services)
+    - [Integração com serviços separados](#sec-integration-separated-services)
 
 - [Contract Tests](#sec-contract-tests)
 
@@ -454,7 +454,68 @@ public class PersonRepositoryIntegrationTest {
 Você pode ver que nosso teste de integração segue a mesma estrutura *Arrange, Act, Assert* dos testes de unidade. Eu lhe disse que este era um conceito universal!
 
 
-### <a id="sec-integration-separated-services"></a>Integration With Separate Services
+### <a id="sec-integration-separated-services"></a>Integração com serviços separados
+
+Nosso microsserviço se comunica com o [*darksky.net*](https://darksky.net/), uma API REST de meteorologia. É claro que queremos garantir que nosso serviço mande requisições e analise as respostas corretamente.
+
+Queremos evitar acessar os servidores reais do *darksky* ao executar testes automatizados. Os limites de cota do nosso plano gratuito são apenas parte do motivo. A verdadeira razão é desacoplamento. Nossos testes devem ser executados independentemente do que as pessoas amáveis do [*darksky.net*](https://darksky.net/) estejam fazendo. Mesmo quando sua máquina não consiga acessar os servidores da *darksky* ou os servidores da *darksky* estejam fora do ar para manutenção.
+
+Podemos evitar acessar os servidores reais da *darksky* executando nosso próprio servidor falso enquanto executamos nossos testes de integração. Isso pode soar como uma tarefa enorme. Graças a ferramentas como o [Wiremock](http://wiremock.org/), é fácil fácil. Veja só:
+
+```Java
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class WeatherClientIntegrationTest {
+
+    @Autowired
+    private WeatherClient subject;
+
+    @Rule
+    public WireMockRule wireMockRule = new WireMockRule(8089);
+
+    @Test
+    public void shouldCallWeatherService() throws Exception {
+        wireMockRule.stubFor(get(urlPathEqualTo("/some-test-api-key/53.5511,9.9937"))
+                .willReturn(aResponse()
+                        .withBody(FileLoader.read("classpath:weatherApiResponse.json"))
+                        .withHeader(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .withStatus(200)));
+
+        Optional<WeatherResponse> weatherResponse = subject.fetchWeather();
+
+        Optional<WeatherResponse> expectedResponse = Optional.of(new WeatherResponse("Rain"));
+        assertThat(weatherResponse, is(expectedResponse));
+    }
+}
+```
+
+Para usar o Wiremock, instanciamos um `WireMockRule` em uma porta fixa `(8089)`. Usando o DSL, podemos configurar o servidor Wiremock, definir os *endpoints* que ele deve escutar e definir os modelos de resposta com os quais ele deve responder.
+
+Em seguida, chamamos o método que queremos testar, aquele que chama o serviço externo e verificamos se o resultado foi analisado corretamente.
+
+É importante entender como o teste sabe que deve chamar o servidor Wiremock falso em vez da API verdadeira do *darksky*. O segredo está em nosso arquivo `application.properties` contido em `src/test/resources`. Este é o arquivo de propriedades que o Spring carrega ao executar testes. Neste arquivo, substituímos configurações como chaves de API e URLs por valores adequados para nossos propósitos de teste, por exemplo, chamando o servidor Wiremock falso ao invés do real:
+
+```java
+weather.url = http://localhost:8089
+```
+
+Observe que a porta definida aqui deve ser a mesma que definimos ao instanciar o `WireMockRule` em nosso teste. Substituir o URL real da API de tempo por um falso em nossos testes é possível injetando o URL no construtor de nossa classe `WeatherClient`:
+
+```Java
+@Autowired
+public WeatherClient(final RestTemplate restTemplate,
+                     @Value("${weather.url}") final String weatherServiceUrl,
+                     @Value("${weather.api_key}") final String weatherServiceApiKey) {
+    this.restTemplate = restTemplate;
+    this.weatherServiceUrl = weatherServiceUrl;
+    this.weatherServiceApiKey = weatherServiceApiKey;
+}
+```
+Desta forma, pedimos ao nosso `WeatherClient` para ler o valor do parâmetro `weatherUrl` da propriedade `weather.url` que definimos nas propriedades de nosso aplicativo.
+
+Escrever testes de integração restritos para um serviço separado é bastante fácil com ferramentas como o Wiremock. Infelizmente, há uma desvantagem nessa abordagem: como garantimos que o servidor falso que configuramos se comporta como o servidor real? Com a implementação atual, o serviço separado poderia mudar sua API e nossos testes ainda passariam. No momento, estamos apenas testando se nosso `WeatherClient` pode analisar as respostas que o servidor falso envia. Isso é um começo, mas é muito frágil. Usar testes de ponta a ponta e executá-los em uma instância de teste do serviço real ao invés de usar um serviço falso resolveria esse problema, mas nos tornaria dependentes da disponibilidade do serviço de teste. 
+
+Felizmente, há uma solução melhor para esse dilema: executar testes de contrato de encontro ao servidor falso, assim, o servidor real garante que o falso que usamos em nossos testes de integração seja um dublê fiel. Vamos ver como isso funciona em seguida.
 
 ## <a id="sec-contract-tests"></a>Contract Tests
 
@@ -491,5 +552,3 @@ Você pode ver que nosso teste de integração segue a mesma estrutura *Arrange,
 ### <a id="sec-test-helpers"></a>Specialised Test Helpers
 
 [^1]: **Nota do tradutor**: no README do [repositório](https://github.com/hamvocke/spring-testing) da aplicação de exemplo, o autor menciona ter trocado a API do *darksky.net* pela do *openweathermap.org*, depois que a primeira foi desativada para consulta pública à previsão do tempo.
-
-
