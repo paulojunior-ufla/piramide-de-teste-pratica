@@ -2,10 +2,10 @@
 
 Esta é uma tradução do artigo [The Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader), originalmente escrito por Ham Vocke.
 
-[numOfTranslatedSections]: 16
+[numOfTranslatedSections]: 17
 [amountOfSections]: 34
 
-![47%](https://progress-bar.dev/47/?title=progresso)
+![48%](https://progress-bar.dev/47/?title=progresso)
 
 ## Como contribuir?
 
