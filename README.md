@@ -61,13 +61,13 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [Integração com serviços separados](#sec-integration-separated-services)
 
-- [Contract Tests](#sec-contract-tests)
+- [Testes de Contrato](#sec-contract-tests)
 
-    - [Consumer Test (our team)](#sec-consumer-test)
+    - [Teste de consumidor (nosso time)](#sec-consumer-test)
 
-    - [Provider Test (the other team)](#sec-provider-test-other-team)
+    - [Teste de provedor (outro time)](#sec-provider-test-other-team)
 
-    - [Provider Test (our team)](#sec-provider-test-our-team)
+    - [Teste de provedor (nosso time)](#sec-provider-test-our-team)
 
 - [UI Tests](#sec-ui-tests)
 
@@ -519,21 +519,21 @@ Felizmente, há uma solução melhor para esse dilema: executar testes de contra
 
 ## <a id="sec-contract-tests"></a>Testes de Contrato
 
-Organizações de desenvolvimento de software mais modernas encontraram maneiras de escalar seus esforços de desenvolvimento distribuindo o desenvolvimento de um sistema entre diferentes equipes. As equipes individuais constroem serviços individuais, fracamente acoplados, sem interferir uns nos outros, e integram esses serviços em um grande sistema coeso. O recente interesse em torno das microservices foca exatamente nisso.
+Organizações de desenvolvimento de software mais modernas encontraram maneiras de escalar seus esforços de desenvolvimento distribuindo o desenvolvimento de um sistema entre diferentes equipes. As equipes individuais constroem serviços individuais, fracamente acoplados, sem interferir uns nos outros, e integram esses serviços em um grande sistema coeso. O recente interesse em torno dos microsserviços foca exatamente nisso.
 
 Dividir o sistema em muitos serviços pequenos muitas vezes significa que esses serviços precisam se comunicar entre si por meio de interfaces específicas (esperançosamente bem definidas, às vezes crescidas de forma acidental).
 
 As interfaces entre diferentes aplicativos podem vir em diferentes formatos e tecnologias. Os mais comuns são:
 
 * REST e JSON via HTTPS
-* RPC usando algo como gRPC
+* RPC usando algo como [gRPC](https://grpc.io/)
 * construção de uma arquitetura orientada a eventos usando filas
 
-Para cada interface, há duas partes envolvidas: o fornecedor e o consumidor. O fornecedor serve dados aos consumidores. O consumidor processa dados obtidos de um fornecedor. Em um mundo REST, um fornecedor constrói uma API REST com todos os endpoints necessários; um consumidor faz chamadas a essa API REST para buscar dados ou acionar mudanças no outro serviço. Em um mundo assíncrono orientado a eventos, um fornecedor (geralmente chamado de publicador) publica dados em uma fila; um consumidor (geralmente chamado de assinante) se inscreve nessas filas e lê e processa dados.
+Para cada interface, há duas partes envolvidas: o fornecedor e o consumidor. O *fornecedor* serve dados aos consumidores. O *consumidor* processa dados obtidos de um fornecedor. Em um mundo REST, um fornecedor constrói uma API REST com todos os endpoints necessários; um consumidor faz chamadas a essa API REST para buscar dados ou acionar mudanças no outro serviço. Em um mundo assíncrono orientado a eventos, um fornecedor (geralmente chamado de *publicador*) publica dados em uma fila; um consumidor (geralmente chamado de *assinante*) se inscreve nessas filas e lê e processa dados.
 
 ![Interface para um contrato](/assets/contract_tests.png "Especificação de interface para um contrato")
 
-**Figura 8**: Cada interface tem um fornecedor (ou publicador) e um consumidor (ou assinante). A especificação de uma interface pode ser considerada um contrato.
+**Figura 8**. Cada interface tem um fornecedor (ou publicador) e um consumidor (ou assinante). A especificação de uma interface pode ser considerada um contrato.
 
 Como os serviços de consumo e fornecimento são frequentemente distribuídos por diferentes equipes, você se encontra na situação em que precisa especificar claramente a interface entre esses serviços (o chamado contrato). Tradicionalmente, as empresas abordaram esse problema da seguinte maneira:
 
@@ -544,17 +544,18 @@ Como os serviços de consumo e fornecimento são frequentemente distribuídos po
 * Executar alguns testes manuais em larga escala do sistema para ver se tudo funciona
 * Esperar que ambas as equipes sigam a definição da interface para sempre e não estraguem tudo
 
-As equipes de desenvolvimento de software mais modernas substituíram as etapas 5 e 6 por algo mais automatizado: Testes de contrato automatizados garantem que as implementações no lado do consumidor e do fornecedor ainda sigam o contrato definido. Eles funcionam como uma boa suíte de teste de regressão e garantem que as variações do contrato serão notadas precocemente.
+As equipes de desenvolvimento de software mais modernas substituíram as etapas 5 e 6 por algo mais automatizado: [Testes de contrato](https://martinfowler.com/bliki/ContractTest.html) automatizados garantem que as implementações no lado do consumidor e do fornecedor ainda sigam o contrato definido. Eles funcionam como uma boa suíte de teste de regressão e garantem que as variações do contrato serão notadas precocemente.
 
 Em uma organização mais ágil, você deve seguir a rota mais eficiente e menos desperdiçadora. Você desenvolve suas aplicações dentro da mesma organização. Realmente não deve ser muito difícil falar diretamente com os desenvolvedores de outros serviços em vez de lançar documentação excessivamente detalhada por cima do muro. Afinal, eles são seus colegas de trabalho e não um fornecedor terceirizado com o qual você só pode falar via suporte ao cliente ou contratos à prova de balas.
 
-Os testes de Contrato Impulsionados pelo Consumidor (CDC - Consumer-Driven Contract tests) permitem que os consumidores conduzam a implementação de um contrato. Usando CDC, os consumidores de uma interface escrevem testes que verificam a interface para todos os dados que eles precisam dessa interface. A equipe consumidora, então, publica esses testes para que a equipe provedora possa buscar e executar esses testes facilmente. A equipe fornecedora agora pode desenvolver sua API executando os testes CDC. Depois que todos os testes passam, eles sabem que implementaram tudo o que a equipe consumidora precisa.
+Os testes de Contrato Impulsionados pelo Consumidor (CDC - Consumer-Driven Contract tests) permitem que os [consumidores conduzam a implementação de um contrato](https://martinfowler.com/articles/consumerDrivenContracts.html). Usando CDC, os consumidores de uma interface escrevem testes que verificam a interface para todos os dados que eles precisam dessa interface. A equipe consumidora, então, publica esses testes para que a equipe provedora possa buscar e executar esses testes facilmente. A equipe fornecedora agora pode desenvolver sua API executando os testes CDC. Depois que todos os testes passam, eles sabem que implementaram tudo o que a equipe consumidora precisa.
 
 
 ![Testes de contrato](/assets/cdc_tests.png "Especificação de testes de contrato")
-**Figura 9:** Os testes de contrato garantem que o provedor e todos os consumidores de uma interface sigam o contrato de interface definido. Com os testes CDC, os consumidores de uma interface publicam seus requisitos na forma de testes automatizados; os provedores buscam e executam esses testes continuamente.
 
-Esta abordagem permite que a equipe provedora implemente apenas o que é realmente necessário (mantendo as coisas simples, YAGNI e tudo mais). A equipe que fornece a interface deve buscar e executar continuamente esses testes CDC (em seu pipeline de build) para detectar quaisquer mudanças quebradoras imediatamente. Se eles quebrarem a interface, seus testes CDC falharão, impedindo que as mudanças quebradoras entrem em produção. Enquanto os testes permanecerem verdes, a equipe pode fazer quaisquer mudanças que desejar sem se preocupar com outras equipes. A abordagem de Contrato Impulsionado pelo Consumidor deixaria você com um processo parecido com este:
+**Figura 9**. Os testes de contrato garantem que o provedor e todos os consumidores de uma interface sigam o contrato de interface definido. Com os testes CDC, os consumidores de uma interface publicam seus requisitos na forma de testes automatizados; os provedores buscam e executam esses testes continuamente.
+
+Esta abordagem permite que a equipe provedora implemente apenas o que é realmente necessário (mantendo as coisas simples, YAGNI e tudo mais). A equipe que fornece a interface deve buscar e executar continuamente esses testes CDC (em seu pipeline de build) para detectar imediatamente quaisquer alterações significativas. Se eles quebrarem a interface, seus testes CDC falharão, impedindo que as alterações entrem em produção. Enquanto os testes permanecerem verdes, a equipe pode fazer quaisquer mudanças que desejar sem se preocupar com outras equipes. A abordagem de Contrato Impulsionado pelo Consumidor deixaria você com um processo parecido com este:
 
 * A equipe consumidora escreve testes automatizados com todas as expectativas do consumidor
 * Eles publicam os testes para a equipe provedora
@@ -563,13 +564,13 @@ Esta abordagem permite que a equipe provedora implemente apenas o que é realmen
 
 Se sua organização adota uma abordagem de microsserviços, ter testes CDC é um grande passo para estabelecer equipes autônomas. Os testes CDC são uma maneira automatizada de fomentar a comunicação entre as equipes. Eles garantem que as interfaces entre equipes estejam funcionando o tempo todo. Testes CDC falhando são um bom indicador de que você deve conversar com a equipe afetada, falar sobre quaisquer mudanças de API iminentes e descobrir como você quer seguir em frente.
 
-Uma implementação ingênua de testes CDC pode ser tão simples quanto enviar solicitações contra uma API e afirmar que as respostas contêm tudo o que você precisa. Então, você empacota esses testes como um executável (.gem, .jar, .sh) e carregue-os em algum lugar onde a outra equipe possa acessá-lo (por exemplo, um repositório de artefatos como o Artifactory).
+Uma implementação ingênua de testes CDC pode ser tão simples quanto enviar solicitações contra uma API e afirmar que as respostas contêm tudo o que você precisa. Então, você empacota esses testes como um executável (.gem, .jar, .sh) e os armazena em algum lugar onde a outra equipe possa acessá-lo (por exemplo, um repositório de artefatos como o [Artifactory](https://jfrog.com/artifactory/)).
 
 Nos últimos anos, a abordagem CDC se tornou cada vez mais popular e várias ferramentas foram construídas para tornar a escrita e a troca delas mais fáceis.
 
-Pact é provavelmente o mais proeminente nos dias de hoje. Ele tem uma abordagem sofisticada de escrever testes para o lado do consumidor e do fornecedor, fornece stubs para serviços separados prontos para uso e permite que você troque testes CDC com outras equipes. O Pact foi portado para muitas plataformas e pode ser usado com linguagens JVM, Ruby, .NET, JavaScript e muitas outras.
+[Pact](https://github.com/realestate-com-au/pact) é provavelmente o mais proeminente nos dias de hoje. Ele tem uma abordagem sofisticada de escrever testes para o lado do consumidor e do fornecedor, fornece stubs para serviços separados prontos para uso e permite que você troque testes CDC com outras equipes. O Pact foi portado para muitas plataformas e pode ser usado com linguagens JVM, Ruby, .NET, JavaScript e muitas outras.
 
-Se você quer começar com os CDCs e não sabe como, o Pact pode ser uma escolha sensata. A documentação pode ser esmagadora no começo. Seja paciente e trabalhe nisso. Isso ajuda a ter uma compreensão sólida dos CDCs, o que por sua vez torna mais fácil para você defender o uso de CDCs ao trabalhar com outras equipes.
+Se você quer começar com os CDCs e não sabe como, o Pact pode ser uma escolha sensata. A [documentação](https://docs.pact.io/) pode ser esmagadora no começo. Seja paciente e trabalhe nisso. Isso ajuda a ter uma compreensão sólida dos CDCs, o que por sua vez torna mais fácil para você defender o uso de CDCs ao trabalhar com outras equipes.
 
 Os testes de contrato orientados pelo consumidor podem ser uma mudança real de jogo para estabelecer equipes autônomas que possam se mover rapidamente e com confiança. Faça um favor a si mesmo, leia sobre esse conceito e experimente. Um conjunto sólido de testes CDC é inestimável para poder se mover rapidamente sem quebrar outros serviços e causar muita frustração com outras equipes.
 
@@ -640,9 +641,9 @@ Obviamente, eles não se importam com nossa modesta aplicação de exemplo e nã
 
 A equipe fornecedora recebe o arquivo pact e o executa contra seu serviço de fornecimento. Para isso, eles implementam um teste do provedor que lê o arquivo pact, define alguns dados de teste e executa as expectativas definidas no arquivo pact em seu serviço.
 
-Os desenvolvedores do Pact escreveram várias bibliotecas para implementar testes do provedor. Seu repositório principal no GitHub fornece uma boa visão geral de quais bibliotecas de consumidor e de provedor estão disponíveis. Escolha aquela que melhor se adapta à sua pilha tecnológica.
+Os desenvolvedores do Pact escreveram várias bibliotecas para implementar testes do provedor. Seu [repositório](https://github.com/pact-foundation/pact-jvm) principal no GitHub fornece uma boa visão geral de quais bibliotecas de consumidor e de provedor estão disponíveis. Escolha aquela que melhor se adapta à sua pilha tecnológica.
 
-Para simplificar, vamos assumir que a API da darksky é implementada em Spring Boot também. Nesse caso, eles poderiam usar o provedor de contrato do Spring, que se integra perfeitamente aos mecanismos do MockMVC do Spring. Um teste de provedor hipotético que a equipe da darksky.net implementaria poderia ser assim:
+Para simplificar, vamos assumir que a API da darksky é implementada em Spring Boot também. Nesse caso, eles poderiam usar o [provedor de contrato do Spring](https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-provider-spring), que se integra perfeitamente aos mecanismos do MockMVC do Spring. Um teste de provedor hipotético que a equipe da darksky.net implementaria poderia ser assim:
 
 
 ````JAVA
@@ -688,7 +689,7 @@ Vamos primeiro adicionar a biblioteca de provedor Pact para Spring ao nosso proj
 testCompile('au.com.dius:pact-jvm-provider-spring_2.12:3.5.5')
 ````
 
-Implementar o teste do provedor segue o mesmo padrão descrito anteriormente. Por uma questão de simplicidade, eu simplesmente adicionei o arquivo Pact do nosso consumidor simples ao repositório do nosso serviço. Isso torna mais fácil para o nosso propósito, mas em um cenário da vida real, provavelmente você usaria um mecanismo mais sofisticado para distribuir seus arquivos Pact.
+Implementar o teste do provedor segue o mesmo padrão descrito anteriormente. Por uma questão de simplicidade, eu simplesmente adicionei o arquivo Pact do nosso [consumidor simples](https://github.com/hamvocke/spring-testing-consumer) ao repositório do nosso serviço. Isso torna mais fácil para o nosso propósito, mas em um cenário da vida real, provavelmente você usaria um mecanismo mais sofisticado para distribuir seus arquivos Pact.
 
 ````JAVA
 @RunWith(RestPactRunner.class)
