@@ -535,9 +535,11 @@ Felizmente, há uma solução melhor para esse dilema: executar testes de contra
 
 ## <a id="sec-exploratory-tests"></a>Exploratory Testing
 
-## <a id="sec-terminology-confusion"></a>The Confusion About Testing Terminology
+## <a id="sec-terminology-confusion"></a>A Confusão Sobre Terminologia de Testes
 
-Falando sobre diferentes classificações de teste é sempre difícil. O que eu quero dizer quando digo sobre testes unitários pode ser um pouco diferente do seu entendimento. Com testes integrados é ainda pior. Para algumas pessoas, integração de testes é uma atividade muito ampla que testa por várias partes diferentes de um sistema inteiro. Para mim, especificamente, é uma coisa simples, somente testar a integração com uma parte externa por vez. Alguns chamam de testes de integração, outros referem como testes de componente, alguns preferem o termo teste de serviço. Alguns ainda irão dizer que todos esses três termos são coisas totalmente diferentes. Não há certo ou errado. A comunidade de desenvolvimento de software simplesmente ainda não conseguiu estabelecer termos bem definidos sobre testes. 
+Falando sobre diferentes classificações de teste é sempre difícil. O que eu quero dizer quando digo sobre testes unitários pode ser um pouco diferente do seu entendimento. Com testes integrados é ainda pior. Para algumas pessoas, integração de testes é uma atividade muito ampla que testa por várias partes diferentes de um sistema inteiro. Para mim, especificamente, é uma coisa simples, somente testar a integração com uma parte externa por vez. Alguns chamam de testes de integração, outros referem como testes de componente, alguns preferem o termo teste de serviço. Alguns ainda irão dizer que todos esses três termos são coisas totalmente diferentes. Não há certo ou errado. A comunidade de desenvolvimento de software simplesmente ainda não conseguiu estabelecer termos bem definidos sobre testes.  
+
+Não se preocupe em se prender a termos ambíguos. Não importa se você chama de end-to-end ou broad stack ou teste funcional. Não importa se seus testes de integração significam algo diferente para você do que para o pessoal de outra empresa. Sim, seriam muito legal se nossa profissão pudesse estabelecer-se em termos bem definidos e ficar com isso. Infelizmente, isso não aconteceu ainda. E, visto que há muitas nuances quando se fala de escrita de testes, é mais um espectro que um monte de "bucket" distintos de qualquer forma, o que faz uma nomeação consistente ainda mais difícil.
 
 ## <a id="sec-deployment-pipeline"></a>Putting Tests Into Your Deployment Pipeline
 
