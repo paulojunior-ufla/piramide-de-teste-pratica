@@ -537,12 +537,12 @@ Para cada interface, há duas partes envolvidas: o fornecedor e o consumidor. O 
 
 Como os serviços de consumo e fornecimento são frequentemente distribuídos por diferentes equipes, você se encontra na situação em que precisa especificar claramente a interface entre esses serviços (o chamado contrato). Tradicionalmente, as empresas abordaram esse problema da seguinte maneira:
 
-* Escrever uma especificação de interface longa e detalhada (o contrato)
-* Implementar o serviço fornecedor de acordo com o contrato definido
-* Jogar a especificação de interface para a equipe de consumo
-* Aguardar até que eles implementem a parte deles do consumo da interface
-* Executar alguns testes manuais em larga escala do sistema para ver se tudo funciona
-* Esperar que ambas as equipes sigam a definição da interface para sempre e não estraguem tudo
+1. Escrever uma especificação de interface longa e detalhada (o contrato)
+2. Implementar o serviço fornecedor de acordo com o contrato definido
+3. Jogar a especificação de interface para a equipe de consumo
+4. Aguardar até que eles implementem a parte deles do consumo da interface
+5. Executar alguns testes manuais em larga escala do sistema para ver se tudo funciona
+6. Esperar que ambas as equipes sigam a definição da interface para sempre e não estraguem tudo
 
 As equipes de desenvolvimento de software mais modernas substituíram as etapas 5 e 6 por algo mais automatizado: [Testes de contrato](https://martinfowler.com/bliki/ContractTest.html) automatizados garantem que as implementações no lado do consumidor e do fornecedor ainda sigam o contrato definido. Eles funcionam como uma boa suíte de teste de regressão e garantem que as variações do contrato serão notadas precocemente.
 
