@@ -83,7 +83,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 - [Putting Tests Into Your Deployment Pipeline](#sec-deployment-pipeline)
 
-- [Avoid Test Duplication](#sec-test-duplication)
+- [Evitando duplicação de testes](#sec-test-duplication)
 
 - [Writing Clean Test Code](#sec-clean-test-code)
 
@@ -741,7 +741,21 @@ O ExampleProviderTest mostrado precisa fornecer o estado de acordo com o arquivo
 
 ## <a id="sec-deployment-pipeline"></a>Putting Tests Into Your Deployment Pipeline
 
-## <a id="sec-test-duplication"></a>Avoid Test Duplication
+## <a id="sec-test-duplication"></a>Evitando duplicação de testes 
+
+Agora que você sabe que deve escrever diferentes tipos de testes, há mais uma armadilha a evitar: duplicar testes em diferentes camadas da pirâmide. Embora seu instinto possa dizer que nunca é demais testar, deixe-me garantir que há um limite. Cada teste em sua suíte de testes é uma carga adicional e não é gratuito. Escrever e manter testes leva tempo. Ler e entender testes de outras pessoas leva tempo. E, é claro, executar testes leva tempo.
+
+Assim como no código de produção, você deve buscar a simplicidade e evitar a duplicação. No contexto da implementação da sua pirâmide de testes, você deve ter em mente duas regras básicas:
+
+1. Se um teste de nível superior identificar um erro e não houver falha em um teste de nível inferior, você precisa escrever um teste de nível inferior.
+
+2. Empurre seus testes o mais para baixo possível na pirâmide de testes.
+
+A primeira regra é importante porque os testes em níveis inferiores permitem que você identifique erros com mais precisão e os replique de forma isolada. Eles serão executados mais rapidamente e serão menos inchados quando você estiver depurando o problema em questão. Eles também servirão como um bom teste de regressão para o futuro. A segunda regra é importante para manter sua suíte de testes rápida. Se você testou todas as condições com confiança em um teste em nível inferior, não há necessidade de manter um teste em nível superior na sua suíte de testes. Isso simplesmente não adiciona mais confiança de que tudo está funcionando. Ter testes redundantes se tornará irritante em seu trabalho diário. Sua suíte de testes será mais lenta e você precisará alterar mais testes quando alterar o comportamento do seu código.
+
+Vamos dizer de outra forma: se um teste em nível superior lhe dá mais confiança de que sua aplicação está funcionando corretamente, você deve tê-lo. Escrever um teste unitário para uma classe Controller ajuda a testar a lógica dentro do Controller em si. No entanto, isso não lhe dirá se o endpoint REST que esse Controller fornece realmente responde a solicitações HTTP. Então você sobe na pirâmide de testes e adiciona um teste que verifica exatamente isso - mas nada mais. Você não testa toda a lógica condicional e casos de borda que seus testes em níveis inferiores já cobrem novamente no teste em nível superior. Certifique-se de que o teste em nível superior se concentra na parte que os testes em níveis inferiores não puderam cobrir.
+
+Eu sou rigoroso quando se trata de eliminar testes que não fornecem nenhum valor. Eu excluo testes em níveis mais altos que já são cobertos em um nível inferior (desde que não forneçam valor adicional). Eu substituo testes em níveis superiores por testes em níveis inferiores, se possível. Às vezes isso é difícil, especialmente se você sabe que criar um teste foi um trabalho árduo. Cuidado com a falácia do custo afundado e aperte a tecla delete. Não há razão para desperdiçar mais tempo precioso em um teste que deixou de fornecer valor.
 
 ## <a id="sec-clean-test-code"></a>Writing Clean Test Code
 
