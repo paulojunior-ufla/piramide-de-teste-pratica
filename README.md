@@ -548,7 +548,7 @@ As equipes de desenvolvimento de software mais modernas substituíram as etapas 
 
 Em uma organização mais ágil, você deve seguir a rota mais eficiente e menos desperdiçadora. Você desenvolve suas aplicações dentro da mesma organização. Realmente não deve ser muito difícil falar diretamente com os desenvolvedores de outros serviços em vez de lançar documentação excessivamente detalhada por cima do muro. Afinal, eles são seus colegas de trabalho e não um fornecedor terceirizado com o qual você só pode falar via suporte ao cliente ou contratos à prova de balas.
 
-Os testes de Contrato Impulsionados pelo Consumidor (CDC - Consumer-Driven Contract tests) permitem que os [consumidores conduzam a implementação de um contrato](https://martinfowler.com/articles/consumerDrivenContracts.html). Usando CDC, os consumidores de uma interface escrevem testes que verificam a interface para todos os dados que eles precisam dessa interface. A equipe consumidora, então, publica esses testes para que a equipe provedora possa buscar e executar esses testes facilmente. A equipe fornecedora agora pode desenvolver sua API executando os testes CDC. Depois que todos os testes passam, eles sabem que implementaram tudo o que a equipe consumidora precisa.
+**Os testes de Contrato Impulsionados pelo Consumidor** (CDC - Consumer-Driven Contract tests) permitem que os [consumidores conduzam a implementação de um contrato](https://martinfowler.com/articles/consumerDrivenContracts.html). Usando CDC, os consumidores de uma interface escrevem testes que verificam a interface para todos os dados que eles precisam dessa interface. A equipe consumidora, então, publica esses testes para que a equipe provedora possa buscar e executar esses testes facilmente. A equipe fornecedora agora pode desenvolver sua API executando os testes CDC. Depois que todos os testes passam, eles sabem que implementaram tudo o que a equipe consumidora precisa.
 
 
 ![Testes de contrato](/assets/cdc_tests.png "Especificação de testes de contrato")
@@ -578,7 +578,7 @@ Os testes de contrato orientados pelo consumidor podem ser uma mudança real de 
 ### <a id="sec-consumer-test"></a>Teste de consumidor (nosso time)
 
 
-Nosso microserviço consome a API do clima. Portanto, é nossa responsabilidade escrever um teste do consumidor que defina nossas expectativas para o contrato (a API) entre nosso microserviço e o serviço de clima.
+Nosso microserviço consome a API do clima. Portanto, é nossa responsabilidade escrever um **teste do consumidor** que defina nossas expectativas para o contrato (a API) entre nosso microserviço e o serviço de clima.
 
 Primeiro, incluímos uma biblioteca para escrever testes de consumidores do Pact em nosso build.gradle:
 
