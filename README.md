@@ -2,10 +2,10 @@
 
 Esta é uma tradução do artigo [The Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader), originalmente escrito por Ham Vocke.
 
-[numOfTranslatedSections]: 17
+[numOfTranslatedSections]: 18
 [amountOfSections]: 34
 
-![50%](https://progress-bar.dev/50/?title=progresso)
+![53%](https://progress-bar.dev/53/?title=progresso)
 
 ## Como contribuir?
 
@@ -13,7 +13,7 @@ Para contribuir com a tradução deste artigo, siga as recomendações abaixo:
 
 - Escolha uma seção do [artigo original](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader) que ainda não foi traduzida. Depois, informe sua intenção de traduzi-la criando uma *issue*, cujo título é o nome da própria seção.
 
-- Enquanto realiza a tradução: (i) não se esqueça de atualizar a barra de progresso acima; e (ii) não traduza elementos de código, tais como *strings* literais, nomes de classes, métodos e atributos, entre outros (traduza apenas comentários de código, quando necessário).
+- Enquanto realiza a tradução, não traduza elementos de código, tais como *strings* literais, nomes de classes, métodos e atributos, entre outros (traduza apenas comentários de código, quando necessário).
 
 - Após concluir a tradução, faça um *commit*, cuja mensagem deve ser `trad: [NOME_DA_SECAO]`, onde `NOME_DA_SECAO` representa o nome da seção que foi traduzida. 
 
@@ -753,7 +753,7 @@ Assim como no código de produção, você deve buscar a simplicidade e evitar a
 
 A primeira regra é importante porque os testes em níveis inferiores permitem que você identifique erros com mais precisão e os replique de forma isolada. Eles serão executados mais rapidamente e serão menos inchados quando você estiver depurando o problema em questão. Eles também servirão como um bom teste de regressão para o futuro. A segunda regra é importante para manter sua suíte de testes rápida. Se você testou todas as condições com confiança em um teste em nível inferior, não há necessidade de manter um teste em nível superior na sua suíte de testes. Isso simplesmente não adiciona mais confiança de que tudo está funcionando. Ter testes redundantes se tornará irritante em seu trabalho diário. Sua suíte de testes será mais lenta e você precisará alterar mais testes quando alterar o comportamento do seu código.
 
-Vamos dizer de outra forma: se um teste em nível superior lhe dá mais confiança de que sua aplicação está funcionando corretamente, você deve tê-lo. Escrever um teste unitário para uma classe Controller ajuda a testar a lógica dentro do Controller em si. No entanto, isso não lhe dirá se o endpoint REST que esse Controller fornece realmente responde a solicitações HTTP. Então você sobe na pirâmide de testes e adiciona um teste que verifica exatamente isso - mas nada mais. Você não testa toda a lógica condicional e casos de borda que seus testes em níveis inferiores já cobrem novamente no teste em nível superior. Certifique-se de que o teste em nível superior se concentra na parte que os testes em níveis inferiores não puderam cobrir.
+Vamos dizer de outra forma: se um teste em nível superior lhe dá mais confiança de que sua aplicação está funcionando corretamente, você deve tê-lo. Escrever um teste unitário para uma classe *Controller* ajuda a testar a lógica dentro do *Controller* em si. No entanto, isso não lhe dirá se o *endpoint* REST que esse *Controller* fornece realmente responde a solicitações HTTP. Então você sobe na pirâmide de testes e adiciona um teste que verifica exatamente isso - mas nada mais. Você não testa toda a lógica condicional e casos de borda que seus testes em níveis inferiores já cobrem novamente no teste em nível superior. Certifique-se de que o teste em nível superior se concentra na parte que os testes em níveis inferiores não puderam cobrir.
 
 Eu sou rigoroso quando se trata de eliminar testes que não fornecem nenhum valor. Eu excluo testes em níveis mais altos que já são cobertos em um nível inferior (desde que não forneçam valor adicional). Eu substituo testes em níveis superiores por testes em níveis inferiores, se possível. Às vezes isso é difícil, especialmente se você sabe que criar um teste foi um trabalho árduo. Cuidado com a falácia do custo afundado e aperte a tecla delete. Não há razão para desperdiçar mais tempo precioso em um teste que deixou de fornecer valor.
 
