@@ -529,7 +529,7 @@ As interfaces entre diferentes aplicativos podem vir em diferentes formatos e te
 * RPC usando algo como [gRPC](https://grpc.io/)
 * construção de uma arquitetura orientada a eventos usando filas
 
-Para cada interface, há duas partes envolvidas: o fornecedor e o consumidor. O *fornecedor* serve dados aos consumidores. O *consumidor* processa dados obtidos de um fornecedor. Em um mundo REST, um fornecedor constrói uma API REST com todos os endpoints necessários; um consumidor faz chamadas a essa API REST para buscar dados ou acionar mudanças no outro serviço. Em um mundo assíncrono orientado a eventos, um fornecedor (geralmente chamado de *publicador*) publica dados em uma fila; um consumidor (geralmente chamado de *assinante*) se inscreve nessas filas e lê e processa dados.
+Para cada interface, há duas partes envolvidas: o fornecedor e o consumidor. O **fornecedor** serve dados aos consumidores. O **consumidor** processa dados obtidos de um fornecedor. Em um mundo REST, um fornecedor constrói uma API REST com todos os *endpoints* necessários; um consumidor faz chamadas a essa API REST para buscar dados ou acionar mudanças no outro serviço. Em um mundo assíncrono orientado a eventos, um fornecedor (geralmente chamado de **publicador**) publica dados em uma fila; um consumidor (geralmente chamado de **assinante**) se inscreve nessas filas e lê e processa dados.
 
 ![Interface para um contrato](/assets/contract_tests.png "Especificação de interface para um contrato")
 
