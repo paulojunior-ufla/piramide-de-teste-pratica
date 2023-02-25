@@ -749,6 +749,12 @@ Além disso, testes _end-to-end_ requerem muito mais manutenção e são de exec
 
 Devido aos altos custos de manutenção você deve ter como objetivo reduzir o número de testes _end-to-end_ ao mínimo possível.
 
+Pense nas interações de alto valor que os usuários terão com seu aplicativo. Tente criar jornadas do usuário que definam o valor principal do seu produto e traduza as etapas mais importantes dessas jornadas em testes automatizados _end-to-end_.
+
+Se você estiver construindo um site de _e-commerce_, sua jornada de cliente mais valiosa pode ser um usuário que procura um produto, o coloca na cesta de compras e faz o _check-out_. É isso. Enquanto esta jornada funcionar, você não deve ter muitos problemas. Talvez você encontre mais uma ou duas jornadas de usuário cruciais que possam ser traduzidas em testes  _end-to-end_. Tudo a mais do que isso provavelmente será mais doloroso do que útil.
+
+Lembre-se: você tem muitos níveis inferiores em sua pirâmide de teste, onde já testou todos os tipos de casos dos extremos e integrações com outras partes do sistema. Não há necessidade de repetir esses testes em um nível superior. Alto esforço de manutenção e muitos falsos positivos irão atrasá-lo e fazer com que você perca a confiança em seus testes, mais cedo ou mais tarde.
+
 ### <a id="sec-ui-end-to-end-tests"></a>User Interface End-to-End Test
 
 ### <a id="sec-api-end-to-end-tests"></a>REST API End-to-End Test
