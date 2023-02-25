@@ -71,7 +71,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 - [UI Tests](#sec-ui-tests)
 
-- [End-to-End Tests](#sec-end-to-end-tests)
+- [Testes End-to-End](#sec-end-to-end-tests)
 
     - [User Interface End-to-End Test](#sec-ui-end-to-end-tests)
 
@@ -729,9 +729,9 @@ O ExampleProviderTest mostrado precisa fornecer o estado de acordo com o arquivo
 
 ## <a id="sec-ui-tests"></a>UI Tests
 
-## <a id="sec-end-to-end-tests"></a>End-to-End Tests
+## <a id="sec-end-to-end-tests"></a>Testes End-to-End
 
-Testar sua aplicação por meio de sua interface de usuário é a maneira mais completa de testar sua aplicação. Os testes de IU orientados por webdriver descritos anteriormente são um bom exemplo de testes _end-to-end_.
+Testar sua aplicação por meio de sua interface de usuário é a maneira mais completa de testar sua aplicação. Os testes de UI orientados por _webdriver_ descritos anteriormente são um bom exemplo de testes _end-to-end_.
 
 ![Testes end-to-end](/assets/e2etests.png "Testes end-to-end")
 
