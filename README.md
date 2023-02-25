@@ -77,7 +77,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [REST API End-to-End Test](#sec-api-end-to-end-tests)
 
-- [Exploratory Testing](#sec-exploratory-tests)
+- [Testes Exploratórios](#sec-exploratory-tests)
 
 - [The Confusion About Testing Terminology](#sec-terminology-confusion)
 
@@ -735,7 +735,19 @@ O ExampleProviderTest mostrado precisa fornecer o estado de acordo com o arquivo
 
 ### <a id="sec-api-end-to-end-tests"></a>REST API End-to-End Test
 
-## <a id="sec-exploratory-tests"></a>Exploratory Testing
+## <a id="sec-exploratory-tests"></a>Testes Exploratórios
+
+Mesmo os esforços de automação de teste mais diligentes não são perfeitos. Às vezes, você perde certos casos extremos em seus testes automatizados. Às vezes é quase impossível detectar um bug específico escrevendo um teste unitário. Certos problemas de qualidade nem se tornam aparentes em seus testes automatizados (pense em *design* ou usabilidade). Apesar de suas melhores intenções com relação à automação de teste, alguns tipos de testes manuais ainda são uma boa ideia.
+
+![Testes exploratórios](/assets/exploratoryTesting.png "Testes exploratórios")
+
+**Figura 12**. Use testes exploratórios para identificar todos os problemas de qualidade que seu *pipeline* de construção não detectou
+
+Inclua [testes exploratórios](https://en.wikipedia.org/wiki/Exploratory_testing) em seu portfólio de testes. É uma abordagem de teste manual que enfatiza a liberdade e a criatividade do testador para detectar problemas de qualidade em um sistema em execução. Simplesmente dedique algum tempo em uma programação regular, arregace as mangas e tente interromper sua inscrição. Use uma mentalidade destrutiva e encontre maneiras de provocar problemas e erros em seu aplicativo. Documente tudo o que encontrar para mais tarde. Fique atento a *bugs*, problemas de *design*, tempos de resposta lentos, mensagens de erro ausentes ou enganosas e tudo mais que possa incomodá-lo como usuário de seu *software*.
+
+A boa notícia é que você pode automatizar a maioria de suas descobertas com testes automatizados. Escrever testes automatizados para os *bugs* que você detecta garante que não haverá nenhuma regressão desse bug no futuro. Além disso, ajuda a reduzir a causa raiz desse problema durante a correção de *bugs*.
+
+Durante o teste exploratório, você detectará problemas que passaram despercebidos pelo *pipeline* de construção. Não fique frustrado. Este é um ótimo *feedback* sobre a maturidade do seu *pipeline* de construção. Como acontece com qualquer *feedback*, certifique-se de agir de acordo com ele: pense no que você pode fazer para evitar esse tipo de problema no futuro. Talvez você esteja perdendo um determinado conjunto de testes automatizados. Talvez você tenha sido negligente com seus testes automatizados nesta iteração e precise testar mais detalhadamente no futuro. Talvez haja uma nova ferramenta ou abordagem brilhante que você possa usar em seu *pipeline* para evitar esses problemas no futuro. Certifique-se de agir sobre isso para que seu *pipeline* e toda a sua entrega de software cresçam mais maduros quanto mais tempo você passar.
 
 ## <a id="sec-terminology-confusion"></a>The Confusion About Testing Terminology
 
