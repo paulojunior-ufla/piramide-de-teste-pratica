@@ -763,7 +763,11 @@ Lembre-se: você tem muitos níveis inferiores em sua pirâmide de teste, onde j
 
 ## <a id="sec-terminology-confusion"></a>The Confusion About Testing Terminology
 
-## <a id="sec-deployment-pipeline"></a>Putting Tests Into Your Deployment Pipeline
+## <a id="sec-deployment-pipeline"></a>Inserindo Testes em seu Pipeline de Deploy
+
+Se você está usando Continuous Integration ou Continuous Delivery, você terá um [Deployment Pipeline](https://martinfowler.com/bliki/DeploymentPipeline.html) em funcionamento que executará testes automatizados sempre que você fizer uma alteração em seu software. Geralmente, este pipeline é dividido em várias etapas que, gradualmente, lhe dão mais confiança de que seu software está pronto para ser implantado em produção. Ao ouvir falar sobre todos esses diferentes tipos de testes, você provavelmente está se perguntando como deve colocá-los em seu Deployment Pipeline. Para responder a isso, basta pensar em um dos valores fundamentais da Continuous Delivery (de fato, um dos principais [valores da Extreme Programming](http://www.extremeprogramming.org/values.html) e também do desenvolvimento ágil de software): **Fast Feedback**.
+
+Um bom pipeline de construção lhe informa que você errou o mais rápido possível. Você não quer esperar uma hora apenas para descobrir que sua última mudança quebrou alguns testes unitários simples. É provável que você já tenha ido para casa se seu pipeline demorar muito para lhe dar esse feedback. Você poderia obter essa informação em questão de segundos, talvez alguns minutos, colocando os testes de execução rápida nas primeiras etapas de seu pipeline. Consequentemente, você coloca os testes de execução mais longos - geralmente os com escopo mais amplo - nas etapas posteriores para não adiar o feedback dos testes de execução rápida. Percebe então, que definir as etapas do seu Deployment Pipeline não é uma tarefa impulsionada pelos tipos de testes, mas sim pela velocidade e escopo dos testes a serem realizados. Com isso em mente, pode ser uma decisão boa colocar alguns testes de integração com escopos estreitos e testes de execução rápida na mesma etapa que seus testes unitários - simplesmente porque eles lhe dão um feedback mais rápido (Fast Feedback) e não porque você quer traçar a linha ao longo do tipo de seus testes.
 
 ## <a id="sec-test-duplication"></a>Evitando duplicação de testes
 
