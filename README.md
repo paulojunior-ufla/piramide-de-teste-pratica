@@ -5,7 +5,7 @@ Esta é uma tradução do artigo [The Practical Test Pyramid](https://martinfowl
 [numOfTranslatedSections]: 19
 [amountOfSections]: 34
 
-![53%](https://progress-bar.dev/53/?title=progresso)
+![56%](https://progress-bar.dev/56/?title=progresso)
 
 ## Como contribuir?
 
