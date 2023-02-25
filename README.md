@@ -741,6 +741,14 @@ Os testes _end-to-end_ (também chamados de [Broad Stack Tests](https://martinfo
 
 Os testes _end-to-end_ vêm com seus próprios tipos de problemas. Eles são notoriamente incertos e muitas vezes falham por razões inesperadas e imprevisíveis. Frequentemente, sua falha é um falso positivo. Quanto mais sofisticada sua interface de usuário, mais inconstantes os testes tendem a se tornar. Peculiaridades do navegador, problemas de tempo, animações e caixas de diálogo pop-up inesperadas são apenas alguns dos motivos que me fizeram gastar mais tempo com depuração do que gostaria de admitir.
 
+Em um mundo de microsserviços existe também a grande questão sobre quem está encarregado de escrever estes testes. Já que são abrangidos vários serviços (o sistema inteiro) não existe apenas um time responsável pela escrita de testes _end-to-end_.
+
+Se você dispõe de um time centralizado de garantia de qualidade (_Quality Assurance_) este pareceria uma opção conveniente. Mas novamente, lançar mão de um time centralizado de QA é um grande anti-padrão e não deveria acontecer em um universo DevOps onde as suas equipes deveriam ser realmente multifuncionais. Não existe resposta fácil sobre quem deveriar estar encarregado de testes _end-to-end_. Talvez sua organização tenha uma comunidade de prática ou um _Quality Guild_ que poderia cuidar disso. Encontrar a resposta correta depende muito da sua Organização.
+
+Além disso, testes _end-to-end_ requerem muito mais manutenção e são de execução lenta. Se imaginarmos uma situação com pouco mais que alguns microsserviços em execução não seria possível nem rodar os testes _end-to-end_ localmente - já que isso necessitaria que todos os microsserviços também fossem executados localmente. Boa sorte tentando rodar centenas de aplicações na sua máquina sem fritar sua RAM.
+
+Devido aos altos custos de manutenção você deve ter como objetivo reduzir o número de testes _end-to-end_ ao mínimo possível.
+
 ### <a id="sec-ui-end-to-end-tests"></a>User Interface End-to-End Test
 
 ### <a id="sec-api-end-to-end-tests"></a>REST API End-to-End Test
