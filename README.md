@@ -85,7 +85,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 - [Evitando duplicação de testes](#sec-test-duplication)
 
-- [Writing Clean Test Code](#sec-clean-test-code)
+- [Escrevendo Código de Teste Limpo](#sec-clean-test-code)
 
 - [Conclusion](#sec-conclusion)
 
