@@ -781,7 +781,19 @@ Vamos dizer de outra forma: se um teste em nível superior lhe dá mais confian�
 
 Eu sou rigoroso quando se trata de eliminar testes que não fornecem nenhum valor. Eu excluo testes em níveis mais altos que já são cobertos em um nível inferior (desde que não forneçam valor adicional). Eu substituo testes em níveis superiores por testes em níveis inferiores, se possível. Às vezes isso é difícil, especialmente se você sabe que criar um teste foi um trabalho árduo. Cuidado com a falácia do custo afundado e aperte a tecla delete. Não há razão para desperdiçar mais tempo precioso em um teste que deixou de fornecer valor.
 
-## <a id="sec-clean-test-code"></a>Writing Clean Test Code
+## <a id="sec-clean-test-code"></a>Escrevendo Código de Teste Limpo
+
+Assim como escrever código em geral, criar um código de teste bom e limpo exige muito cuidado. Aqui estão mais algumas dicas para criar um código de teste de fácil manutenção antes de prosseguir com sua suíte de testes automatizados:
+
+1.  Código de teste é tão importante quanto código de produção. Dê o mesmo nível de atenção e cuidado para
+    ele. "*Isso é apenas código de teste*" não é uma desculpa válida para justificar um código desleixado
+2.  Teste uma condição por teste. Isso vai ajudar a manter os seus testes curtos e fáceis de racionar
+3.  "*Preparar, Rodar, Verificar*" ou "*Dado, Quando, Então*" são bons mnemônicos para manter seus testes
+    bem estruturados
+4.  Legibilidade importa. Não tente ser excessivamente DRY. Duplicação é aceitável, se melhorar a
+    legibilidade. Tente encontrar um equilíbrio entre códigos [DRY e DAMP](https://stackoverflow.com/questions/6453235/what-does-damp-not-dry-mean-when-talking-about-unit-tests)
+5.  Quando estiver com dúvida use a [Rule of Three](https://blog.codinghorror.com/rule-of-three/) para
+    decidir quando refatorar. *Use antes de reutilizar*
 
 ## <a id="sec-conclusion"></a>Conclusion
 
