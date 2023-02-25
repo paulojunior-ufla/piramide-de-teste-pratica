@@ -81,7 +81,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 - [The Confusion About Testing Terminology](#sec-terminology-confusion)
 
-- [Putting Tests Into Your Deployment Pipeline](#sec-deployment-pipeline)
+- [Inserindo Testes em seu Pipeline de Deploy](#sec-deployment-pipeline)
 
 - [Evitando duplicação de testes](#sec-test-duplication)
 
