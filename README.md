@@ -69,7 +69,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [Teste de provedor (nosso time)](#sec-provider-test-our-team)
 
-- [UI Tests](#sec-ui-tests)
+- [Testes de UI](#sec-ui-tests)
 
 - [Testes End-to-End](#sec-end-to-end-tests)
 
@@ -727,7 +727,36 @@ public class ExampleProviderTest {
 
 O ExampleProviderTest mostrado precisa fornecer o estado de acordo com o arquivo de contrato que nos é fornecido, é isso. Assim que executamos o teste do provedor, o Pact irá pegar o arquivo de contrato e disparar uma solicitação HTTP contra nosso serviço, que responderá de acordo com o estado que configuramos.
 
-## <a id="sec-ui-tests"></a>UI Tests
+## <a id="sec-ui-tests"></a>Testes de UI
+
+A maioria dos aplicativos tem algum tipo de interface de usuário. Normalmente, estamos falando de uma interface da Web no contexto de aplicativos da Web. Muitas vezes, as pessoas esquecem que uma API REST ou uma interface de linha de comando é tanto uma interface de usuário quanto uma interface de usuário da web sofisticada.
+
+Testes de UI testa se a interface do usuário do seu aplicativo funciona corretamente. A entrada do usuário deve acionar as ações corretas, os dados devem ser apresentados ao usuário, o estado da interface do usuário deve mudar conforme o esperado.
+
+![](/assets/ui_tests.png)
+
+Testes de UI e Testes end-to-end às vezes (como no caso de Mike Cohn) dizem ser a mesma coisa. Para mim, isso combina duas coisas que são conceitos bastante ortogonais.
+
+Sim, testar seu aplicativo de ponta a ponta geralmente significa conduzir seus testes por meio da interface do usuário. O inverso, porém, não é verdadeiro.
+
+O teste da interface do usuário não precisa ser feito de ponta a ponta. Dependendo da tecnologia que você usa, testar sua interface de usuário pode ser tão simples quanto escrever alguns testes de unidade para seu código javascript *front-end* com seu *back-end* eliminado.
+
+Com os aplicativos da Web tradicionais, o teste da interface do usuário pode ser obtido com ferramentas como o [Selenium](docs.seleniumhq.org). Se você considera uma API REST como sua interface de usuário, deve ter tudo o que precisa escrevendo testes de integração adequados em torno de sua API.
+
+Com as interfaces da Web, há vários aspectos que você provavelmente deseja testar em torno de sua interface do usuário: comportamento, *layout*, usabilidade ou aderência ao design corporativo são apenas alguns.
+
+Felizmente, testar o comportamento da interface do usuário é bastante simples. Você clica aqui, insere dados lá e deseja que o estado da interface do usuário mude de acordo. As estruturas modernas de aplicativos de página única ([React](https://reactjs.org/), [Vue.js](https://vuejs.org/), [Angular](https://angular.io/) e similares) geralmente vêm com suas próprias ferramentas e auxiliares que permitem que você teste completamente essas interações em um nível bastante baixo (teste de unidade). Mesmo se você lançar sua própria implementação de *front-end* usando javascript vanilla, poderá usar suas ferramentas de teste regulares, como [Jasmine](https://jasmine.github.io/) ou [Mocha](https://mochajs.org/). Com um aplicativo renderizado mais tradicional do lado do servidor, os testes baseados em Selenium serão sua melhor escolha.
+
+Testar se o *layout* do seu aplicativo da Web permanece intacto é um pouco mais difícil. Dependendo de seu aplicativo e das necessidades de seus usuários, você pode querer certificar-se de que as alterações de código não quebrem o *layout* do site por acidente.
+
+O problema é que os computadores são notoriamente ruins em verificar se algo "parece bom" (talvez algum algoritmo inteligente de aprendizado de máquina possa mudar isso no futuro).
+
+Existem algumas ferramentas para tentar se você quiser verificar automaticamente o design do seu aplicativo Web em seu *pipeline* de construção. A maioria dessas ferramentas utiliza o Selenium para abrir seu aplicativo da Web em diferentes navegadores e formatos, fazer capturas de tela e compará-las com capturas de tela feitas anteriormente. Se as capturas de tela antigas e novas diferirem de maneira inesperada, a ferramenta informará você.
+
+[Galen](http://galenframework.com/) é uma dessas ferramentas. Mas mesmo lançar sua própria solução não é muito difícil se você tiver requisitos especiais. Algumas equipes com as quais trabalhei construíram [lineup](http://galenframework.com/) e seu primo [jlineup](https://github.com/otto-de/jlineup) baseado em Java para conseguir algo semelhante. Ambas as ferramentas adotam a mesma abordagem baseada em Selenium que descrevi anteriormente.
+
+Uma vez que você deseja testar a usabilidade e um fator de "boa aparência", você deixa os domínios dos testes automatizados. Esta é a área em que você deve contar com [testes exploratórios](https://en.wikipedia.org/wiki/Exploratory_testing), testes de usabilidade (isso pode até ser tão simples quanto [hallway testing](https://en.wikipedia.org/wiki/Usability_testing#Hallway_testing)) e vitrines com seus usuários para ver se eles gostam de usar seu produto e podem usar todos os recursos sem ficarem frustrados ou irritados.
+
 
 ## <a id="sec-end-to-end-tests"></a>Testes End-to-End
 
