@@ -79,7 +79,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 - [Exploratory Testing](#sec-exploratory-tests)
 
-- [The Confusion About Testing Terminology](#sec-terminology-confusion)
+- [A Confusão Sobre Terminologia de Testes](#sec-terminology-confusion)
 
 - [Putting Tests Into Your Deployment Pipeline](#sec-deployment-pipeline)
 
@@ -537,11 +537,11 @@ Felizmente, há uma solução melhor para esse dilema: executar testes de contra
 
 ## <a id="sec-terminology-confusion"></a>A Confusão Sobre Terminologia de Testes
 
-Falando sobre diferentes classificações de teste é sempre difícil. O que eu quero dizer quando digo sobre testes unitários pode ser um pouco diferente do seu entendimento. Com testes integrados é ainda pior. Para algumas pessoas, integração de testes é uma atividade muito ampla que testa por várias partes diferentes de um sistema inteiro. Para mim, especificamente, é uma coisa simples, somente testar a integração com uma parte externa por vez. Alguns chamam de testes de integração, outros referem como testes de componente, alguns preferem o termo teste de serviço. Alguns ainda irão dizer que todos esses três termos são coisas totalmente diferentes. Não há certo ou errado. A comunidade de desenvolvimento de software simplesmente ainda não conseguiu estabelecer termos bem definidos sobre testes.  
+Falando sobre diferentes classificações de teste é sempre difícil. O que eu quero dizer quando digo sobre testes de unidade pode ser um pouco diferente do seu entendimento. Com testes integrados é ainda pior. Para algumas pessoas, integração de testes é uma atividade muito ampla que testa por várias partes diferentes de um sistema inteiro. Para mim, especificamente, é uma coisa simples, somente testar a integração com uma parte externa por vez. Alguns chamam de testes de integração, outros referem como testes de componente, alguns preferem o termo teste de serviço. Alguns ainda irão dizer que todos esses três termos são coisas totalmente diferentes. Não há certo ou errado. A comunidade de desenvolvimento de software simplesmente ainda não conseguiu estabelecer termos bem definidos sobre testes.  
 
-Não se preocupe em se prender a termos ambíguos. Não importa se você chama de end-to-end ou broad stack ou teste funcional. Não importa se seus testes de integração significam algo diferente para você do que para o pessoal de outra empresa. Sim, seriam muito legal se nossa profissão pudesse estabelecer-se em termos bem definidos e ficar com isso. Infelizmente, isso não aconteceu ainda. E, visto que há muitas nuances quando se fala de escrita de testes, é mais um espectro que um monte de coisas distintas de qualquer forma, o que faz uma nomeação consistente ainda mais difícil.
+Não se preocupe em se prender a termos ambíguos. Não importa se você chama de *end-to-end* ou *broad stack* ou teste funcional. Não importa se seus testes de integração significam algo diferente para você do que para o pessoal de outra empresa. Sim, seriam muito legal se nossa profissão pudesse estabelecer-se em termos bem definidos e ficar com isso. Infelizmente, isso não aconteceu ainda. E, visto que há muitas nuances quando se fala de escrita de testes, é mais um espectro que um monte de coisas distintas de qualquer forma, o que faz uma nomeação consistente ainda mais difícil.
 
-O importante a se aprender é que você encontre termos que funcionem para você e sua equipe. Seja claro sobre os diferentes tipos de testes que deseja escrever. Concorde com a nomeação em sua equipe e encontre um consenso sobre o escopo de cada tipo de teste. Se você conseguir isso consistente dentro de sua equipe (ou talvez até mesmo dentro de sua organização), isso é tudo com o que você deve se preocupar. Simon Stewart resumiu isso muito bem quando descreveu a abordagem que eles usam no Google. E acho que isso mostra perfeitamente como ficar muito preso a nomes e convenções de nomenclatura simplesmente não vale a pena.
+O importante a se aprender é que você encontre termos que funcionem para você e sua equipe. Seja claro sobre os diferentes tipos de testes que deseja escrever. Concorde com a nomeação em sua equipe e encontre um consenso sobre o escopo de cada tipo de teste. Se você conseguir isso consistente dentro de sua equipe (ou talvez até mesmo dentro de sua organização), isso é tudo com o que você deve se preocupar. [Simon Stewart](https://testing.googleblog.com/2010/12/test-sizes.html) resumiu isso muito bem quando descreveu a abordagem que eles usam no Google. E acho que isso mostra perfeitamente como ficar muito preso a nomes e convenções de nomenclatura simplesmente não vale a pena.
 
 ## <a id="sec-deployment-pipeline"></a>Putting Tests Into Your Deployment Pipeline
 
