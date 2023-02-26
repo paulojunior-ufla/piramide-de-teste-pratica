@@ -87,11 +87,11 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 - [Writing Clean Test Code](#sec-clean-test-code)
 
-- [Conclusion](#sec-conclusion)
+- [Conclusão](#sec-conclusion)
 
-- [Appendix](#sec-appendix)
+- [Apêndice](#sec-appendix)
 
-    - [But I Really Need to Test This Private Method](#sec-private-method-tests)
+    - [Mas eu realmente preciso testar este método privado](#sec-private-method-tests)
 
     - [Specialised Test Helpers](#sec-test-helpers)
 
@@ -826,9 +826,9 @@ Eu sou rigoroso quando se trata de eliminar testes que não fornecem nenhum valo
 
 ## <a id="sec-conclusion"></a>Conclusão
 
-É isso! Sei que foi uma leitura longa e difícil para explicar por que e como você deve testar seu software. A boa notícia é que essas informações são bastante atemporais e independentes do tipo de software que você está construindo. Não importa se você está trabalhando em um cenário de microsserviços, dispositivos IoT, aplicativos móveis ou aplicativos da Web, as lições deste artigo podem ser aplicadas a todos eles.
+É isso! Sei que foi uma leitura longa e difícil para explicar porque e como você deve testar seu software. A boa notícia é que essas informações são bastante atemporais e independentes do tipo de software que você está construindo. Não importa se você está trabalhando em um cenário de microsserviços, dispositivos IoT, aplicativos móveis ou aplicativos da Web, as lições deste artigo podem ser aplicadas a todos eles.
 
-Espero que haja algo útil neste artigo. Agora vá em frente e confira o código de amostra e obtenha alguns dos conceitos explicados aqui em seu portfólio de teste. Ter um portfólio de teste sólido exige algum esforço. Vai compensar a longo prazo e vai deixar sua vida como desenvolvedor mais tranquila, acredite
+Espero que haja algo útil neste artigo. Agora vá em frente e confira o [código de amostra](https://github.com/hamvocke/spring-testing) e obtenha alguns dos conceitos explicados aqui em seu portfólio de teste. Ter um portfólio de teste sólido exige algum esforço. Vai compensar a longo prazo e vai deixar sua vida como desenvolvedor mais tranquila, acredite
 
 ## <a id="sec-appendix"></a>Apêndice
 
@@ -838,7 +838,7 @@ Se você se encontrar em uma situação em que realmente precisa testar um méto
 
 Tenho certeza de que isso é mais um problema de design do que um problema de escopo. Muito provavelmente você sente a necessidade de testar um método privado porque é complexo e testar esse método através da interface pública da classe requer muita configuração complicada.
 
-Sempre que me encontro nessa situação, geralmente chego à conclusão de que a classe que estou testando já é muito complexa. Está fazendo demais e viola o princípio da responsabilidade única - o S dos cinco princípios SOLID.
+Sempre que me encontro nessa situação, geralmente chego à conclusão de que a classe que estou testando já é muito complexa. Está fazendo demais e viola o princípio da responsabilidade única - o S dos cinco princípios [SOLID](https://pt.wikipedia.org/wiki/SOLID).
 
 A solução que geralmente funciona para mim é dividir a classe original em duas classes. Freqüentemente, leva apenas um ou dois minutos para pensar para encontrar uma boa maneira de dividir uma grande classe em duas classes menores com responsabilidade individual. Eu movo o método privado (que quero testar com urgência) para a nova classe e deixo a classe antiga chamar o novo método. Voilà, meu método privado difícil de testar agora é público e pode ser testado facilmente. Além disso, melhorei a estrutura do meu código aderindo ao princípio da responsabilidade única.
 
