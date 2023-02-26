@@ -541,6 +541,8 @@ Falando sobre diferentes classificações de teste é sempre difícil. O que eu 
 
 Não se preocupe em se prender a termos ambíguos. Não importa se você chama de end-to-end ou broad stack ou teste funcional. Não importa se seus testes de integração significam algo diferente para você do que para o pessoal de outra empresa. Sim, seriam muito legal se nossa profissão pudesse estabelecer-se em termos bem definidos e ficar com isso. Infelizmente, isso não aconteceu ainda. E, visto que há muitas nuances quando se fala de escrita de testes, é mais um espectro que um monte de "bucket" distintos de qualquer forma, o que faz uma nomeação consistente ainda mais difícil.
 
+O importante é que você encontre termos que funcionem para você e sua equipe. Seja claro sobre os diferentes tipos de testes que deseja escrever. Concorde com a nomeação em sua equipe e encontre um consenso sobre o escopo de cada tipo de teste. Se você conseguir isso consistente dentro de sua equipe (ou talvez até mesmo dentro de sua organização), isso é tudo com o que você deve se preocupar. Simon Stewart resumiu isso muito bem quando descreveu a abordagem que eles usam no Google. E acho que isso mostra perfeitamente como ficar muito preso a nomes e convenções de nomenclatura simplesmente não vale a pena.
+
 ## <a id="sec-deployment-pipeline"></a>Putting Tests Into Your Deployment Pipeline
 
 ## <a id="sec-test-duplication"></a>Avoid Test Duplication
