@@ -840,7 +840,7 @@ Tenho certeza de que isso é mais um problema de design do que um problema de es
 
 Sempre que me encontro nessa situação, geralmente chego à conclusão de que a classe que estou testando já é muito complexa. Está fazendo demais e viola o princípio da responsabilidade única - o S dos cinco princípios [SOLID](https://pt.wikipedia.org/wiki/SOLID).
 
-A solução que geralmente funciona para mim é dividir a classe original em duas classes. Freqüentemente, leva apenas um ou dois minutos para pensar para encontrar uma boa maneira de dividir uma grande classe em duas classes menores com responsabilidade individual. Eu movo o método privado (que quero testar com urgência) para a nova classe e deixo a classe antiga chamar o novo método. Voilà, meu método privado difícil de testar agora é público e pode ser testado facilmente. Além disso, melhorei a estrutura do meu código aderindo ao princípio da responsabilidade única.
+A solução que geralmente funciona para mim é dividir a classe original em duas classes. Frequentemente, leva apenas um ou dois minutos para pensar para encontrar uma boa maneira de dividir uma grande classe em duas classes menores com responsabilidade individual. Eu movo o método privado (que quero testar com urgência) para a nova classe e deixo a classe antiga chamar o novo método. Voilà, meu método privado difícil de testar agora é público e pode ser testado facilmente. Além disso, melhorei a estrutura do meu código aderindo ao princípio da responsabilidade única.
 
 ### <a id="sec-test-helpers"></a>Specialised Test Helpers
 
