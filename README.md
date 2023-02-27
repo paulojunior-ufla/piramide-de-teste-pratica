@@ -2,10 +2,10 @@
 
 Esta é uma tradução do artigo [The Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html?utm_source=pocket_reader), originalmente escrito por Ham Vocke.
 
-[numOfTranslatedSections]: 19
+[numOfTranslatedSections]: 26
 [amountOfSections]: 34
 
-![62%](https://progress-bar.dev/62/?title=progresso)
+![77%](https://progress-bar.dev/77/?title=progresso)
 
 ## Como contribuir?
 
@@ -81,7 +81,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 - [A Confusão Sobre Terminologia de Testes](#sec-terminology-confusion)
 
-- [Inserindo Testes em seu Pipeline de Deploy](#sec-deployment-pipeline)
+- [Inserindo Testes em seu Pipeline de Implantação](#sec-deployment-pipeline)
 
 - [Evitando duplicação de testes](#sec-test-duplication)
 
@@ -810,7 +810,7 @@ Não se preocupe em se prender a termos ambíguos. Não importa se você chama d
 
 O importante a se aprender é que você encontre termos que funcionem para você e sua equipe. Seja claro sobre os diferentes tipos de testes que deseja escrever. Concorde com a nomeação em sua equipe e encontre um consenso sobre o escopo de cada tipo de teste. Se você conseguir isso consistente dentro de sua equipe (ou talvez até mesmo dentro de sua organização), isso é tudo com o que você deve se preocupar. [Simon Stewart](https://testing.googleblog.com/2010/12/test-sizes.html) resumiu isso muito bem quando descreveu a abordagem que eles usam no Google. E acho que isso mostra perfeitamente como ficar muito preso a nomes e convenções de nomenclatura simplesmente não vale a pena.
 
-## <a id="sec-deployment-pipeline"></a>Inserindo Testes em seu Pipeline de Deploy
+## <a id="sec-deployment-pipeline"></a>Inserindo Testes em seu Pipeline de Implantação
 
 Se você está usando Continuous Integration ou Continuous Delivery, você terá um [Deployment Pipeline](https://martinfowler.com/bliki/DeploymentPipeline.html) em funcionamento que executará testes automatizados sempre que você fizer uma alteração em seu software. Geralmente, este pipeline é dividido em várias etapas que, gradualmente, lhe dão mais confiança de que seu software está pronto para ser implantado em produção. Ao ouvir falar sobre todos esses diferentes tipos de testes, você provavelmente está se perguntando como deve colocá-los em seu Deployment Pipeline. Para responder a isso, basta pensar em um dos valores fundamentais da Continuous Delivery (de fato, um dos principais [valores da Extreme Programming](http://www.extremeprogramming.org/values.html) e também do desenvolvimento ágil de software): **Fast Feedback**.
 
