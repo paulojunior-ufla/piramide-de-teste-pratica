@@ -81,11 +81,11 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 - [A Confusão Sobre Terminologia de Testes](#sec-terminology-confusion)
 
-- [Putting Tests Into Your Deployment Pipeline](#sec-deployment-pipeline)
+- [Inserindo Testes em seu Pipeline de Deploy](#sec-deployment-pipeline)
 
 - [Evitando duplicação de testes](#sec-test-duplication)
 
-- [Writing Clean Test Code](#sec-clean-test-code)
+- [Escrevendo Código de Teste Limpo](#sec-clean-test-code)
 
 - [Conclusão](#sec-conclusion)
 
@@ -810,7 +810,11 @@ Não se preocupe em se prender a termos ambíguos. Não importa se você chama d
 
 O importante a se aprender é que você encontre termos que funcionem para você e sua equipe. Seja claro sobre os diferentes tipos de testes que deseja escrever. Concorde com a nomeação em sua equipe e encontre um consenso sobre o escopo de cada tipo de teste. Se você conseguir isso consistente dentro de sua equipe (ou talvez até mesmo dentro de sua organização), isso é tudo com o que você deve se preocupar. [Simon Stewart](https://testing.googleblog.com/2010/12/test-sizes.html) resumiu isso muito bem quando descreveu a abordagem que eles usam no Google. E acho que isso mostra perfeitamente como ficar muito preso a nomes e convenções de nomenclatura simplesmente não vale a pena.
 
-## <a id="sec-deployment-pipeline"></a>Putting Tests Into Your Deployment Pipeline
+## <a id="sec-deployment-pipeline"></a>Inserindo Testes em seu Pipeline de Deploy
+
+Se você está usando Continuous Integration ou Continuous Delivery, você terá um [Deployment Pipeline](https://martinfowler.com/bliki/DeploymentPipeline.html) em funcionamento que executará testes automatizados sempre que você fizer uma alteração em seu software. Geralmente, este pipeline é dividido em várias etapas que, gradualmente, lhe dão mais confiança de que seu software está pronto para ser implantado em produção. Ao ouvir falar sobre todos esses diferentes tipos de testes, você provavelmente está se perguntando como deve colocá-los em seu Deployment Pipeline. Para responder a isso, basta pensar em um dos valores fundamentais da Continuous Delivery (de fato, um dos principais [valores da Extreme Programming](http://www.extremeprogramming.org/values.html) e também do desenvolvimento ágil de software): **Fast Feedback**.
+
+Um bom pipeline de construção lhe informa que você errou o mais rápido possível. Você não quer esperar uma hora apenas para descobrir que sua última mudança quebrou alguns testes unitários simples. É provável que você já tenha ido para casa se seu pipeline demorar muito para lhe dar esse feedback. Você poderia obter essa informação em questão de segundos, talvez alguns minutos, colocando os testes de execução rápida nas primeiras etapas de seu pipeline. Consequentemente, você coloca os testes de execução mais longos - geralmente os com escopo mais amplo - nas etapas posteriores para não adiar o feedback dos testes de execução rápida. Percebe então, que definir as etapas do seu Deployment Pipeline não é uma tarefa impulsionada pelos tipos de testes, mas sim pela velocidade e escopo dos testes a serem realizados. Com isso em mente, pode ser uma decisão boa colocar alguns testes de integração com escopos estreitos e testes de execução rápida na mesma etapa que seus testes unitários - simplesmente porque eles lhe dão um feedback mais rápido (Fast Feedback) e não porque você quer traçar a linha ao longo do tipo de seus testes.
 
 ## <a id="sec-test-duplication"></a>Evitando duplicação de testes
 
@@ -828,7 +832,19 @@ Vamos dizer de outra forma: se um teste em nível superior lhe dá mais confian�
 
 Eu sou rigoroso quando se trata de eliminar testes que não fornecem nenhum valor. Eu excluo testes em níveis mais altos que já são cobertos em um nível inferior (desde que não forneçam valor adicional). Eu substituo testes em níveis superiores por testes em níveis inferiores, se possível. Às vezes isso é difícil, especialmente se você sabe que criar um teste foi um trabalho árduo. Cuidado com a falácia do custo afundado e aperte a tecla delete. Não há razão para desperdiçar mais tempo precioso em um teste que deixou de fornecer valor.
 
-## <a id="sec-clean-test-code"></a>Writing Clean Test Code
+## <a id="sec-clean-test-code"></a>Escrevendo Código de Teste Limpo
+
+Assim como escrever código em geral, criar um código de teste bom e limpo exige muito cuidado. Aqui estão mais algumas dicas para criar um código de teste de fácil manutenção antes de prosseguir com sua suíte de testes automatizados:
+
+1.  Código de teste é tão importante quanto código de produção. Dê o mesmo nível de atenção e cuidado para
+    ele. "*Isso é apenas código de teste*" não é uma desculpa válida para justificar um código desleixado
+2.  Teste uma condição por teste. Isso vai ajudar a manter os seus testes curtos e fáceis de racionar
+3.  "*Preparar, Rodar, Verificar*" ou "*Dado, Quando, Então*" são bons mnemônicos para manter seus testes
+    bem estruturados
+4.  Legibilidade importa. Não tente ser excessivamente DRY. Duplicação é aceitável, se melhorar a
+    legibilidade. Tente encontrar um equilíbrio entre códigos [DRY e DAMP](https://stackoverflow.com/questions/6453235/what-does-damp-not-dry-mean-when-talking-about-unit-tests)
+5.  Quando estiver com dúvida use a [Rule of Three](https://blog.codinghorror.com/rule-of-three/) para
+    decidir quando refatorar. *Use antes de reutilizar*
 
 ## <a id="sec-conclusion"></a>Conclusão
 
