@@ -270,10 +270,7 @@ Uma boa estrutura para todos os seus testes (não limitada apenas a testes de un
 
 Há um mnemônico legal para lembrar essa estrutura: "[*Arrange, Act, Assert*](https://xp123.com/articles/3a-arrange-act-assert/)". Outro que você pode usar, inspirado no BDD (*Behavior Driven Development*), é a tríade "[*given, when, then*](https://martinfowler.com/bliki/GivenWhenThen.html)", onde "*given*" representa a configuração dos dados de teste, "*when*" representa o método chamado e "*then*" representa a parte da asserção.
 
-This pattern can be applied to other, more high-level tests as well. In every case they ensure that your tests remain easy and consistent to read. On top of that tests written with this structure in mind tend to be shorter and more expressive.
-
 Este padrão pode ser aplicado a outros testes de nível mais alto também. Em todos os casos, eles garantem que seus testes permaneçam consistentes e fáceis de ler. Além disso, testes escritos com essa estrutura em mente tendem a ser mais curtos e expressivos.
-
 
 ### <a id="sec-implementing-unit-test"></a>Implementando um Teste de Unidade
 
