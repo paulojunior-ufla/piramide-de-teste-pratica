@@ -785,6 +785,68 @@ Lembre-se: você tem muitos níveis inferiores em sua pirâmide de teste, onde j
 
 ### <a id="sec-api-end-to-end-tests"></a>REST API End-to-End Test
 
+Evitar uma user interface gráfica ao testar seu aplicativo pode ser uma boa ideia para criar testes que sejam menos escamosos ​​do que testes End-to-End completos e, ao mesmo tempo, cobrir uma ampla parte da pilha do seu aplicativo. Isso pode ser útil quando testar por meio da interface web do seu aplicativo for particularmente difícil. Talvez você nem tenha uma UI web porém hospeda uma API REST (porque você tem um aplicativo de página única em algum lugar conversando com essa API ou simplesmente porque despreza tudo que é bonito e brilhante). De qualquer forma, um teste subcutâneo que testa logo abaixo da interface gráfica do usuário e pode levar você muito longe sem comprometer muito a confiança. A coisa certa se você estiver hospedando uma API REST como fazemos em nosso código de exemplo:
+
+````JAVA
+@RestController
+public class ExampleController {
+    private final PersonRepository personRepository;
+
+    // abreviado para maior clareza
+
+    @GetMapping("/hello/{lastName}")
+    public String hello(@PathVariable final String lastName) {
+        Optional<Person> foundPerson = personRepository.findByLastName(lastName);
+
+        return foundPerson
+             .map(person -> String.format("Hello %s %s!",
+                     person.getFirstName(),
+                     person.getLastName()))
+             .orElse(String.format("Who is this '%s' you're talking about?",
+                     lastName));
+    }
+}
+````
+Deixe-me mostrar mais uma biblioteca que é útil ao testar um serviço que fornece uma API REST. REST-assured é uma biblioteca que oferece uma boa DSL para disparar requisições HTTP reais para uma API e avaliar as respostas que você recebe.
+
+Comecemos pelo princípio: adicione a dependência ao seu build.gradle.
+
+````
+testCompile('io.rest-assured:rest-assured:3.0.3')
+````
+Com esta biblioteca em mãos podemos implementar um teste End-to-End para nossa API REST:
+
+````JAVA
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class HelloE2ERestTest {
+
+    @Autowired
+    private PersonRepository personRepository;
+
+    @LocalServerPort
+    private int port;
+
+    @After
+    public void tearDown() throws Exception {
+        personRepository.deleteAll();
+    }
+
+    @Test
+    public void shouldReturnGreeting() throws Exception {
+        Person peter = new Person("Peter", "Pan");
+        personRepository.save(peter);
+
+        when()
+                .get(String.format("http://localhost:%s/hello/Pan", port))
+        .then()
+                .statusCode(is(200))
+                .body(containsString("Hello Peter Pan!"));
+    }
+}
+````
+Novamente, iniciamos todo o aplicativo Spring usando @SpringBootTest. Nesse caso, nós @Autowire o PersonRepository para que possamos gravar dados de teste em nosso banco de dados facilmente. Quando agora pedimos à API REST para dizer “olá” ao nosso amigo “Sr. Pan”, estamos sendo presenteados com uma bela saudação. Incrível! E um teste End-to-End mais do que suficiente se você nem mesmo possui uma interface web.
+
 ## <a id="sec-exploratory-tests"></a>Testes Exploratórios
 
 Mesmo os esforços de automação de teste mais diligentes não são perfeitos. Às vezes, você perde certos casos extremos em seus testes automatizados. Às vezes é quase impossível detectar um bug específico escrevendo um teste unitário. Certos problemas de qualidade nem se tornam aparentes em seus testes automatizados (pense em *design* ou usabilidade). Apesar de suas melhores intenções com relação à automação de teste, alguns tipos de testes manuais ainda são uma boa ideia.
