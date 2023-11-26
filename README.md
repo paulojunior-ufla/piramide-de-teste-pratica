@@ -77,6 +77,8 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [REST API End-to-End Test](#sec-api-end-to-end-tests)
 
+- [Testes de Aceitação – Seus Recursos Funcionam Corretamente?](#sec-acceptance-tests)
+
 - [Testes Exploratórios](#sec-exploratory-tests)
 
 - [A Confusão Sobre Terminologia de Testes](#sec-terminology-confusion)
@@ -784,6 +786,55 @@ Lembre-se: você tem muitos níveis inferiores em sua pirâmide de teste, onde j
 ### <a id="sec-ui-end-to-end-tests"></a>User Interface End-to-End Test
 
 ### <a id="sec-api-end-to-end-tests"></a>REST API End-to-End Test
+
+## <a id="sec-acceptance-tests"></a>Testes de Aceitação – Seus Recursos Funcionam Corretamente?
+
+Quanto mais alto você subir em sua pirâmide de testes, maior será a probabilidade de você entrar no campo de testar se os recursos que você está construindo funcionam corretamente do ponto de vista do usuário. Você pode tratar seu aplicativo como uma caixa preta e mudar o foco dos seus testes **de**
+
+
+*quando introduzo os valores **x** e **y**, o valor de retorno deve ser **z***
+
+**para**
+
+<code>
+
+***dado** que há um usuário logado*
+
+***e** há um artigo "bicicleta"*
+
+***quando** o usuário navega até a página de detalhes do artigo "bicicleta"*
+
+***e** clica no botão "adicionar ao cesto"*
+
+***então** o artigo "bicicleta" deve estar no cesto de compras*
+
+</code>
+
+Às vezes você ouvirá os termos [**teste funcional**](https://en.wikipedia.org/wiki/Functional_testing) ou [**teste de aceitação**](https://en.wikipedia.org/wiki/Acceptance_testing#Acceptance_testing_in_extreme_programming) para esses tipos de testes. Às vezes as pessoas dirão que os testes funcionais e de aceitação são coisas diferentes. Às vezes, os termos são confundidos. Às vezes, as pessoas discutem interminavelmente sobre palavras e definições. Freqüentemente, essa discussão é uma grande fonte de confusão.
+
+O problema é o seguinte: em um ponto, você deve testar se seu software funciona corretamente do ponto de vista do usuário, não apenas do ponto de vista técnico. O que você chama de testes não é tão importante. Ter esses testes, no entanto, é. Escolha um termo, cumpra-o e escreva esses testes.
+
+Este também é o momento em que as pessoas falam sobre BDD e ferramentas que permitem implementar testes no estilo BDD. O BDD ou uma forma de escrever testes no estilo BDD pode ser um bom truque para mudar sua mentalidade dos detalhes de implementação para as necessidades dos usuários. Vá em frente e experimente.
+
+Você nem precisa adotar ferramentas BDD completas como o [**Cucumber**](https://cucumber.io/) (embora possa). Algumas bibliotecas de asserções (como [**chai.js**](https://www.chaijs.com/guide/styles/#should) permitem que você escreva ***assertions*** com palavras-chave no estilo deveria que podem fazer com que seus testes sejam mais parecidos com BDD. E mesmo se você não usar uma biblioteca que forneça essa notação, código inteligente e bem fatorado permitirá que você escreva testes focados no comportamento do usuário.Alguns métodos/funções auxiliares podem ajudá-lo muito:
+
+````Python
+# Um simples teste de aceitacao em Python
+
+def test_add_to_basket():
+    # dado
+    user = a_user_with_empty_basket()
+    user.login()
+    bicycle = article(name="bicycle", price=100)
+
+    # quando
+    article_page.add_to_.basket(bicycle)
+
+    # entao
+    assert user.basket.contains(bicycle)
+````
+
+Os testes de aceitação podem vir em diferentes níveis de granularidade. Na maioria das vezes, eles serão de alto nível e testarão seu serviço por meio da interface do usuário. No entanto, é bom entender que tecnicamente não há necessidade de escrever testes de aceitação no nível mais alto da sua pirâmide de testes. Se o design do seu aplicativo e o cenário em questão permitirem que você escreva um teste de aceitação em um nível inferior, vá em frente. Fazer um teste de baixo nível é melhor do que fazer um teste de alto nível. O conceito de testes de aceitação – provar que seus recursos funcionam corretamente para o usuário – é completamente ortogonal à sua pirâmide de testes.
 
 ## <a id="sec-exploratory-tests"></a>Testes Exploratórios
 
