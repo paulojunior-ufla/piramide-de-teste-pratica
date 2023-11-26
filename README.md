@@ -783,6 +783,52 @@ Lembre-se: você tem muitos níveis inferiores em sua pirâmide de teste, onde j
 
 ### <a id="sec-ui-end-to-end-tests"></a>User Interface End-to-End Test
 
+Para testes ponta a ponta, o [Selenium](https://www.selenium.dev/) e o protocolo [WebDriver](https://www.w3.org/TR/webdriver/) são a ferramenta preferida de muitos desenvolvedores.Com o Selenium você pode escolher o navegador de sua preferência e deixá-lo interagir automaticamente com o seu site, clicar aqui e ali, inserir os dados e verificar se alguma coisa muda na interface do usuário.
+O Selenium precisa de um navegador que possa iniciar e usar para executar seus testes. Existem vários chamados ‘drivers’ para diferentes navegadores que você pode usar. [Escolha um](https://mvnrepository.com/search?q=selenium+driver) (ou vários) e adicione-o ao seu build.gradle. Seja qual for o navegador escolhido, você precisa ter certeza de que todos os desenvolvedores da sua equipe e do servidor de CI instalaram a versão correta do navegador localmente. Pode ser muito difícil manter a sincronia. Para Java, existe uma pequena biblioteca chamada [webdrivermanager](https://github.com/bonigarcia/webdrivermanager) que pode automatizar o download e a configuração da versão correta do navegador que você deseja usar. Adicione essas duas dependências ao seu build.gradle e pronto:
+```bash
+testCompile('org.seleniumhq.selenium:selenium-chrome-driver:2.53.1')
+testCompile('io.github.bonigarcia:webdrivermanager:1.7.2')
+```
+Executar um navegador completo em seu conjunto de testes pode ser um incômodo. Especialmente ao usar entrega contínua, o servidor que executa seu pipeline pode não conseguir ativar um navegador incluindo uma interface de usuário (por exemplo, porque não há X-Server disponível). Você pode solucionar esse problema iniciando um X-Server virtual como o xvfb.
+Uma abordagem mais recente é usar um navegador headless (ou seja, um navegador que não possui uma interface de usuário) para executar os testes do webdriver. Até recentemente, o [PhantomJS](https://phantomjs.org/) era o navegador headless líder usado para automação de navegador. Desde que o [Chromium](https://developer.chrome.com/blog/headless-chrome/) e o [Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Headless_mode) anunciaram que implementaram um modo headless em seus navegadores, o PhantomJS de repente se tornou obsoleto. Afinal, é melhor testar seu site com um navegador que seus usuários realmente usam (como Firefox e Chrome) em vez de usar um navegador artificial apenas porque é conveniente para você como desenvolvedor.
+Ambos, Firefox headless e Chrome, são novos e ainda não foram amplamente adotados para implementação de testes de webdriver. Queremos manter as coisas simples. Em vez de ficar brincando para usar os modos headless de última geração, vamos nos ater à maneira clássica usando Selenium e um navegador normal. Um teste simples de ponta a ponta que inicia o Chrome, navega até nosso serviço e verifica o conteúdo do site é assim:
+```JAVA
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class HelloE2ESeleniumTest {
+
+    private WebDriver driver;
+
+    @LocalServerPort
+    private int port;
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        ChromeDriverManager.getInstance().setup();
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        driver = new ChromeDriver();
+    }
+
+    @After
+    public void tearDown() {
+        driver.close();
+    }
+
+    @Test
+    public void helloPageHasTextHelloWorld() {
+        driver.get(String.format("http://127.0.0.1:%s/hello", port));
+
+        assertThat(driver.findElement(By.tagName("body")).getText(), containsString("Hello World!"));
+    }
+}
+```
+Observe que este teste só será executado em seu sistema se você tiver o Chrome instalado no sistema em que você executa este teste (sua máquina local, seu servidor CI).
+
+O teste é direto. Ele ativa todo o aplicativo Spring em uma porta aleatória usando @SpringBootTest. Em seguida, instanciamos um novo webdriver do Chrome, solicitamos que ele navegue até o endpoint /hello do nosso microsserviço e verificamos se ele imprime "Hello World!" na janela do navegador. Coisas legais!
+
 ### <a id="sec-api-end-to-end-tests"></a>REST API End-to-End Test
 
 ## <a id="sec-exploratory-tests"></a>Testes Exploratórios
