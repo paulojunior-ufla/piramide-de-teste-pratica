@@ -49,6 +49,8 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [Sociável e Solitário](#sec-sociable-and-solitary)
 
+    - [Mocking e Stubbing](#sec-Mocking-and-Stubbing)
+
     - [O que testar?](#sec-what-to-test)
 
     - [A estrutura de um teste](#sec-test-structure)
@@ -229,6 +231,20 @@ Algumas pessoas defendem que todos os colaboradores (por exemplo, outras classes
 [Geralmente](https://martinfowler.com/bliki/UnitTest.html), as pessoas nomeiam esses dois tipos de testes como **testes de unidade solitários**, para os testes que substituem todos os seus colaboradores, e **testes de unidade sociáveis**, para os testes que permitem "conversar" com colaboradores reais (Jay Fields cunhou esses termos em seu livro [*Working Effectively with Unit Tests*](https://leanpub.com/wewut)). Se você tiver algum tempo livre, [leia mais sobre](https://martinfowler.com/articles/mocksArentStubs.html) os prós e contras dessas diferentes escolas de pensamento.
 
 No final das contas, não importa se você vai de testes de unidade solitários ou sociáveis. Escrever testes automatizados é o que importa. Pessoalmente, eu procuro usar ambas as abordagens o tempo todo. Se ficar estranho usar colaboradores reais, então eu os substituirei, sem cerimônia. Se eu sentir que envolver o colaborador real me dá mais confiança em um teste, então eu vou substituir apenas as partes mais externas do meu serviço.
+
+### <a id="sec-Mocking-and-Stubbing"></a>Mocking e Stubbing
+
+Mocks e Stubs são dois tipos diferentes de Test Doubles (existem mais do que esses dois). Muitas pessoas usam os termos Mock e Stub de forma intercambiável. Acho bom ser preciso e manter em mente suas propriedades específicas. Você pode usar test doubles para substituir objetos que você usaria na produção por uma implementação que ajuda nos testes.
+
+Em termos simples, isso significa que você substitui algo real (por exemplo, uma classe, módulo ou função) por uma versão falsa desse algo. A versão falsa parece e age como a coisa real (responde às mesmas chamadas de método), mas responde com respostas predefinidas que você mesmo define no início do seu teste de unidade.
+
+O uso de test doubles não é específico para testes de unidade. Test doubles mais elaborados podem ser usados para simular partes inteiras do seu sistema de maneira controlada. No entanto, nos testes de unidade, é mais provável que você encontre muitos mocks e stubs (dependendo se você é do tipo sociável ou solitário de desenvolvedor), simplesmente porque muitas linguagens e bibliotecas modernas facilitam e tornam confortável a configuração de mocks e stubs.
+
+Independentemente da sua escolha de tecnologia, há uma boa chance de que tanto a biblioteca padrão da sua linguagem quanto alguma biblioteca de terceiros popular forneçam maneiras elegantes de configurar mocks. E até mesmo escrever seus próprios mocks do zero é apenas uma questão de criar uma classe/módulo/função falsa com a mesma assinatura da real e configurar a falsa no seu teste.
+
+Seus testes de unidade serão executados muito rapidamente. Em uma máquina decente, você pode esperar executar milhares de testes de unidade em poucos minutos. Teste pequenas partes da sua base de código isoladamente e evite acessar bancos de dados, o sistema de arquivos ou fazer consultas HTTP (usando mocks e stubs para essas partes) para manter seus testes rápidos.
+
+Uma vez que você pegar o jeito de escrever testes de unidade, você se tornará cada vez mais fluente nessa prática. Substitua colaboradores externos por stubs, configure alguns dados de entrada, chame o objeto em teste e verifique se o valor retornado é o esperado. Explore o [Desenvolvimento Orientado a Testes](https://pt.wikipedia.org/wiki/Test-driven_development)  e deixe que seus testes de unidade guiem o seu desenvolvimento; se aplicado corretamente, pode ajudar você a entrar em um ótimo fluxo e criar um design sólido e sustentável, ao mesmo tempo que produz automaticamente uma suíte de testes abrangente e totalmente automatizada. Ainda assim, não é uma solução mágica. Experimente de verdade e veja se se adapta ao seu estilo.
 
 ### <a id="sec-what-to-test"></a>O que testar?
 
