@@ -75,7 +75,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [User Interface End-to-End Test](#sec-ui-end-to-end-tests)
 
-    - [REST API End-to-End Test](#sec-api-end-to-end-tests)
+    - [REST API Testes End-to-End](#sec-api-end-to-end-tests)
 
 - [Testes Exploratórios](#sec-exploratory-tests)
 
@@ -783,9 +783,9 @@ Lembre-se: você tem muitos níveis inferiores em sua pirâmide de teste, onde j
 
 ### <a id="sec-ui-end-to-end-tests"></a>User Interface End-to-End Test
 
-### <a id="sec-api-end-to-end-tests"></a>REST API End-to-End Test
+### <a id="sec-api-end-to-end-tests"></a>REST API Testes End-to-End
 
-Evitar uma user interface gráfica ao testar seu aplicativo pode ser uma boa ideia para criar testes que sejam menos escamosos ​​do que testes End-to-End completos e, ao mesmo tempo, cobrir uma ampla parte da pilha do seu aplicativo. Isso pode ser útil quando testar por meio da interface web do seu aplicativo for particularmente difícil. Talvez você nem tenha uma UI web porém hospeda uma API REST (porque você tem um aplicativo de página única em algum lugar conversando com essa API ou simplesmente porque despreza tudo que é bonito e brilhante). De qualquer forma, um teste subcutâneo que testa logo abaixo da interface gráfica do usuário e pode levar você muito longe sem comprometer muito a confiança. A coisa certa se você estiver hospedando uma API REST como fazemos em nosso código de exemplo:
+Evitar uma interface gráfica de usuário ao testar seu aplicativo pode ser uma boa ideia para criar testes que sejam menos regressivos ​​do que testes End-to-End completos e, ao mesmo tempo, cobrir uma ampla parte da pilha do seu aplicativo. Isso pode ser útil quando testar por meio da interface web do seu aplicativo for particularmente difícil. Talvez você nem tenha uma UI web porém hospeda uma API REST (porque você tem um aplicativo de página única em algum lugar conversando com essa API ou simplesmente porque despreza tudo que é bonito e brilhante). De qualquer forma, um [teste subcutâneo](https://martinfowler.com/bliki/SubcutaneousTest.html) que testa logo abaixo da interface gráfica do usuário e pode levar você muito longe sem comprometer muito a confiança. A coisa certa se você estiver hospedando uma API REST como fazemos em nosso código de exemplo:
 
 ````JAVA
 @RestController
@@ -807,9 +807,9 @@ public class ExampleController {
     }
 }
 ````
-Deixe-me mostrar mais uma biblioteca que é útil ao testar um serviço que fornece uma API REST. REST-assured é uma biblioteca que oferece uma boa DSL para disparar requisições HTTP reais para uma API e avaliar as respostas que você recebe.
+Deixe-me mostrar mais uma biblioteca que é útil ao testar um serviço que fornece uma API REST. [REST-assured](https://github.com/rest-assured/rest-assured) é uma biblioteca que oferece uma boa DSL para disparar requisições HTTP reais para uma API e avaliar as respostas que você recebe.
 
-Comecemos pelo princípio: adicione a dependência ao seu build.gradle.
+Comecemos pelo princípio: adicione a dependência ao seu _build.gradle_.
 
 ````
 testCompile('io.rest-assured:rest-assured:3.0.3')
@@ -845,7 +845,7 @@ public class HelloE2ERestTest {
     }
 }
 ````
-Novamente, iniciamos todo o aplicativo Spring usando @SpringBootTest. Nesse caso, nós @Autowire o PersonRepository para que possamos gravar dados de teste em nosso banco de dados facilmente. Quando agora pedimos à API REST para dizer “olá” ao nosso amigo “Sr. Pan”, estamos sendo presenteados com uma bela saudação. Incrível! E um teste End-to-End mais do que suficiente se você nem mesmo possui uma interface web.
+Novamente, iniciamos todo o aplicativo Spring usando _@SpringBootTest_. Nesse caso, nós _@Autowire_ o _PersonRepository_ para que possamos gravar dados de teste em nosso banco de dados facilmente. Quando agora pedimos à API REST para dizer “olá” ao nosso amigo “Sr. Pan”, estamos sendo presenteados com uma bela saudação. Incrível! E um teste End-to-End mais do que suficiente se você nem mesmo possui uma interface web.
 
 ## <a id="sec-exploratory-tests"></a>Testes Exploratórios
 
