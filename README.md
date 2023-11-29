@@ -232,7 +232,7 @@ No final das contas, não importa se você vai de testes de unidade solitários 
 
 ### <a id="sec-Mocking-and-Stubbing"></a>*Mocking* e *Stubbing*
 
-*Mocks* e *Stubs* são dois tipos diferentes de *Test Doubles* (existem mais do que esses dois). Muitas pessoas usam os termos *Mock* e Stub de forma intercambiável. Acho bom ser preciso e manter em mente suas propriedades específicas. Você pode usar *test doubles* para substituir objetos que você usaria na produção por uma implementação que ajuda nos testes.
+*Mocks* e *Stubs* são dois tipos diferentes de [*Test Doubles*](https://martinfowler.com/bliki/TestDouble.html) (existem mais do que esses dois). Muitas pessoas usam os termos *Mock* e Stub de forma intercambiável. Acho bom ser preciso e manter em mente suas propriedades específicas. Você pode usar *test doubles* para substituir objetos que você usaria na produção por uma implementação que ajuda nos testes.
 
 Em termos simples, isso significa que você substitui algo real (por exemplo, uma classe, módulo ou função) por uma versão falsa desse algo. A versão falsa parece e age como a coisa real (responde às mesmas chamadas de método), mas responde com respostas predefinidas que você mesmo define no início do seu teste de unidade.
 
