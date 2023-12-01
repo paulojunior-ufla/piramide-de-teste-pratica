@@ -810,13 +810,13 @@ Quanto mais alto você subir em sua pirâmide de testes, maior será a probabili
 
 </code>
 
-Às vezes você ouvirá os termos [**teste funcional**](https://en.wikipedia.org/wiki/Functional_testing) ou [**teste de aceitação**](https://en.wikipedia.org/wiki/Acceptance_testing#Acceptance_testing_in_extreme_programming) para esses tipos de testes. Às vezes as pessoas dirão que os testes funcionais e de aceitação são coisas diferentes. Às vezes, os termos são confundidos. Às vezes, as pessoas discutem interminavelmente sobre palavras e definições. Freqüentemente, essa discussão é uma grande fonte de confusão.
+Às vezes você ouvirá os termos [**teste funcional**](https://en.wikipedia.org/wiki/Functional_testing) ou [**teste de aceitação**](https://en.wikipedia.org/wiki/Acceptance_testing#Acceptance_testing_in_extreme_programming) para esses tipos de testes. Às vezes as pessoas dirão que os testes funcionais e de aceitação são coisas diferentes. Às vezes, os termos são confundidos. Às vezes, as pessoas discutem interminavelmente sobre palavras e definições. Frequentemente, essa discussão é uma grande fonte de confusão.
 
 O problema é o seguinte: em um ponto, você deve testar se seu software funciona corretamente do ponto de vista do usuário, não apenas do ponto de vista técnico. O que você chama de testes não é tão importante. Ter esses testes, no entanto, é. Escolha um termo, cumpra-o e escreva esses testes.
 
 Este também é o momento em que as pessoas falam sobre BDD e ferramentas que permitem implementar testes no estilo BDD. O BDD ou uma forma de escrever testes no estilo BDD pode ser um bom truque para mudar sua mentalidade dos detalhes de implementação para as necessidades dos usuários. Vá em frente e experimente.
 
-Você nem precisa adotar ferramentas BDD completas como o [**Cucumber**](https://cucumber.io/) (embora possa). Algumas bibliotecas de asserções (como [**chai.js**](https://www.chaijs.com/guide/styles/#should) permitem que você escreva ***assertions*** com palavras-chave no estilo deveria que podem fazer com que seus testes sejam mais parecidos com BDD. E mesmo se você não usar uma biblioteca que forneça essa notação, código inteligente e bem fatorado permitirá que você escreva testes focados no comportamento do usuário.Alguns métodos/funções auxiliares podem ajudá-lo muito:
+Você nem precisa adotar ferramentas BDD completas como o [**Cucumber**](https://cucumber.io/) (embora possa). Algumas bibliotecas de *assertions* (como [**chai.js**](https://www.chaijs.com/guide/styles/#should)) permitem que você escreva ***assertions*** com palavras-chave no estilo deveria que podem fazer com que seus testes sejam mais parecidos com BDD. E mesmo se você não usar uma biblioteca que forneça essa notação, código inteligente e bem fatorado permitirá que você escreva testes focados no comportamento do usuário.Alguns métodos/funções auxiliares podem ajudá-lo muito:
 
 ````Python
 # Um simples teste de aceitacao em Python
