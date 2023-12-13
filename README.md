@@ -71,11 +71,13 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
 - [Testes de UI](#sec-ui-tests)
 
-- [Testes End-to-End](#sec-end-to-end-tests)
+- [Testes End-to-En](#sec-end-to-end-tests)
 
-    - [User Interface End-to-End Test](#sec-ui-end-to-end-tests)
+    - [Teste ponta a ponta da interface do usuário](#sec-ui-end-to-end-tests)
 
-    - [REST API End-to-End Test](#sec-api-end-to-end-tests)
+    - [Teste ponta a ponta da API REST](#sec-api-end-to-end-tests)
+
+- [Testes de aceitação – seus recursos funcionam corretamente?](#sec-Acceptance-Tests)
 
 - [Testes Exploratórios](#sec-exploratory-tests)
 
@@ -781,9 +783,164 @@ Se você estiver construindo um site de _e-commerce_, sua jornada de cliente mai
 
 Lembre-se: você tem muitos níveis inferiores em sua pirâmide de teste, onde já testou todos os tipos de casos dos extremos e integrações com outras partes do sistema. Não há necessidade de repetir esses testes em um nível superior. Alto esforço de manutenção e muitos falsos positivos irão atrasá-lo e fazer com que você perca a confiança em seus testes, mais cedo ou mais tarde.
 
-### <a id="sec-ui-end-to-end-tests"></a>User Interface End-to-End Test
+### <a id="sec-ui-end-to-end-tests"></a>Teste ponta a ponta da Interface do Usuário
 
-### <a id="sec-api-end-to-end-tests"></a>REST API End-to-End Test
+Para testes ponta a ponta, o Selenium e o protocolo WebDriver são a ferramenta preferida de muitos desenvolvedores. Com o Selenium você pode escolher o navegador de sua preferência e deixá-lo ligar automaticamente para o seu site, clicar aqui e ali, inserir os dados e verificar se alguma coisa muda na interface do usuário.
+
+O Selenium precisa de um navegador que possa iniciar e usar para executar seus testes. Existem vários chamados ‘drivers’ para diferentes navegadores que você pode usar. Escolha um (ou vários) e adicione-o ao seu build.gradle. Seja qual for o navegador escolhido, você precisa ter certeza de que todos os desenvolvedores da sua equipe e do servidor de CI instalaram a versão correta do navegador localmente. Pode ser muito doloroso manter a sincronia. Para Java, existe uma pequena biblioteca chamada webdrivermanager que pode automatizar o download e a configuração da versão correta do navegador que você deseja usar. Adicione essas duas dependências ao seu build.gradle e pronto:
+
+testCompile('org.seleniumhq.selenium:selenium-chrome-driver:2.53.1')
+testCompile('io.github.bonigarcia:webdrivermanager:1.7.2')
+
+Executar um navegador completo em seu conjunto de testes pode ser um incômodo. Especialmente ao usar entrega contínua, o servidor que executa seu pipeline pode não conseguir ativar um navegador incluindo uma interface de usuário (por exemplo, porque não há X-Server disponível). Você pode solucionar esse problema iniciando um X-Server virtual como o [xvfb](https://en.wikipedia.org/wiki/Xvfb)
+
+Uma abordagem mais recente é usar um navegador headless (ou seja, um navegador que não possui uma interface de usuário) para executar os testes do webdriver. Até recentemente, o [PhantomJS](https://phantomjs.org/) era o navegador headless líder usado para automação de navegador. Desde que o [Chrome](https://developer.chrome.com/blog/headless-chrome?hl=pt-br) e o [Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Headless_mode) anunciaram que implementaram um modo headless em seus navegadores, o PhantomJS de repente se tornou obsoleto. Afinal, é melhor testar seu site com um navegador que seus usuários realmente usam (como Firefox e Chrome) em vez de usar um navegador artificial apenas porque é conveniente para você como desenvolvedor.
+
+Ambos, Firefox e Chrome headless, são novos e ainda não foram amplamente adotados para implementação de testes de webdriver. Queremos manter as coisas simples. Em vez de ficar brincando para usar os modos headless de última geração, vamos nos ater à maneira clássica usando Selenium e um navegador normal. Um teste simples de ponta a ponta que inicia o Chrome, navega até nosso serviço e verifica o conteúdo do site é assim:
+
+@RunWith(SpringRunner.class)
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+
+    public class HelloE2ESeleniumTest {
+
+    private WebDriver driver;
+
+    @LocalServerPort
+    private int port;
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        ChromeDriverManager.getInstance().setup();
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        driver = new ChromeDriver();
+    }
+
+    @After
+    public void tearDown() {
+        driver.close();
+    }
+
+    @Test
+    public void helloPageHasTextHelloWorld() {
+        driver.get(String.format("http://127.0.0.1:%s/hello", port));
+
+        assertThat(driver.findElement(By.tagName("body")).getText(), containsString("Hello World!"));
+    }
+}
+
+Observe que este teste só será executado em seu sistema se você tiver o Chrome instalado no sistema em que você executa este teste (sua máquina local, seu servidor CI).
+O teste é direto. Ele ativa todo o aplicativo Spring em uma porta aleatória usando @SpringBootTest. Em seguida, instanciamos um novo webdriver do Chrome, solicitamos que ele navegue até o endpoint /hello do nosso microsserviço e verificamos se ele imprime "Hello World!" na janela do navegador. Coisas legais!
+
+
+### <a id="sec-api-end-to-end-tests"></a>Teste ponta a ponta da API REST
+
+Evitar uma interface gráfica do usuário ao testar seu aplicativo pode ser uma boa ideia para criar testes que sejam menos instáveis do que testes completos de ponta a ponta e, ao mesmo tempo, cobrir uma ampla parte da pilha do seu aplicativo. Isso pode ser útil quando o teste por meio da interface da web do seu aplicativo for particularmente difícil. Talvez você nem tenha uma UI da web, mas sirva uma API REST (porque você tem um aplicativo de página única em algum lugar conversando com essa API ou simplesmente porque despreza tudo que é bonito e brilhante). De qualquer forma, um [teste subcutâneo](https://martinfowler.com/bliki/SubcutaneousTest.html) que testa logo abaixo da interface gráfica do usuário e pode levar você muito longe sem comprometer muito a confiança. A coisa certa se você estiver servindo uma API REST como fazemos em nosso código de exemplo:
+
+@RestController
+
+    public class ExampleController {
+    private final PersonRepository personRepository;
+
+    // shortened for clarity
+
+    @GetMapping("/hello/{lastName}")
+    public String hello(@PathVariable final String lastName) {
+        Optional<Person> foundPerson = personRepository.findByLastName(lastName);
+
+        return foundPerson
+             .map(person -> String.format("Hello %s %s!",
+                     person.getFirstName(),
+                     person.getLastName()))
+             .orElse(String.format("Who is this '%s' you're talking about?",
+                     lastName));
+    }
+}
+
+Deixe-me mostrar mais uma biblioteca que é útil ao testar um serviço que fornece uma API REST. [REST-assured](https://github.com/rest-assured/rest-assured) é uma biblioteca que oferece uma boa DSL para disparar solicitações HTTP reais em uma API e avaliar as respostas que você recebe.
+
+Comecemos pelo princípio: adicione a dependência ao seu build.gradle.
+
+testCompile('io.rest-assured:rest-assured:3.0.3')
+
+Com esta biblioteca em mãos podemos implementar um teste ponta a ponta para nossa API REST:
+
+@RunWith(SpringRunner.class)
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+
+    public class HelloE2ERestTest {
+
+    @Autowired
+    private PersonRepository personRepository;
+
+    @LocalServerPort
+    private int port;
+
+    @After
+    public void tearDown() throws Exception {
+        personRepository.deleteAll();
+    }
+
+    @Test
+    public void shouldReturnGreeting() throws Exception {
+        Person peter = new Person("Peter", "Pan");
+        personRepository.save(peter);
+
+        when()
+                .get(String.format("http://localhost:%s/hello/Pan", port))
+        .then()
+                .statusCode(is(200))
+                .body(containsString("Hello Peter Pan!"));
+    }
+}
+
+Novamente, iniciamos todo o aplicativo Spring usando @SpringBootTest. Nesse caso, @Autowire o PersonRepository para que possamos gravar dados de teste em nosso banco de dados facilmente. Quando agora pedimos à API REST para dizer “olá” ao nosso amigo “Sr. Pan”, estamos sendo presenteados com uma bela saudação. Incrível! E um teste mais do que suficiente se você nem mesmo possui uma interface web.
+
+## <a id="sec-Acceptance-Tests"></a>Testes de aceitação – seus recursos funcionam corretamente?
+
+Quanto mais alto você subir em sua pirâmide de testes, maior será a probabilidade de você entrar no campo de testar se os recursos que você está construindo funcionam corretamente do ponto de vista do usuário. Você pode tratar seu aplicativo como uma caixa preta e mudar o foco dos seus testes de
+
+quando insiro os valores x e y, o valor de retorno deve ser z para:
+
+*dado* que há um usuário logado
+
+*e* há um artigo "bicicleta"
+
+*quando* o usuário navega até a página de detalhes do artigo "bicicleta"
+
+*e* clica no botão "adicionar ao carrinho"
+
+*então* o artigo "bicicleta" deve estar no carrinho de compras
+
+Às vezes você ouvirá os termos teste funcional ou teste de aceitação para esses tipos de testes. Às vezes as pessoas dirão que os [testes funcionais](https://en.wikipedia.org/wiki/Functional_testing) e [testes de aceitação](https://en.wikipedia.org/wiki/Acceptance_testing#Acceptance_testing_in_extreme_programming) são coisas diferentes. Às vezes, os termos são confundidos. Às vezes, as pessoas discutem interminavelmente sobre palavras e definições. Frequentemente, essa discussão é uma grande fonte de confusão.
+
+O problema é o seguinte: em um ponto, você deve testar se seu software funciona corretamente do ponto de vista do usuário, não apenas do ponto de vista técnico. O que você chama de testes não é tão importante. Ter esses testes, no entanto, é. Escolha um termo, cumpra-o e escreva esses testes.
+
+Este também é o momento em que as pessoas falam sobre BDD e ferramentas que permitem implementar testes no estilo BDD. O BDD ou uma forma de escrever testes no estilo BDD pode ser um bom truque para mudar sua mentalidade dos detalhes de implementação para as necessidades dos usuários. Vá em frente e experimente.
+
+Você nem precisa adotar ferramentas BDD completas como o [Cucumber](https://cucumber.io/) (embora possa). Algumas bibliotecas de asserções (como [chai.js](https://www.chaijs.com/guide/styles/#should) permitem que você escreva asserções com palavras-chave no estilo deveria que podem fazer com que seus testes sejam mais parecidos com BDD. E mesmo se você não usar uma biblioteca que forneça essa notação, código inteligente e bem fatorado permitirá que você escreva testes focados no comportamento do usuário. Alguns métodos/funções auxiliares podem proporcionar um tempo muito longo:
+
+Um exemplo de teste de aceitação em Python
+
+    def test_add_to_basket():
+        # given
+        user = a_user_with_empty_basket()
+        user.login()
+        bicycle = article(name="bicycle", price=100)
+    
+        # when
+        article_page.add_to_.basket(bicycle)
+    
+        # then
+        assert user.basket.contains(bicycle)
+
+
+Os testes de aceitação podem vir em diferentes níveis de granularidade. Na maioria das vezes, eles serão de alto nível e testarão seu serviço por meio da interface do usuário. No entanto, é bom entender que tecnicamente não há necessidade de escrever testes de aceitação no nível mais alto da sua pirâmide de testes. Se o design do seu aplicativo e o cenário em questão permitirem que você escreva um teste de aceitação em um nível inferior, vá em frente. Fazer um teste de baixo nível é melhor do que fazer um teste de alto nível. O conceito de testes de aceitação – provar que seus recursos funcionam corretamente para o usuário – é completamente ortogonal à sua pirâmide de testes.
+
 
 ## <a id="sec-exploratory-tests"></a>Testes Exploratórios
 
