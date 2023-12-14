@@ -782,6 +782,58 @@ Se você estiver construindo um site de _e-commerce_, sua jornada de cliente mai
 Lembre-se: você tem muitos níveis inferiores em sua pirâmide de teste, onde já testou todos os tipos de casos dos extremos e integrações com outras partes do sistema. Não há necessidade de repetir esses testes em um nível superior. Alto esforço de manutenção e muitos falsos positivos irão atrasá-lo e fazer com que você perca a confiança em seus testes, mais cedo ou mais tarde.
 
 ### <a id="sec-ui-end-to-end-tests"></a>User Interface End-to-End Test
+Para testes de ponta a ponta, o [Selenium](https://www.selenium.dev) e o protocolo [WebDriver](https://www.w3.org/TR/webdriver/) são a ferramenta de escolha para muitos desenvolvedores. Com o Selenium, você pode escolher um navegador de sua preferência e deixá-lo chamar automaticamente o seu site, clicar aqui e ali, inserir dados e verificar mudanças na interface do usuário.
+
+O Selenium precisa de um navegador que possa ser iniciado e utilizado para executar seus testes. Existem vários chamados 'drivers' para diferentes navegadores que você pode usar. [Escolha um](https://mvnrepository.com/search?q=selenium+driver) (ou vários) e adicione-o ao seu build.gradle. Independentemente do navegador que escolher, você precisa garantir que todos os desenvolvedores da sua equipe e o servidor de integração contínua (CI) tenham instalada localmente a versão correta do navegador. Isso pode ser bastante complicado para manter sincronizado. Para Java, há uma pequena biblioteca útil chamada [webdrivermanager](https://github.com/bonigarcia/webdrivermanager) que pode automatizar o download e a configuração da versão correta do navegador que você deseja usar. Adicione essas duas dependências ao seu build.gradle e você estará pronto para começar:
+````JAVA
+testCompile('org.seleniumhq.selenium:selenium-chrome-driver:2.53.1')
+testCompile('io.github.bonigarcia:webdrivermanager:1.7.2')
+````
+Executar um navegador completo em sua suíte de testes pode ser um aborrecimento. Especialmente ao usar entrega contínua, o servidor que executa seu pipeline pode não ser capaz de iniciar um navegador com uma interface de usuário (por exemplo, porque não há um servidor X disponível). Você pode contornar esse problema iniciando um servidor X virtual, como o [xvfb](https://en.wikipedia.org/wiki/Xvfb).
+
+Uma abordagem mais recente é usar um navegador sem interface gráfica (ou seja, um navegador que não possui uma interface de usuário) para executar seus testes com webdriver. Até recentemente, o [PhantomJS](https://phantomjs.org) era o navegador sem interface líder usado para automação de navegador. Desde que tanto o [Chromium](https://developer.chrome.com/blog/headless-chrome/) quanto o [Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Headless_mode) anunciaram que implementaram um modo sem interface em seus navegadores, o PhantomJS de repente se tornou obsoleto. Afinal, é melhor testar seu site com um navegador que seus usuários realmente usam (como Firefox e Chrome) em vez de usar um navegador artificial apenas porque é conveniente para você como desenvolvedor.
+
+Tanto o Firefox quanto o Chrome sem interface são novidades e ainda estão para ser amplamente adotados na implementação de testes com webdriver. Queremos manter as coisas simples. Em vez de nos esforçarmos para usar os novos modos sem interface na vanguarda, vamos nos ater ao método clássico usando o Selenium e um navegador regular. Um simples teste de ponta a ponta que inicia o Chrome, navega até o nosso serviço e verifica o conteúdo do site se parece com isso:
+
+
+````JAVA
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class HelloE2ESeleniumTest {
+
+    private WebDriver driver;
+
+    @LocalServerPort
+    private int port;
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        ChromeDriverManager.getInstance().setup();
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        driver = new ChromeDriver();
+    }
+
+    @After
+    public void tearDown() {
+        driver.close();
+    }
+
+    @Test
+    public void helloPageHasTextHelloWorld() {
+        driver.get(String.format("http://127.0.0.1:%s/hello", port));
+
+        assertThat(driver.findElement(By.tagName("body")).getText(), containsString("Hello World!"));
+    }
+}
+````
+
+  
+Observe que este teste só será executado no seu sistema se você tiver o Chrome instalado no sistema em que está executando este teste (sua máquina local, seu servidor CI).
+
+O teste é simples. Ele inicia toda a aplicação Spring em uma porta aleatória usando @SpringBootTest. Em seguida, instanciamos um novo webdriver do Chrome, dizemos a ele para navegar até o endpoint /hello do nosso microsserviço e verificamos se ele exibe "Hello World!" na janela do navegador. Muito legal!
 
 ### <a id="sec-api-end-to-end-tests"></a>REST API End-to-End Test
 
