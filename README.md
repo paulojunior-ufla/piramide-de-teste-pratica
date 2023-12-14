@@ -782,6 +782,7 @@ Se você estiver construindo um site de _e-commerce_, sua jornada de cliente mai
 Lembre-se: você tem muitos níveis inferiores em sua pirâmide de teste, onde já testou todos os tipos de casos dos extremos e integrações com outras partes do sistema. Não há necessidade de repetir esses testes em um nível superior. Alto esforço de manutenção e muitos falsos positivos irão atrasá-lo e fazer com que você perca a confiança em seus testes, mais cedo ou mais tarde.
 
 ### <a id="sec-ui-end-to-end-tests"></a>User Interface End-to-End Test
+
 Para testes de ponta a ponta, o [Selenium](https://www.selenium.dev) e o protocolo [WebDriver](https://www.w3.org/TR/webdriver/) são a ferramenta de escolha para muitos desenvolvedores. Com o Selenium, você pode escolher um navegador de sua preferência e deixá-lo chamar automaticamente o seu site, clicar aqui e ali, inserir dados e verificar mudanças na interface do usuário.
 
 O Selenium precisa de um navegador que possa ser iniciado e utilizado para executar seus testes. Existem vários chamados 'drivers' para diferentes navegadores que você pode usar. [Escolha um](https://mvnrepository.com/search?q=selenium+driver) (ou vários) e adicione-o ao seu build.gradle. Independentemente do navegador que escolher, você precisa garantir que todos os desenvolvedores da sua equipe e o servidor de integração contínua (CI) tenham instalada localmente a versão correta do navegador. Isso pode ser bastante complicado para manter sincronizado. Para Java, há uma pequena biblioteca útil chamada [webdrivermanager](https://github.com/bonigarcia/webdrivermanager) que pode automatizar o download e a configuração da versão correta do navegador que você deseja usar. Adicione essas duas dependências ao seu build.gradle e você estará pronto para começar:
@@ -836,6 +837,65 @@ Observe que este teste só será executado no seu sistema se você tiver o Chrom
 O teste é simples. Ele inicia toda a aplicação Spring em uma porta aleatória usando @SpringBootTest. Em seguida, instanciamos um novo webdriver do Chrome, dizemos a ele para navegar até o endpoint /hello do nosso microsserviço e verificamos se ele exibe "Hello World!" na janela do navegador. Muito legal!
 
 ### <a id="sec-api-end-to-end-tests"></a>REST API End-to-End Test
+
+Evitar uma interface gráfica do usuário ao testar sua aplicação pode ser uma boa ideia para elaborar testes que sejam menos instáveis do que testes de ponta a ponta completos, ao mesmo tempo que cobrem uma grande parte da pilha da sua aplicação. Isso pode ser útil quando testar através da interface web da sua aplicação é particularmente difícil. Talvez você nem tenha uma UI web, mas ofereça uma API REST em vez disso (porque você tem uma aplicação de página única conversando com essa API, ou simplesmente porque você despreza tudo que é bonito e brilhante). De qualquer forma, um [Teste Subcutâneo](https://martinfowler.com/bliki/SubcutaneousTest.html) que testa logo abaixo da interface gráfica do usuário pode levar você realmente longe sem comprometer demais a confiança. A coisa certa se você está servindo uma API REST como nós fazemos no nosso código de exemplo:
+````JAVA
+RestController
+public class ExampleController {
+    private final PersonRepository personRepository;
+
+    // shortened for clarity
+
+    @GetMapping("/hello/{lastName}")
+    public String hello(@PathVariable final String lastName) {
+        Optional<Person> foundPerson = personRepository.findByLastName(lastName);
+
+        return foundPerson
+             .map(person -> String.format("Hello %s %s!",
+                     person.getFirstName(),
+                     person.getLastName()))
+             .orElse(String.format("Who is this '%s' you're talking about?",
+                     lastName));
+    }
+}
+````
+Deixe-me mostrar mais uma biblioteca que é útil ao testar um serviço que fornece uma API [REST. REST-assured](https://github.com/rest-assured/rest-assured) é uma biblioteca que oferece uma DSL (Linguagem de Domínio Específico) agradável para disparar requisições HTTP reais contra uma API e avaliar as respostas recebidas.
+````JAVA
+testCompile('io.rest-assured:rest-assured:3.0.3')
+````
+Primeiramente: Adicione a dependência ao seu build.gradle.
+
+Com esta biblioteca em mãos, podemos implementar um teste de ponta a ponta para a nossa API REST:
+````JAVA
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class HelloE2ERestTest {
+
+    @Autowired
+    private PersonRepository personRepository;
+
+    @LocalServerPort
+    private int port;
+
+    @After
+    public void tearDown() throws Exception {
+        personRepository.deleteAll();
+    }
+
+    @Test
+    public void shouldReturnGreeting() throws Exception {
+        Person peter = new Person("Peter", "Pan");
+        personRepository.save(peter);
+
+        when()
+                .get(String.format("http://localhost:%s/hello/Pan", port))
+        .then()
+                .statusCode(is(200))
+                .body(containsString("Hello Peter Pan!"));
+    }
+}
+````
+Novamente, iniciamos toda a aplicação Spring usando @SpringBootTest. Neste caso, nós usamos @Autowire no PersonRepository para que possamos escrever dados de teste em nosso banco de dados facilmente. Quando agora pedimos à API REST para dizer "olá" para o nosso amigo "Sr. Pan", somos apresentados com uma saudação agradável. Incrível! E mais do que suficiente para um teste de ponta a ponta se você nem mesmo tem uma interface web.
 
 ## <a id="sec-exploratory-tests"></a>Testes Exploratórios
 
