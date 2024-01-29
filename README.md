@@ -93,7 +93,7 @@ A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software 
 
     - [Mas eu realmente preciso testar este método privado](#sec-private-method-tests)
 
-    - [Specialised Test Helpers](#sec-test-helpers)
+    - [Auxiliares de Teste Especializados](#sec-test-helpers)
 
 
 Um software pronto para produção requer testes antes de definitivamente entrar em produção. À medida que a área de desenvolvimento de software amadureceu, as abordagens para teste de software também amadureceram. Ao invés de se ter uma miríade de testadores manuais de software, as equipes de desenvolvimento passaram a automatizar a maior parte de seus esforços com teste de software. Automatizar os testes permite que as equipes saibam se seu software está "quebrado" em questão de segundos e minutos, em vez de dias e semanas.
@@ -861,6 +861,8 @@ Sempre que me encontro nessa situação, geralmente chego à conclusão de que a
 
 A solução que geralmente funciona para mim é dividir a classe original em duas classes. Frequentemente, leva apenas um ou dois minutos para pensar para encontrar uma boa maneira de dividir uma grande classe em duas classes menores com responsabilidade individual. Eu movo o método privado (que quero testar com urgência) para a nova classe e deixo a classe antiga chamar o novo método. Voilà, meu método privado difícil de testar agora é público e pode ser testado facilmente. Além disso, melhorei a estrutura do meu código aderindo ao princípio da responsabilidade única.
 
-### <a id="sec-test-helpers"></a>Specialised Test Helpers
+### <a id="sec-test-helpers"></a>Auxiliares de Teste Especializados
+
+É uma coisa linda que você possa escrever testes unitários para todo o seu código, independentemente da camada da arquitetura da sua aplicação em que você esteja. O exemplo mostra um simples teste unitário para um controlador. Infelizmente, quando se trata de controladores do Spring, há uma desvantagem nesta abordagem: os controladores do Spring MVC fazem amplo uso de anotações para declarar em quais caminhos eles estão ouvindo, quais verbos HTTP usar, quais parâmetros eles analisam do caminho do URL ou dos parâmetros de consulta, e assim por diante. Simplesmente invocar o método de um controlador nos seus testes unitários não testará todas essas coisas cruciais. Felizmente, os desenvolvedores do Spring criaram um bom auxiliar de teste que você pode usar para escrever testes de controladores melhores. Certifique-se de conferir o [MockMVC](https://docs.spring.io/spring-framework/reference/testing/spring-mvc-test-framework/server.html). Ele fornece uma DSL que você pode usar para enviar solicitações falsas ao seu controlador e verificar se está tudo bem. Incluí um [exemplo](https://github.com/hamvocke/spring-testing/blob/master/src/test/java/example/ExampleControllerAPITest.java) no código de amostra. Muitos frameworks (estruturas) oferecem auxiliares de teste para tornar mais agradável testar aspectos específicos do seu código. Consulte a documentação do seu framework de escolha e veja se ele oferece auxílios úteis para seus testes automatizados.
 
 [^1]: **Nota do tradutor**: no README do [repositório](https://github.com/hamvocke/spring-testing) da aplicação de exemplo, o autor menciona ter trocado a API do *darksky.net* pela do *openweathermap.org*, depois que a primeira foi desativada para consulta pública à previsão do tempo.
