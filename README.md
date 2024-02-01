@@ -1,5 +1,7 @@
 # A Pirâmide de Teste Prática
 
+Traduzido de [Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html), de Ham Vocke, com a anuência do autor.
+
 # Início do artigo
 
 A "Pirâmide de Teste" é uma metáfora que diz para agrupar testes de software em compartimentos (*buckets*) de diferentes granularidades. Ela também oferece uma ideia de quantos testes devemos ter em cada um desses compartimentos. Embora o conceito da pirâmide de teste exista há algum tempo, as equipes de desenvolvimento ainda lutam para colocá-lo em prática de forma adequada. Este artigo revisita o conceito original da pirâmide de teste e apresenta como você pode colocá-lo em prática. O artigo também mostra os tipos de teste que você deve procurar em diferentes níveis da pirâmide e oferece exemplos práticos sobre como eles podem ser implementados.
