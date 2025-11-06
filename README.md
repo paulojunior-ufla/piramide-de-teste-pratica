@@ -140,7 +140,7 @@ Dadas essas limitações dos nomes originais, é totalmente aceitável criar out
 * [Mockito](http://site.mockito.org/): para substituir (*mock*) dependências
 * [Wiremock](http://wiremock.org/): para criar *stubs* de serviços externos
 * [Pact](https://docs.pact.io/): para escrever testes CDC
-* [Selenium](http://docs.seleniumhq.org/): para escrever testes ponta-a-ponta (*end-to-end*), executados a partir da interface de usuário
+* [Selenium](https://www.selenium.dev/documentation/): para escrever testes ponta-a-ponta (*end-to-end*), executados a partir da interface de usuário
 * [REST-assured](https://github.com/rest-assured/rest-assured): para escrever testes ponta-a-ponta (*end-to-end*), executados a partir dos *endpoints* de uma API REST
 
 ## <a id="sec-sample-app"></a>Aplicação de exemplo
@@ -732,7 +732,7 @@ Sim, testar seu aplicativo de ponta-a-ponta geralmente significa conduzir seus t
 
 O teste da interface de usuário não precisa ser feito de ponta-a-ponta. Dependendo da tecnologia que você usa, testar sua interface de usuário pode ser tão simples quanto escrever alguns testes de unidade para seu código JavaScript *front-end* com seu *back-end* eliminado.
 
-Com os aplicativos Web tradicionais, o teste da interface do usuário pode ser obtido com ferramentas como o [Selenium](docs.seleniumhq.org). Se você considera uma API REST como sua interface de usuário, deve ter tudo o que precisa escrevendo testes de integração adequados em torno de sua API.
+Com os aplicativos Web tradicionais, o teste da interface do usuário pode ser obtido com ferramentas como o [Selenium](https://www.selenium.dev/documentation/). Se você considera uma API REST como sua interface de usuário, deve ter tudo o que precisa escrevendo testes de integração adequados em torno de sua API.
 
 Com interfaces Web, há vários aspectos que você provavelmente deseja testar em torno de sua interface do usuário: comportamento, *layout*, usabilidade ou aderência ao design corporativo são apenas alguns.
 
@@ -776,7 +776,7 @@ Lembre-se: você tem muitos níveis inferiores em sua pirâmide de teste, onde j
 
 ### <a id="sec-ui-end-to-end-tests"></a>Testes Ponta-a-Ponta de UI
 
-Para testes de ponta a ponta, o [Selenium](http://docs.seleniumhq.org/) e o protocolo [WebDriver](https://www.w3.org/TR/webdriver/) são a ferramenta de escolha para muitos desenvolvedores. Com o Selenium, você pode escolher um navegador de sua preferência e deixá-lo chamar automaticamente o seu site, clicar aqui e ali, inserir dados e verificar se as coisas mudam na interface do usuário.
+Para testes de ponta a ponta, o [Selenium](https://www.selenium.dev/documentation/) e o protocolo [WebDriver](https://www.w3.org/TR/webdriver/) são a ferramenta de escolha para muitos desenvolvedores. Com o Selenium, você pode escolher um navegador de sua preferência e deixá-lo chamar automaticamente o seu site, clicar aqui e ali, inserir dados e verificar se as coisas mudam na interface do usuário.
 
 O Selenium precisa de um navegador que ele possa iniciar e usar para executar seus testes. Existem vários chamados "*drivers*" para diferentes navegadores que você poderia usar. [Escolha um](https://www.mvnrepository.com/search?q=selenium+driver) (ou vários) e adicione-o ao seu arquivo `build.gradle`. Independentemente do navegador que você escolher, você precisa garantir que todos os desenvolvedores em sua equipe e seu servidor de integração contínua (*Continuous Integration - CI*) tenham instalado localmente a versão correta do navegador. Isso pode ser bastante difícil de manter sincronizado. Para Java, existe uma biblioteca pequena e agradável chamada [webdrivermanager](https://github.com/bonigarcia/webdrivermanager) que pode automatizar o download e a configuração da versão correta do navegador que você deseja usar. Adicione essas duas dependências ao seu arquivo `build.gradle` e você está pronto para começar:
 
